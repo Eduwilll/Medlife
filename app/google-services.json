@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "727714709876",
+    "project_id": "medlife-tgii",
+    "storage_bucket": "medlife-tgii.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:727714709876:android:da3535b6cd90a305cbec21",
+        "android_client_info": {
+          "package_name": "medlife.com.br"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDKoWXeQd0Pfpj33NkoIwmSpCq_ymLVOIU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

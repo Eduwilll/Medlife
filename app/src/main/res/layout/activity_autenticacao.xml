@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="16dp"
+    tools:context=".activity.AutenticacaoActivity">
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="290dp"
+        android:layout_height="260dp"
+        android:layout_gravity="center"
+        app:srcCompat="@drawable/logolema" />
+
+    <EditText
+        android:id="@+id/editCadastroEmail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="-25dp"
+        android:background="@drawable/bg_edit_text"
+        android:ems="10"
+        android:hint="@string/email"
+        android:textColorHint="#1976D2"
+        android:inputType="textEmailAddress"
+        android:padding="16dp"/>
+
+    <EditText
+        android:id="@+id/editCadastroSenha"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="-2dp"
+        android:background="@drawable/bg_edit_text"
+        android:ems="10"
+        android:hint="@string/senha"
+        android:inputType="textPassword"
+        android:padding="16dp"
+        android:textColorHint="#1976D2" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp">>
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Logar"
+            android:textColor="@android:color/black" />
+
+        <Switch
+            android:id="@+id/switchAcesso"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Cadastre-se"
+            android:textColor="@android:color/black" />
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/buttonAcesso"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/color3"
+        android:padding="16dp"
+        android:text="ACESSAR"
+        android:theme="@style/botaoPadrao" />
+</LinearLayout>

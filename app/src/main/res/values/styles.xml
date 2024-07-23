@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="botaoPadrao" parent="Theme.AppCompat.Light">
+        <item name="colorControlHighlight">#ff404e</item>
+        <item name="colorButtonNormal">@color/color3</item>
+        <item name="android:textColor">@color/color1</item>
+
+    </style>
+    
+</resources>
