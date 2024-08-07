@@ -1,11 +1,9 @@
-package medlife.com.br.activity;
+package medlife.com.br.helper;
 
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
-
-import medlife.com.br.helper.ConfiguracaoFirebase;
 
 public class UsuarioFirebase {
 

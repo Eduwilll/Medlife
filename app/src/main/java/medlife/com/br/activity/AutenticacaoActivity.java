@@ -24,6 +24,7 @@ import com.google.firebase.auth.FirebaseUser;
 
 import medlife.com.br.R;
 import medlife.com.br.helper.ConfiguracaoFirebase;
+import medlife.com.br.helper.UsuarioFirebase;
 
 
 public class AutenticacaoActivity extends AppCompatActivity {
@@ -40,7 +41,7 @@ public class AutenticacaoActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_autenticacao);
-        getSupportActionBar().hide();
+        //getSupportActionBar().hide();
 
         inicializaComponentes();
         autenticacao = ConfiguracaoFirebase.getFirebaseAutenticacao();

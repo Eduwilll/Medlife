@@ -1,5 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/color1</item>
+        <item name="colorPrimaryDark">@color/color2</item>
+        <item name="colorAccent">@color/color3</item>
+        <!-- Desativa a ActionBar fornecida pelo decorador da janela -->
+        <item name="windowActionBar">false</item>
+        <!-- Necessário para o suporte de ActionBar -->
+        <item name="windowNoTitle">true</item>
+    </style>
+
     <style name="botaoPadrao" parent="Theme.AppCompat.Light">
         <item name="colorControlHighlight">#ff404e</item>
         <item name="colorButtonNormal">@color/color3</item>

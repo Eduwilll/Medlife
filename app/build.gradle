@@ -3,14 +3,18 @@ plugins {
     id 'com.google.gms.google-services'
 }
 
+ext {
+    materialsearchviewVersion = '1.4.0'
+}
+
 android {
     namespace 'medlife.com.br'
-    compileSdk 32
+    compileSdk 34
 
     defaultConfig {
         applicationId "medlife.com.br"
         minSdk 21
-        targetSdk 32
+        targetSdk 34
         versionCode 1
         versionName "1.0"
 
@@ -27,12 +31,18 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+    dependenciesInfo {
+        includeInApk true
+        includeInBundle true
+    }
+    buildToolsVersion '35.0.0'
 }
 
 dependencies {
     implementation 'androidx.appcompat:appcompat:1.5.1'
     implementation 'com.google.android.material:material:1.7.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    implementation 'androidx.activity:activity:1.9.1'
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.4'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.0'
@@ -42,8 +52,19 @@ dependencies {
     implementation 'com.google.firebase:firebase-auth'
     implementation 'com.google.firebase:firebase-storage'
     implementation 'com.google.firebase:firebase-database'
-}
 
+
+    /*MaterialSearchView*/
+    implementation 'com.miguelcatalan:materialsearchview:1.4.0'
+
+}
+configurations.all {
+    resolutionStrategy {
+        force 'org.jetbrains.kotlin:kotlin-stdlib:1.8.22'
+        force 'org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.8.22'
+        force 'org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.8.22'
+    }
+}
 tasks.whenTaskAdded { task ->
     if (task.name == 'mapDebugSourceSetPaths') {
         task.dependsOn 'processDebugGoogleServices'
