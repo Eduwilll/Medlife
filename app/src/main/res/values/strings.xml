@@ -6,4 +6,9 @@
     <string name="cadastre_se">Cadastre-se</string>
     <string name="logar">Logar</string>
     <string name="title_activity_empresa">EmpresaActivity</string>
+    <string name="continuar_com_facebook">Continuar com Facebook</string>
+    <string name="continuar_com_google">Continuar com Google</string>
+    <string name="ou_conectar_com_m_dia_social">Ou conectar com Mídia Social</string>
+    <string name="esqueceu_senha">Esqueceu senha?</string>
+    <string name="receba_seus_rem_dios_sem_sair_de_casa">Receba seus remédios sem sair de casa!</string>
 </resources>
