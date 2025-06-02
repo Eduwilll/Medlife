@@ -83,6 +83,8 @@ public class AutenticacaoActivity extends AppCompatActivity {
                 Toast.makeText(AutenticacaoActivity.this,
                         "Funcionalidade em desenvolvimento",
                         Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(getApplicationContext(), RegisterActivity.class));
+
             }
         });
 
@@ -111,6 +113,7 @@ public class AutenticacaoActivity extends AppCompatActivity {
                         "Funcionalidade em desenvolvimento",
                         Toast.LENGTH_SHORT).show();
             }
+
         });
     }
 
