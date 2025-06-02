@@ -18,4 +18,8 @@
     <string name="j_possui_conta">Já possui conta? <font fgcolor='#1E56A0'>Entrar</font></string>
     <string name="nome_completo">Nome Completo</string>
     <string name="digite_suas_informa_es_para_continuar">Digite suas informações para continuar</string>
+    <string name="carrinho">Carrinho</string>
+    <string name="pesquisar">Pesquisar</string>
+    <string name="in_cio">Início</string>
+    <string name="perfil">Perfil</string>
 </resources>

@@ -6,12 +6,11 @@
     android:layout_height="match_parent"
     tools:context=".activity.HomeActivity">
 
-
     <TextView
         android:id="@+id/titleText"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Receba seus remédios sem sair de casa!"
+        android:text="@string/receba_seus_rem_dios_sem_sair_de_casa"
         android:textSize="24sp"
         android:textStyle="bold"
         android:textColor="@android:color/black"
@@ -19,4 +18,175 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="48dp"/>
+
+    <!-- Content above the bottom bar will go here -->
+    <FrameLayout
+        android:id="@+id/contentFrame"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/bottomBarLayout"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <!-- Your existing or new content for the Home screen -->
+
+    </FrameLayout>
+
+    <!-- Bottom Navigation Bar -->
+    <LinearLayout
+        android:id="@+id/bottomBarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="92dp"
+        android:orientation="horizontal"
+        android:background="@color/color1"
+        android:elevation="8dp"
+        android:gravity="center_vertical"
+        android:paddingHorizontal="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <!-- Início (Home) -->
+        <LinearLayout
+            android:id="@+id/menuItemHome"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center">
+
+            <ImageView
+                android:id="@+id/iconHome"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_home_filled"
+                app:tint="#1E56A0" /> <!-- Active color -->
+
+            <TextView
+                android:id="@+id/textHome"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/in_cio"
+                android:textSize="12sp"
+                android:textColor="#1E56A0"
+                android:fontFamily="@font/gilroy"
+                android:textStyle="bold"/>
+
+        </LinearLayout>
+
+        <!-- Pesquisar (Search) -->
+        <LinearLayout
+            android:id="@+id/menuItemSearch"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center">
+
+            <ImageView
+                android:id="@+id/iconSearch"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_search"
+                app:tint="#181725" /> <!-- Inactive color -->
+
+            <TextView
+                android:id="@+id/textSearch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/pesquisar"
+                android:textSize="12sp"
+                android:textColor="#181725"
+                android:fontFamily="@font/gilroy"
+                android:textStyle="bold"/>
+
+        </LinearLayout>
+
+        <!-- Carrinho (Cart) -->
+        <LinearLayout
+            android:id="@+id/menuItemCart"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center">
+
+            <ImageView
+                android:id="@+id/iconCart"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_cart"
+                app:tint="#181725" /> <!-- Inactive color -->
+
+            <TextView
+                android:id="@+id/textCart"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/carrinho"
+                android:textSize="12sp"
+                android:textColor="#181725"
+                android:fontFamily="@font/gilroy"
+                android:textStyle="bold"/>
+
+        </LinearLayout>
+
+        <!-- Favorito (Favorites) -->
+        <LinearLayout
+            android:id="@+id/menuItemFavorite"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center">
+
+            <ImageView
+                android:id="@+id/iconFavorite"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_favorite"
+                app:tint="#181725" />
+
+            <TextView
+                android:id="@+id/textFavorite"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Favorito"
+                android:textSize="12sp"
+                android:textColor="#181725"
+                android:fontFamily="@font/gilroy"
+                android:textStyle="bold"/>
+
+        </LinearLayout>
+
+        <!-- Perfil (Profile) -->
+        <LinearLayout
+            android:id="@+id/menuItemProfile"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center">
+
+            <ImageView
+                android:id="@+id/iconProfile"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_profile"
+                app:tint="#181725" />
+
+            <TextView
+                android:id="@+id/textProfile"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/perfil"
+                android:textSize="12sp"
+                android:textColor="#181725"
+                android:fontFamily="@font/gilroy"
+                android:textStyle="bold"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
