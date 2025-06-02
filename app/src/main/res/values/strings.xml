@@ -16,4 +16,6 @@
     <string name="sempre_que_precisar_estarei_l_medlife_cuidando_do_seu_bem_estar">Sempre que precisar estarei lá, MedLife cuidando do seu bem estar!</string>
     <string name="politica_de_privacidade">Ao continuar, você concorda com nosso <font fgcolor='#1E56A0'>Termos de Serviço</font> e <font fgcolor='#1E56A0'>Política de Privacidade</font></string>
     <string name="j_possui_conta">Já possui conta? <font fgcolor='#1E56A0'>Entrar</font></string>
+    <string name="nome_completo">Nome Completo</string>
+    <string name="digite_suas_informa_es_para_continuar">Digite suas informações para continuar</string>
 </resources>

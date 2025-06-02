@@ -40,7 +40,7 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-        //getSupportActionBar().hide(); // Hide action bar if needed
+        getSupportActionBar().hide(); // Hide action bar if needed
 
         inicializaComponentes();
         autenticacao = ConfiguracaoFirebase.getFirebaseAutenticacao();
