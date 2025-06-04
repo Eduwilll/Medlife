@@ -18,4 +18,10 @@
 
     </style>
     
+    <style name="BottomNavigationText">
+        <item name="android:textSize">12sp</item>
+        <item name="android:fontFamily">@font/gilroy</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+    
 </resources>
