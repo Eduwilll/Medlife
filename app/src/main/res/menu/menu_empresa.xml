@@ -6,17 +6,17 @@
     <item
         android:id="@+id/menuNovoProduto"
         android:icon="@drawable/ic_adicionar_24"
-        android:title="Novo Produto"
+        android:title="@string/novo_produto"
         app:showAsAction="always" />
 
     <item
         android:id="@+id/menuConfiguracoes"
-        android:title="Configurações"
+        android:title="@string/configura_es"
         app:showAsAction="never" />
 
     <item
         android:id="@+id/menuSair"
-        android:title="Sair"
+        android:title="@string/sair"
         app:showAsAction="never" />
 
 </menu>

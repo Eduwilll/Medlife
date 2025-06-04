@@ -22,4 +22,8 @@
     <string name="pesquisar">Pesquisar</string>
     <string name="in_cio">Início</string>
     <string name="perfil">Perfil</string>
+    <string name="novo_produto">Novo Produto</string>
+    <string name="configura_es">Configurações</string>
+    <string name="sair">Sair</string>
+    <string name="favorito">Favorito</string>
 </resources>
