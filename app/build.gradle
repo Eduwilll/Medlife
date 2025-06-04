@@ -35,7 +35,6 @@ android {
         includeInApk true
         includeInBundle true
     }
-    buildToolsVersion '35.0.0'
 }
 
 dependencies {
@@ -53,19 +52,15 @@ dependencies {
     implementation 'com.google.firebase:firebase-storage'
     implementation 'com.google.firebase:firebase-database'
 
-
-    /*MaterialSearchView*/
-    implementation 'com.miguelcatalan:materialsearchview:1.4.0'
-
 }
-configurations.all {
+configurations.configureEach {
     resolutionStrategy {
         force 'org.jetbrains.kotlin:kotlin-stdlib:1.8.22'
         force 'org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.8.22'
         force 'org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.8.22'
     }
 }
-tasks.whenTaskAdded { task ->
+tasks.configureEach { task ->
     if (task.name == 'mapDebugSourceSetPaths') {
         task.dependsOn 'processDebugGoogleServices'
     }

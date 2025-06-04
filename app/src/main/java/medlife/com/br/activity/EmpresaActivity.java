@@ -6,10 +6,12 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
-
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-
+import androidx.core.view.MenuProvider; // Import MenuProvider
+import androidx.lifecycle.Lifecycle; // Import Lifecycle
+import androidx.lifecycle.LifecycleOwner;
 
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -32,39 +34,41 @@ public class EmpresaActivity extends AppCompatActivity {
         toolbar.setTitle("Ifood - empresa");
         setSupportActionBar(toolbar);
 
+        // Add menu items without overriding MenuActivity methods
+        addMenuProvider(new MenuProvider() {
+            @Override
+            public void onCreateMenu(@NonNull Menu menu, @NonNull MenuInflater menuInflater) {
+                // Add menu items here
+                menuInflater.inflate(R.menu.menu_empresa, menu);
+            }
 
+            @Override
+            public boolean onMenuItemSelected(@NonNull MenuItem menuItem) {
+                // Handle option Menu Here
+                int itemId = menuItem.getItemId();
+                if (itemId == R.id.menuSair) {
+                    deslogarUsuario();
+                    return true;
+                } else if (itemId == R.id.menuConfiguracoes) {
+                    abrirConfiguracoes();
+                    return true;
+                } else if (itemId == R.id.menuNovoProduto) {
+                    abrirNovoProduto();
+                    return true;
+                }
+                return false; // Return false if the item was not handled
+            }
+        }, getViewLifecycleOwner(), Lifecycle.State.RESUMED); // Observe lifecycle
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_empresa, menu);
-
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-
-        switch (item.getItemId()){
-            case R.id.menuSair :
-                deslogarUsuario();
-                break;
-            case R.id.menuConfiguracoes :
-                abrirConfiguracoes();
-                break;
-            case R.id.menuNovoProduto :
-                abrirNovoProduto();
-                break;
-        }
-
-        return super.onOptionsItemSelected(item);
+    private LifecycleOwner getViewLifecycleOwner() {
+        return this;
     }
 
     private void deslogarUsuario(){
         try {
             autenticacao.signOut();
+            finish(); //  Consider navigating the user away or finishing the activity
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -77,6 +81,4 @@ public class EmpresaActivity extends AppCompatActivity {
     private void abrirNovoProduto(){
         startActivity(new Intent(EmpresaActivity.this, NovoProdutoEmpresaActivity.class));
     }
-
-
 }
