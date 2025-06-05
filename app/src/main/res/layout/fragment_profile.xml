@@ -2,16 +2,344 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#FFFFFF">
 
+    <!-- Profile Image -->
+    <ImageView
+        android:id="@+id/imageProfile"
+        android:layout_width="87dp"
+        android:layout_height="91dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="49dp"
+        android:background="@drawable/profile_bg"
+        android:scaleType="centerCrop"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:src="@drawable/ic_profile_placeholder" />
+
+    <!-- User Name -->
     <TextView
+        android:id="@+id/textName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Profile Screen"
-        android:textSize="24sp"
+        android:text="Nome do Usuário"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:textColor="#181725"
+        android:fontFamily="@font/gilroybold"
+        app:layout_constraintStart_toEndOf="@id/imageProfile"
+        app:layout_constraintTop_toTopOf="@id/imageProfile"
+        android:layout_marginStart="8dp"/>
+
+    <!-- User Email -->
+    <TextView
+        android:id="@+id/textEmail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="email@exemplo.com"
+        android:textSize="16sp"
+        android:textColor="#7C7C7C"
+        android:fontFamily="@font/gilroyregular"
+        app:layout_constraintStart_toEndOf="@id/imageProfile"
+        app:layout_constraintTop_toBottomOf="@id/textName"
+        android:layout_marginStart="8dp"/>
+
+    <!-- Menu Items Container -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="20dp"
+        app:layout_constraintTop_toBottomOf="@id/imageProfile">
+
+        <!-- Pedidos -->
+        <LinearLayout
+            android:id="@+id/menuPedidos"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="16dp"
+            android:gravity="center_vertical">
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_orders"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Pedidos"
+                android:textSize="18sp"
+                android:textColor="#181725"
+                android:fontFamily="@font/gilroysemibold"
+                android:layout_marginStart="16dp"/>
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1"/>
+
+            <ImageView
+                android:layout_width="8dp"
+                android:layout_height="14dp"
+                android:src="@drawable/ic_arrow_right"/>
+        </LinearLayout>
+
+        <!-- Meus Dados -->
+        <LinearLayout
+            android:id="@+id/menuMeusDados"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="16dp"
+            android:gravity="center_vertical">
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_user_data"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Meus dados"
+                android:textSize="18sp"
+                android:textColor="#181725"
+                android:fontFamily="@font/gilroysemibold"
+                android:layout_marginStart="16dp"/>
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1"/>
+
+            <ImageView
+                android:layout_width="8dp"
+                android:layout_height="14dp"
+                android:src="@drawable/ic_arrow_right"/>
+        </LinearLayout>
+
+        <!-- Endereços -->
+        <LinearLayout
+            android:id="@+id/menuEnderecos"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="16dp"
+            android:gravity="center_vertical">
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_address"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Endereços"
+                android:textSize="18sp"
+                android:textColor="#181725"
+                android:fontFamily="@font/gilroysemibold"
+                android:layout_marginStart="16dp"/>
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1"/>
+
+            <ImageView
+                android:layout_width="8dp"
+                android:layout_height="14dp"
+                android:src="@drawable/ic_arrow_right"/>
+        </LinearLayout>
+
+        <!-- Carteira -->
+        <LinearLayout
+            android:id="@+id/menuCarteira"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="16dp"
+            android:gravity="center_vertical">
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_wallet"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Carteira"
+                android:textSize="18sp"
+                android:textColor="#181725"
+                android:fontFamily="@font/gilroysemibold"
+                android:layout_marginStart="16dp"/>
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1"/>
+
+            <ImageView
+                android:layout_width="8dp"
+                android:layout_height="14dp"
+                android:src="@drawable/ic_arrow_right"/>
+        </LinearLayout>
+
+        <!-- Cupons -->
+        <LinearLayout
+            android:id="@+id/menuCupons"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="16dp"
+            android:gravity="center_vertical">
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_coupon"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Cupons"
+                android:textSize="18sp"
+                android:textColor="#181725"
+                android:fontFamily="@font/gilroysemibold"
+                android:layout_marginStart="16dp"/>
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1"/>
+
+            <ImageView
+                android:layout_width="8dp"
+                android:layout_height="14dp"
+                android:src="@drawable/ic_arrow_right"/>
+        </LinearLayout>
+
+        <!-- Notificações -->
+        <LinearLayout
+            android:id="@+id/menuNotificacoes"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="16dp"
+            android:gravity="center_vertical">
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_notification"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Notificações"
+                android:textSize="18sp"
+                android:textColor="#181725"
+                android:fontFamily="@font/gilroysemibold"
+                android:layout_marginStart="16dp"/>
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1"/>
+
+            <ImageView
+                android:layout_width="8dp"
+                android:layout_height="14dp"
+                android:src="@drawable/ic_arrow_right"/>
+        </LinearLayout>
+
+        <!-- Ajuda -->
+        <LinearLayout
+            android:id="@+id/menuAjuda"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="16dp"
+            android:gravity="center_vertical">
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_help"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Ajuda"
+                android:textSize="18sp"
+                android:textColor="#181725"
+                android:fontFamily="@font/gilroysemibold"
+                android:layout_marginStart="16dp"/>
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1"/>
+
+            <ImageView
+                android:layout_width="8dp"
+                android:layout_height="14dp"
+                android:src="@drawable/ic_arrow_right"/>
+        </LinearLayout>
+
+        <!-- Sobre -->
+        <LinearLayout
+            android:id="@+id/menuSobre"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="16dp"
+            android:gravity="center_vertical">
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_about"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Sobre"
+                android:textSize="18sp"
+                android:textColor="#181725"
+                android:fontFamily="@font/gilroysemibold"
+                android:layout_marginStart="16dp"/>
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1"/>
+
+            <ImageView
+                android:layout_width="8dp"
+                android:layout_height="14dp"
+                android:src="@drawable/ic_arrow_right"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <!-- Sair Button -->
+    <Button
+        android:id="@+id/sairButton"
+        android:layout_width="364dp"
+        android:layout_height="67dp"
+        android:layout_marginBottom="16dp"
+        android:text="Sair"
+        android:textColor="#1E56A0"
+        android:textSize="18sp"
+        android:fontFamily="@font/gilroysemibold"
+        android:background="@drawable/button_logout_bg"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
