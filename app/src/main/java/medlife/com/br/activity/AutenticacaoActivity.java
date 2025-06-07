@@ -147,7 +147,7 @@ public class AutenticacaoActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             FirebaseUser user = autenticacao.getCurrentUser();
-                            UsuarioFirebase.atualizarTipoUsuario("U");
+//                            UsuarioFirebase.atualizarTipoUsuario("U");
                             abrirTelaPrincipal("U");
                         } else {
                             Toast.makeText(AutenticacaoActivity.this,
