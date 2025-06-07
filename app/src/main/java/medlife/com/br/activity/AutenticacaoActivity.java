@@ -10,9 +10,9 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-//import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
-//import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -38,7 +38,7 @@ public class AutenticacaoActivity extends AppCompatActivity {
     private TextView registerLink, forgotPasswordLink;
     private MaterialButton googleButton, facebookButton;
     private FirebaseAuth autenticacao;
-//    private GoogleSignInClient googleSignInClient;
+    private GoogleSignInClient googleSignInClient;
     private static final int RC_SIGN_IN = 123;
 
     @Override
@@ -48,7 +48,7 @@ public class AutenticacaoActivity extends AppCompatActivity {
         getSupportActionBar().hide(); // Hide action bar if needed
 
         inicializaComponentes();
-//        configurarGoogleSignIn();
+        configurarGoogleSignIn();
         autenticacao = ConfiguracaoFirebase.getFirebaseAutenticacao();
         autenticacao.signOut();
 
@@ -80,72 +80,64 @@ public class AutenticacaoActivity extends AppCompatActivity {
         registerLink.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO: Implementar tela de cadastro
-                Toast.makeText(AutenticacaoActivity.this,
-                        "Funcionalidade em desenvolvimento",
-                        Toast.LENGTH_SHORT).show();
                 startActivity(new Intent(getApplicationContext(), RegisterActivity.class));
-
             }
         });
 
         forgotPasswordLink.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO: Implementar recuperação de senha
                 Toast.makeText(AutenticacaoActivity.this,
                         "Funcionalidade em desenvolvimento",
                         Toast.LENGTH_SHORT).show();
             }
         });
 
-//        googleButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                signInWithGoogle();
-//            }
-//        });
+        googleButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                signInWithGoogle();
+            }
+        });
 
         facebookButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO: Implementar login com Facebook
                 Toast.makeText(AutenticacaoActivity.this,
                         "Funcionalidade em desenvolvimento",
                         Toast.LENGTH_SHORT).show();
             }
-
         });
     }
 
-//    private void configurarGoogleSignIn() {
-//        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-//                .requestIdToken(getString(R.string.default_web_client_id))
-//                .requestEmail()
-//                .build();
-//
-//        googleSignInClient = GoogleSignIn.getClient(this, gso);
-//    }
-//
-//    private void signInWithGoogle() {
-//        Intent signInIntent = googleSignInClient.getSignInIntent();
-//        startActivityForResult(signInIntent, RC_SIGN_IN);
-//    }
-//
-//    @Override
-//    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        super.onActivityResult(requestCode, resultCode, data);
-//
-//        if (requestCode == RC_SIGN_IN) {
-//            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
-//            try {
-//                GoogleSignInAccount account = task.getResult(ApiException.class);
-//                firebaseAuthWithGoogle(account.getIdToken());
-//            } catch (ApiException e) {
-//                Toast.makeText(this, "Erro ao fazer login com Google", Toast.LENGTH_SHORT).show();
-//            }
-//        }
-//    }
+    private void configurarGoogleSignIn() {
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(getString(R.string.default_web_client_id))
+                .requestEmail()
+                .build();
+
+        googleSignInClient = GoogleSignIn.getClient(this, gso);
+    }
+
+    private void signInWithGoogle() {
+        Intent signInIntent = googleSignInClient.getSignInIntent();
+        startActivityForResult(signInIntent, RC_SIGN_IN);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == RC_SIGN_IN) {
+            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
+            try {
+                GoogleSignInAccount account = task.getResult(ApiException.class);
+                firebaseAuthWithGoogle(account.getIdToken());
+            } catch (ApiException e) {
+                Toast.makeText(this, "Erro ao fazer login com Google: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
 
     private void firebaseAuthWithGoogle(String idToken) {
         AuthCredential credential = GoogleAuthProvider.getCredential(idToken, null);
@@ -155,10 +147,11 @@ public class AutenticacaoActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             FirebaseUser user = autenticacao.getCurrentUser();
-                            abrirTelaPrincipal("U"); // Usuário padrão para login social
+                            UsuarioFirebase.atualizarTipoUsuario("U");
+                            abrirTelaPrincipal("U");
                         } else {
                             Toast.makeText(AutenticacaoActivity.this,
-                                    "Erro ao autenticar com Google",
+                                    "Erro ao autenticar com Google: " + task.getException().getMessage(),
                                     Toast.LENGTH_SHORT).show();
                         }
                     }
