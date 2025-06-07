@@ -6,17 +6,31 @@
     android:background="@android:color/white">
 
     <TextView
-        android:id="@+id/titleText"
+        android:id="@+id/welcomeText"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="@string/receba_seus_rem_dios_sem_sair_de_casa"
-        android:textSize="24sp"
+        android:text="Bem-vindo(a)!"
+        android:textSize="28sp"
         android:textStyle="bold"
         android:textColor="@android:color/black"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="48dp"/>
+        android:layout_marginTop="48dp"
+        android:layout_marginHorizontal="24dp"/>
+
+    <TextView
+        android:id="@+id/subtitleText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/receba_seus_rem_dios_sem_sair_de_casa"
+        android:textSize="18sp"
+        android:textColor="@android:color/darker_gray"
+        app:layout_constraintTop_toBottomOf="@id/welcomeText"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="8dp"
+        android:layout_marginHorizontal="24dp"/>
 
     <!-- Add your home screen content here -->
     <TextView
@@ -27,6 +41,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/titleText" />
+        app:layout_constraintTop_toBottomOf="@id/subtitleText" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

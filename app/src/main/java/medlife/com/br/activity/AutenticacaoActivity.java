@@ -50,7 +50,7 @@ public class AutenticacaoActivity extends AppCompatActivity {
         inicializaComponentes();
 //        configurarGoogleSignIn();
         autenticacao = ConfiguracaoFirebase.getFirebaseAutenticacao();
-        // autenticacao.signOut();
+        autenticacao.signOut();
 
         //Verificar usuario logado
         verificarUsuarioLogado();
