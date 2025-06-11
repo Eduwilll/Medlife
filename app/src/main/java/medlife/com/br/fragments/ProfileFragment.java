@@ -10,11 +10,16 @@ import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 import medlife.com.br.R;
 import medlife.com.br.activity.AutenticacaoActivity;
 import medlife.com.br.helper.ConfiguracaoFirebase;
+import medlife.com.br.model.Usuario;
+import medlife.com.br.fragments.profile.*;
 
 public class ProfileFragment extends Fragment {
 
@@ -22,10 +27,15 @@ public class ProfileFragment extends Fragment {
     private TextView textName, textEmail;
     private View menuPedidos, menuMeusDados, menuEnderecos, menuCarteira, 
                 menuCupons, menuNotificacoes, menuAjuda, menuSobre;
+    private FirebaseFirestore db;
+    private Usuario usuarioAtual;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
+
+        // Initialize Firestore
+        db = FirebaseFirestore.getInstance();
 
         // Initialize views
         imageProfile = view.findViewById(R.id.imageProfile);
@@ -46,69 +56,76 @@ public class ProfileFragment extends Fragment {
         setupClickListeners();
 
         // Load user info
-//        loadUserInfo();
+        loadUserInfo();
 
         return view;
     }
 
+    private void loadUserInfo() {
+        FirebaseUser user = ConfiguracaoFirebase.getFirebaseAutenticacao().getCurrentUser();
+        if (user != null) {
+            db.collection("usuarios")
+                    .document(user.getUid())
+                    .get()
+                    .addOnCompleteListener(task -> {
+                        if (task.isSuccessful()) {
+                            DocumentSnapshot document = task.getResult();
+                            if (document.exists()) {
+                                usuarioAtual = document.toObject(Usuario.class);
+                                if (usuarioAtual != null) {
+                                    textName.setText(usuarioAtual.getNome());
+                                    textEmail.setText(usuarioAtual.getEmail());
+                                }
+                            }
+                        } else {
+                            Toast.makeText(getContext(),
+                                    "Erro ao carregar dados do usuário: " + task.getException().getMessage(),
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                    });
+        }
+    }
+
     private void setupClickListeners() {
         menuPedidos.setOnClickListener(v -> {
-            // TODO: Navigate to Orders screen
-            Toast.makeText(getContext(), "Pedidos", Toast.LENGTH_SHORT).show();
+            replaceFragment(new ProfileOrdersFragment());
         });
 
         menuMeusDados.setOnClickListener(v -> {
-            // TODO: Navigate to User Data screen
-            Toast.makeText(getContext(), "Meus Dados", Toast.LENGTH_SHORT).show();
+            replaceFragment(new ProfileUserDataFragment());
         });
 
         menuEnderecos.setOnClickListener(v -> {
-            // TODO: Navigate to Addresses screen
-            Toast.makeText(getContext(), "Endereços", Toast.LENGTH_SHORT).show();
+            replaceFragment(new ProfileAddressesFragment());
         });
 
         menuCarteira.setOnClickListener(v -> {
-            // TODO: Navigate to Wallet screen
-            Toast.makeText(getContext(), "Carteira", Toast.LENGTH_SHORT).show();
+            replaceFragment(new ProfileWalletFragment());
         });
 
         menuCupons.setOnClickListener(v -> {
-            // TODO: Navigate to Coupons screen
-            Toast.makeText(getContext(), "Cupons", Toast.LENGTH_SHORT).show();
+            replaceFragment(new ProfileCouponsFragment());
         });
 
         menuNotificacoes.setOnClickListener(v -> {
-            // TODO: Navigate to Notifications screen
-            Toast.makeText(getContext(), "Notificações", Toast.LENGTH_SHORT).show();
+            replaceFragment(new ProfileNotificationsFragment());
         });
 
         menuAjuda.setOnClickListener(v -> {
-            // TODO: Navigate to Help screen
-            Toast.makeText(getContext(), "Ajuda", Toast.LENGTH_SHORT).show();
+            replaceFragment(new ProfileHelpFragment());
         });
 
         menuSobre.setOnClickListener(v -> {
-            // TODO: Navigate to About screen
-            Toast.makeText(getContext(), "Sobre", Toast.LENGTH_SHORT).show();
+            replaceFragment(new ProfileAboutFragment());
         });
     }
 
-//    private void loadUserInfo() {
-//        FirebaseUser user = ConfiguracaoFirebase.getFirebaseAutenticacao().getCurrentUser();
-//        if (user != null) {
-//            textName.setText(user.getDisplayName() != null ? user.getDisplayName() : "Usuário");
-//            textEmail.setText(user.getEmail());
-//
-//            if (user.getPhotoUrl() != null) {
-//                Glide.with(this)
-//                    .load(user.getPhotoUrl())
-//                    .placeholder(R.drawable.ic_profile_placeholder)
-//                    .into(imageProfile);
-//            } else {
-//                imageProfile.setImageResource(R.drawable.ic_profile_placeholder);
-//            }
-//        }
-//    }
+    private void replaceFragment(Fragment fragment) {
+        FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
+        transaction.replace(R.id.frameLayout, fragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
+    }
 
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {

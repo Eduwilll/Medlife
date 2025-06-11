@@ -22,10 +22,17 @@ import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import medlife.com.br.R;
 import medlife.com.br.helper.ConfiguracaoFirebase;
 import medlife.com.br.helper.UsuarioFirebase;
+import medlife.com.br.model.Usuario;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -34,6 +41,7 @@ public class RegisterActivity extends AppCompatActivity {
     private MaterialButton buttonRegister;
     private TextView textLoginLink;
     private FirebaseAuth autenticacao;
+    private FirebaseFirestore db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +52,7 @@ public class RegisterActivity extends AppCompatActivity {
 
         inicializaComponentes();
         autenticacao = ConfiguracaoFirebase.getFirebaseAutenticacao();
+        db = FirebaseFirestore.getInstance();
 
         buttonRegister.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -106,17 +115,36 @@ public class RegisterActivity extends AppCompatActivity {
                                     @Override
                                     public void onComplete(@NonNull Task<Void> task) {
                                         if (task.isSuccessful()) {
-                                            Toast.makeText(RegisterActivity.this,
-                                                    "Cadastro realizado com sucesso!",
-                                                    Toast.LENGTH_SHORT).show();
-                                            // Assuming a default user type 'U' for registration
-                                            abrirTelaPrincipal("U"); // Navigate to home activity
+                                            // Create user document in Firestore
+                                            Usuario usuario = new Usuario();
+                                            usuario.setUid(user.getUid());
+                                            usuario.setNome(nome);
+                                            usuario.setEmail(email);
+                                            usuario.setTelefone(new ArrayList<>());
+                                            usuario.setEndereco(new ArrayList<>());
+
+                                            db.collection("usuarios")
+                                                    .document(user.getUid())
+                                                    .set(usuario)
+                                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                        @Override
+                                                        public void onComplete(@NonNull Task<Void> task) {
+                                                            if (task.isSuccessful()) {
+                                                                Toast.makeText(RegisterActivity.this,
+                                                                        "Cadastro realizado com sucesso!",
+                                                                        Toast.LENGTH_SHORT).show();
+                                                                abrirTelaPrincipal("U");
+                                                            } else {
+                                                                Toast.makeText(RegisterActivity.this,
+                                                                        "Erro ao salvar dados do usuário: " + task.getException().getMessage(),
+                                                                        Toast.LENGTH_SHORT).show();
+                                                            }
+                                                        }
+                                                    });
                                         } else {
-                                            // Handle the error in updating profile if necessary
                                             Toast.makeText(RegisterActivity.this,
                                                     "Erro ao atualizar perfil: " + task.getException().getMessage(),
                                                     Toast.LENGTH_SHORT).show();
-                                            // You might still want to proceed or handle this differently
                                             abrirTelaPrincipal("U");
                                         }
                                     }
@@ -126,7 +154,6 @@ public class RegisterActivity extends AppCompatActivity {
                                 "Erro ao obter usuário após cadastro",
                                 Toast.LENGTH_SHORT).show();
                     }
-
                 } else {
                     String erroExcecao = "";
                     try {
