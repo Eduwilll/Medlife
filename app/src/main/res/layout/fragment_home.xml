@@ -9,7 +9,7 @@
         android:id="@+id/welcomeText"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Bem-vindo(a)!"
+        android:text="@string/bem_vindo_a"
         android:textSize="28sp"
         android:textStyle="bold"
         android:textColor="@android:color/black"
@@ -36,7 +36,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Home Screen Content"
+        android:text="@string/home_screen_content"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

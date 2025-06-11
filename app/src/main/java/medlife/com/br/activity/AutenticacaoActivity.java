@@ -27,6 +27,8 @@ import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 
+import java.util.Objects;
+
 import medlife.com.br.R;
 import medlife.com.br.helper.ConfiguracaoFirebase;
 import medlife.com.br.helper.UsuarioFirebase;
@@ -45,7 +47,7 @@ public class AutenticacaoActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_autenticacao);
-        getSupportActionBar().hide(); // Hide action bar if needed
+        Objects.requireNonNull(getSupportActionBar()).hide(); // Hide action bar if needed
 
         inicializaComponentes();
         configurarGoogleSignIn();
@@ -55,59 +57,36 @@ public class AutenticacaoActivity extends AppCompatActivity {
         //Verificar usuario logado
         verificarUsuarioLogado();
 
-        buttonAcessar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String email = campoEmail.getText().toString();
-                String senha = campoSenha.getText().toString();
+        buttonAcessar.setOnClickListener(v -> {
+            String email = campoEmail.getText().toString();
+            String senha = campoSenha.getText().toString();
 
-                if (!email.isEmpty()) {
-                    if (!senha.isEmpty()) {
-                        autenticarUsuario(email, senha);
-                    } else {
-                        Toast.makeText(AutenticacaoActivity.this,
-                                "Preencha a senha!",
-                                Toast.LENGTH_SHORT).show();
-                    }
+            if (!email.isEmpty()) {
+                if (!senha.isEmpty()) {
+                    autenticarUsuario(email, senha);
                 } else {
                     Toast.makeText(AutenticacaoActivity.this,
-                            "Preencha o E-mail!",
+                            "Preencha a senha!",
                             Toast.LENGTH_SHORT).show();
                 }
-            }
-        });
-
-        registerLink.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(), RegisterActivity.class));
-            }
-        });
-
-        forgotPasswordLink.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+            } else {
                 Toast.makeText(AutenticacaoActivity.this,
-                        "Funcionalidade em desenvolvimento",
+                        "Preencha o E-mail!",
                         Toast.LENGTH_SHORT).show();
             }
         });
 
-        googleButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                signInWithGoogle();
-            }
-        });
+        registerLink.setOnClickListener(v -> startActivity(new Intent(getApplicationContext(), RegisterActivity.class)));
 
-        facebookButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(AutenticacaoActivity.this,
-                        "Funcionalidade em desenvolvimento",
-                        Toast.LENGTH_SHORT).show();
-            }
-        });
+        forgotPasswordLink.setOnClickListener(v -> Toast.makeText(AutenticacaoActivity.this,
+                "Funcionalidade em desenvolvimento",
+                Toast.LENGTH_SHORT).show());
+
+        googleButton.setOnClickListener(v -> signInWithGoogle());
+
+        facebookButton.setOnClickListener(v -> Toast.makeText(AutenticacaoActivity.this,
+                "Funcionalidade em desenvolvimento",
+                Toast.LENGTH_SHORT).show());
     }
 
     private void configurarGoogleSignIn() {
@@ -142,18 +121,14 @@ public class AutenticacaoActivity extends AppCompatActivity {
     private void firebaseAuthWithGoogle(String idToken) {
         AuthCredential credential = GoogleAuthProvider.getCredential(idToken, null);
         autenticacao.signInWithCredential(credential)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            FirebaseUser user = autenticacao.getCurrentUser();
-//                            UsuarioFirebase.atualizarTipoUsuario("U");
-                            abrirTelaPrincipal("U");
-                        } else {
-                            Toast.makeText(AutenticacaoActivity.this,
-                                    "Erro ao autenticar com Google: " + task.getException().getMessage(),
-                                    Toast.LENGTH_SHORT).show();
-                        }
+                .addOnCompleteListener(this, task -> {
+                    if (task.isSuccessful()) {
+//                        FirebaseUser user = autenticacao.getCurrentUser();
+                        abrirTelaPrincipal("U");
+                    } else {
+                        Toast.makeText(AutenticacaoActivity.this,
+                                "Erro ao autenticar com Google: " + Objects.requireNonNull(task.getException()).getMessage(),
+                                Toast.LENGTH_SHORT).show();
                     }
                 });
     }
@@ -161,28 +136,25 @@ public class AutenticacaoActivity extends AppCompatActivity {
     private void autenticarUsuario(String email, String senha) {
         autenticacao.signInWithEmailAndPassword(
                 email, senha
-        ).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                if (task.isSuccessful()) {
-                    Toast.makeText(AutenticacaoActivity.this,
-                            "Logado com sucesso",
-                            Toast.LENGTH_SHORT).show();
-                    String tipoUsuario = task.getResult().getUser().getDisplayName();
-                    abrirTelaPrincipal(tipoUsuario);
-                } else {
-                    String erroExcecao = "";
-                    try {
-                        throw task.getException();
-                    } catch (FirebaseAuthInvalidCredentialsException e) {
-                        erroExcecao = "E-mail ou senha inválidos";
-                    } catch (Exception e) {
-                        erroExcecao = "Erro ao fazer login: " + e.getMessage();
-                    }
-                    Toast.makeText(AutenticacaoActivity.this,
-                            "Erro: " + erroExcecao,
-                            Toast.LENGTH_SHORT).show();
+        ).addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                Toast.makeText(AutenticacaoActivity.this,
+                        "Logado com sucesso",
+                        Toast.LENGTH_SHORT).show();
+                String tipoUsuario = Objects.requireNonNull(task.getResult().getUser()).getDisplayName();
+                abrirTelaPrincipal(tipoUsuario);
+            } else {
+                String erroExcecao;
+                try {
+                    throw Objects.requireNonNull(task.getException());
+                } catch (FirebaseAuthInvalidCredentialsException e) {
+                    erroExcecao = "E-mail ou senha inválidos";
+                } catch (Exception e) {
+                    erroExcecao = "Erro ao fazer login: " + e.getMessage();
                 }
+                Toast.makeText(AutenticacaoActivity.this,
+                        "Erro: " + erroExcecao,
+                        Toast.LENGTH_SHORT).show();
             }
         });
     }
