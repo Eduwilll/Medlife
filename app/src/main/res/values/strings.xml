@@ -29,4 +29,22 @@
     <string name="default_web_client_id">727714709876-2hc54lir19914kb8qft75jkn4eom76jt.apps.googleusercontent.com</string>
     <string name="bem_vindo_a">Bem-vindo(a)!</string>
     <string name="home_screen_content">Home Screen Content</string>
+    <string name="cidade">Cidade</string>
+    <string name="bairro">Bairro</string>
+    <string name="estado">Estado</string>
+    <string name="logradouro">Logradouro</string>
+    <string name="cep">CEP</string>
+    <string name="meus_endere_os">Meus Endereços</string>
+    <string name="complemento">Complemento</string>
+    <string name="adicionar_endere_o">Adicionar Endereço</string>
+    <string name="nenhum_endere_o_cadastrado">Nenhum endereço cadastrado</string>
+    <string name="n_mero">Número</string>
+    <string name="pedidos">Pedidos</string>
+    <string name="meus_dados">Meus dados</string>
+    <string name="enderecos">Endereços</string>
+    <string name="carteira">Carteira</string>
+    <string name="cupons">Cupons</string>
+    <string name="notificacoes">Notificações</string>
+    <string name="ajuda">Ajuda</string>
+    <string name="sobre">Sobre</string>
 </resources>

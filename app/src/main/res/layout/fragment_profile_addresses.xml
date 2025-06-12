@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:text="Meus Endereços"
+        android:text="@string/meus_endere_os"
         android:textColor="#181725"
         android:textSize="24sp"
         android:fontFamily="@font/gilroybold"
@@ -38,7 +38,8 @@
                 android:id="@+id/editCep"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="CEP"
+                android:autofillHints=""
+                android:hint="@string/cep"
                 android:inputType="number"
                 android:background="@android:drawable/edit_text"
                 android:padding="10dp" />
@@ -48,7 +49,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:hint="Logradouro"
+                android:autofillHints=""
+                android:hint="@string/logradouro"
                 android:inputType="text"
                 android:background="@android:drawable/edit_text"
                 android:padding="10dp" />
@@ -58,7 +60,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:hint="Número"
+                android:autofillHints=""
+                android:hint="@string/n_mero"
                 android:inputType="number"
                 android:background="@android:drawable/edit_text"
                 android:padding="10dp" />
@@ -68,7 +71,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:hint="Complemento"
+                android:autofillHints=""
+                android:hint="@string/complemento"
                 android:inputType="text"
                 android:background="@android:drawable/edit_text"
                 android:padding="10dp" />
@@ -78,7 +82,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:hint="Bairro"
+                android:autofillHints=""
+                android:hint="@string/bairro"
                 android:inputType="text"
                 android:background="@android:drawable/edit_text"
                 android:padding="10dp" />
@@ -88,7 +93,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:hint="Cidade"
+                android:autofillHints=""
+                android:hint="@string/cidade"
                 android:inputType="text"
                 android:background="@android:drawable/edit_text"
                 android:padding="10dp" />
@@ -98,7 +104,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:hint="Estado"
+                android:autofillHints=""
+                android:hint="@string/estado"
                 android:inputType="text"
                 android:background="@android:drawable/edit_text"
                 android:padding="10dp" />
@@ -108,11 +115,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
-                android:text="Adicionar Endereço"
-                android:textColor="#FFFFFF"
-                android:textSize="16sp"
+                android:background="@drawable/button_primary_bg"
                 android:fontFamily="@font/gilroysemibold"
-                android:background="@drawable/button_primary_bg" />
+                android:text="@string/adicionar_endere_o"
+                android:textColor="#FFFFFF"
+                android:textSize="16sp" />
 
         </LinearLayout>
     </ScrollView>
@@ -132,7 +139,7 @@
         android:id="@+id/textEmpty"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Nenhum endereço cadastrado"
+        android:text="@string/nenhum_endere_o_cadastrado"
         android:textColor="#7C7C7C"
         android:textSize="16sp"
         android:fontFamily="@font/gilroyregular"
