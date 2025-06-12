@@ -122,7 +122,7 @@ public class ProfileFragment extends Fragment {
 
     private void replaceFragment(Fragment fragment) {
         FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
-        transaction.replace(R.id.frameLayout, fragment);
+        transaction.replace(R.id.contentFrame, fragment);
         transaction.addToBackStack(null);
         transaction.commit();
     }
