@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F5F5F5">
+    >
 
     <TextView
         android:id="@+id/textTitle"
@@ -12,7 +12,6 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:text="@string/meus_endere_os"
-        android:textColor="#181725"
         android:textSize="24sp"
         android:fontFamily="@font/gilroybold"
         app:layout_constraintStart_toStartOf="parent"
@@ -32,7 +31,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:padding="16dp"
-            android:background="#FFFFFF">
+            >
 
             <EditText
                 android:id="@+id/editCep"
@@ -41,7 +40,6 @@
                 android:autofillHints=""
                 android:hint="@string/cep"
                 android:inputType="number"
-                android:background="@android:drawable/edit_text"
                 android:padding="10dp" />
 
             <EditText
@@ -52,7 +50,6 @@
                 android:autofillHints=""
                 android:hint="@string/logradouro"
                 android:inputType="text"
-                android:background="@android:drawable/edit_text"
                 android:padding="10dp" />
 
             <EditText
@@ -63,7 +60,6 @@
                 android:autofillHints=""
                 android:hint="@string/n_mero"
                 android:inputType="number"
-                android:background="@android:drawable/edit_text"
                 android:padding="10dp" />
 
             <EditText
@@ -74,7 +70,6 @@
                 android:autofillHints=""
                 android:hint="@string/complemento"
                 android:inputType="text"
-                android:background="@android:drawable/edit_text"
                 android:padding="10dp" />
 
             <EditText
@@ -85,7 +80,6 @@
                 android:autofillHints=""
                 android:hint="@string/bairro"
                 android:inputType="text"
-                android:background="@android:drawable/edit_text"
                 android:padding="10dp" />
 
             <EditText
@@ -96,7 +90,6 @@
                 android:autofillHints=""
                 android:hint="@string/cidade"
                 android:inputType="text"
-                android:background="@android:drawable/edit_text"
                 android:padding="10dp" />
 
             <EditText
@@ -107,7 +100,6 @@
                 android:autofillHints=""
                 android:hint="@string/estado"
                 android:inputType="text"
-                android:background="@android:drawable/edit_text"
                 android:padding="10dp" />
 
             <Button
@@ -118,7 +110,6 @@
                 android:background="@drawable/button_primary_bg"
                 android:fontFamily="@font/gilroysemibold"
                 android:text="@string/adicionar_endere_o"
-                android:textColor="#FFFFFF"
                 android:textSize="16sp" />
 
         </LinearLayout>
@@ -131,7 +122,7 @@
         android:layout_marginTop="16dp"
         android:clipToPadding="false"
         android:padding="8dp"
-        android:background="#FFFFFF"
+
         app:layout_constraintTop_toBottomOf="@id/scrollView"
         app:layout_constraintBottom_toBottomOf="parent" />
 
@@ -140,7 +131,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/nenhum_endere_o_cadastrado"
-        android:textColor="#7C7C7C"
         android:textSize="16sp"
         android:fontFamily="@font/gilroyregular"
         android:visibility="gone"

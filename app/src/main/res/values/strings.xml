@@ -47,4 +47,8 @@
     <string name="notificacoes">Notificações</string>
     <string name="ajuda">Ajuda</string>
     <string name="sobre">Sobre</string>
+    <string name="carrinho_vazio">Seu carrinho está vazio</string>
+    <string name="adicione_produtos_ao_carrinho">Adicione produtos ao seu carrinho</string>
+    <string name="total">Total</string>
+    <string name="finalizar_compra">Finalizar Compra</string>
 </resources>

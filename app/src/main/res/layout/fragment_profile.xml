@@ -3,9 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F5F5F5">
+    android:background="@android:color/white">
 
-    <!-- Profile Image -->
+
+<!-- Profile Image -->
     <ImageView
         android:id="@+id/imageProfile"
         android:layout_width="87dp"
@@ -363,7 +364,7 @@
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:src="@drawable/ic_about"
-                android:tint="#181725"/>
+                app:tint="#181725" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -395,6 +396,8 @@
         android:layout_height="67dp"
         android:layout_marginBottom="16dp"
         android:text="@string/sair"
+        app:icon="@drawable/baseline_login_24"
+        app:iconTint="#1E56A0"
         android:textColor="#1E56A0"
         android:textSize="18sp"
         android:fontFamily="@font/gilroysemibold"

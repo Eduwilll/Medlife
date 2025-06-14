@@ -1,25 +1,44 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.Medlife" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+    <style name="Theme.Medlife" parent="Theme.MaterialComponents.Light.NoActionBar">
         <!-- Primary brand color. -->
-<!--        <item name="colorPrimary">@color/color1</item>-->
-<!--        <item name="colorPrimaryVariant">@color/color2</item>-->
-        <item name="colorOnPrimary">@color/white</item>
-        <!-- Secondary brand color. -->
-<!--        <item name="colorSecondary">@color/color3</item>-->
-<!--        <item name="colorSecondaryVariant">@color/color4</item>-->
-        <item name="colorOnSecondary">@color/googleLogin</item>
-        <!-- Status bar color. -->
-<!--        <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>-->
-        <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/blue_500</item>
         <item name="colorPrimaryVariant">@color/blue_700</item>
-        <item name="android:statusBarColor">@android:color/white</item>
+        <item name="colorOnPrimary">@color/white</item>
+        
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/blue_500</item>
+        <item name="colorSecondaryVariant">@color/blue_700</item>
+        <item name="colorOnSecondary">@color/white</item>
+        
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor">@color/white</item>
         <item name="android:windowLightStatusBar">true</item>
+
+        <!-- Background colors -->
+        <item name="android:colorBackground">@color/white</item>
+        <item name="colorSurface">@color/white</item>
+        <item name="colorOnSurface">@color/blue_900</item>
+
+        <!-- Text appearances -->
+        <item name="textAppearanceHeadline1">@style/TextAppearance.Medlife.Headline1</item>
+        <item name="textAppearanceHeadline2">@style/TextAppearance.Medlife.Headline2</item>
+        <item name="textAppearanceBody1">@style/TextAppearance.Medlife.Body1</item>
+        <item name="textAppearanceBody2">@style/TextAppearance.Medlife.Body2</item>
+
+        <!-- Button styles -->
+        <item name="materialButtonStyle">@style/Widget.Medlife.Button</item>
+        <item name="materialButtonOutlinedStyle">@style/Widget.Medlife.Button.OutlinedButton</item>
 
         <!-- TextInputLayout styling -->
         <item name="boxStrokeColor">@color/blue_500</item>
         <item name="hintTextColor">@color/blue_500</item>
         <item name="android:textColorHint">@color/blue_500</item>
+    </style>
+
+    <!-- NoActionBar theme variant -->
+    <style name="Theme.Medlife.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
     </style>
 </resources>
