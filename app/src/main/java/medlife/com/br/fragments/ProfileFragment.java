@@ -18,6 +18,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import medlife.com.br.R;
 import medlife.com.br.activity.AutenticacaoActivity;
 import medlife.com.br.helper.ConfiguracaoFirebase;
+import medlife.com.br.helper.UsuarioFirebase;
 import medlife.com.br.model.Usuario;
 import medlife.com.br.fragments.profile.*;
 
@@ -28,7 +29,8 @@ public class ProfileFragment extends Fragment {
     private View menuPedidos, menuMeusDados, menuEnderecos, menuCarteira, 
                 menuCupons, menuNotificacoes, menuAjuda, menuSobre;
     private FirebaseFirestore db;
-    private Usuario usuarioAtual;
+    private FirebaseUser usuarioAtual;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -56,35 +58,18 @@ public class ProfileFragment extends Fragment {
         setupClickListeners();
 
         // Load user info
-        loadUserInfo();
+        // Get current user and update welcome message
+        usuarioAtual = UsuarioFirebase.getUsuarioAtual();
+
+        if (usuarioAtual != null && usuarioAtual.getDisplayName() != null) {
+            String nomeUsuario = usuarioAtual.getDisplayName();
+            textName.setText(usuarioAtual.getDisplayName());
+            textEmail.setText(usuarioAtual.getEmail());
+        }
 
         return view;
     }
 
-    private void loadUserInfo() {
-        FirebaseUser user = ConfiguracaoFirebase.getFirebaseAutenticacao().getCurrentUser();
-        if (user != null) {
-            db.collection("usuarios")
-                    .document(user.getUid())
-                    .get()
-                    .addOnCompleteListener(task -> {
-                        if (task.isSuccessful()) {
-                            DocumentSnapshot document = task.getResult();
-                            if (document.exists()) {
-                                usuarioAtual = document.toObject(Usuario.class);
-                                if (usuarioAtual != null) {
-                                    textName.setText(usuarioAtual.getNome());
-                                    textEmail.setText(usuarioAtual.getEmail());
-                                }
-                            }
-                        } else {
-                            Toast.makeText(getContext(),
-                                    "Erro ao carregar dados do usuário: " + task.getException().getMessage(),
-                                    Toast.LENGTH_SHORT).show();
-                        }
-                    });
-        }
-    }
 
     private void setupClickListeners() {
         menuPedidos.setOnClickListener(v -> {

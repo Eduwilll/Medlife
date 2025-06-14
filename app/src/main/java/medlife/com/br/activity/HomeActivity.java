@@ -10,14 +10,13 @@ import medlife.com.br.fragments.*;
 public class HomeActivity extends AppCompatActivity {
 
     private BottomNavigationView bottomNavigationView;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         
         setupBottomNavigation();
-        
+
         // Set default fragment
         if (savedInstanceState == null) {
             loadFragment(new HomeFragment());
