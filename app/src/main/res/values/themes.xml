@@ -2,23 +2,23 @@
     <!-- Base application theme. -->
     <style name="Theme.Medlife" parent="Theme.MaterialComponents.Light.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/blue_500</item>
+        <item name="colorPrimary">@color/social_button_facebook</item>
         <item name="colorPrimaryVariant">@color/blue_700</item>
         <item name="colorOnPrimary">@color/white</item>
         
         <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/blue_500</item>
+        <item name="colorSecondary">@color/medlife_blue_login</item>
         <item name="colorSecondaryVariant">@color/blue_700</item>
         <item name="colorOnSecondary">@color/white</item>
         
         <!-- Status bar color. -->
-        <item name="android:statusBarColor">@color/white</item>
+        <item name="android:statusBarColor">@color/background_light</item>
         <item name="android:windowLightStatusBar">true</item>
 
         <!-- Background colors -->
-        <item name="android:colorBackground">@color/white</item>
+        <item name="android:colorBackground">@color/background_light</item>
         <item name="colorSurface">@color/white</item>
-        <item name="colorOnSurface">@color/blue_900</item>
+        <item name="colorOnSurface">@color/text_primary_dark</item>
 
         <!-- Text appearances -->
         <item name="textAppearanceHeadline1">@style/TextAppearance.Medlife.Headline1</item>
@@ -31,9 +31,10 @@
         <item name="materialButtonOutlinedStyle">@style/Widget.Medlife.Button.OutlinedButton</item>
 
         <!-- TextInputLayout styling -->
-        <item name="boxStrokeColor">@color/blue_500</item>
-        <item name="hintTextColor">@color/blue_500</item>
-        <item name="android:textColorHint">@color/blue_500</item>
+        <item name="textInputStyle">@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense</item>
+        <item name="boxStrokeColor">@color/input_border_color</item>
+        <item name="hintTextColor">@color/text_secondary_dark</item>
+        <item name="android:textColorHint">@color/text_secondary_dark</item>
     </style>
 
     <!-- NoActionBar theme variant -->

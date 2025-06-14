@@ -6,7 +6,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,6 +25,7 @@ import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.Objects;
 
@@ -35,8 +35,8 @@ import medlife.com.br.helper.UsuarioFirebase;
 
 public class AutenticacaoActivity extends AppCompatActivity {
 
+    private TextInputEditText campoEmail, campoSenha;
     private MaterialButton buttonAcessar;
-    private EditText campoEmail, campoSenha;
     private TextView registerLink, forgotPasswordLink;
     private MaterialButton googleButton, facebookButton;
     private FirebaseAuth autenticacao;

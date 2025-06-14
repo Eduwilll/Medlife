@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,6 +22,7 @@ import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -36,7 +36,7 @@ import medlife.com.br.model.Usuario;
 
 public class RegisterActivity extends AppCompatActivity {
 
-    private EditText campoNome, campoEmail, campoSenha;
+    private TextInputEditText campoNome, campoEmail, campoSenha;
     private CheckBox checkboxConsent;
     private MaterialButton buttonRegister;
     private TextView textLoginLink;
