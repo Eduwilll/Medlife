@@ -1,7 +1,13 @@
 package medlife.com.br.activity;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.TextPaint;
+import android.text.method.LinkMovementMethod;
+import android.text.style.ClickableSpan;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -10,6 +16,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -87,12 +94,37 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
 
-        textLoginLink.setOnClickListener(new View.OnClickListener() {
+        setupLoginLink();
+    }
+
+    private void setupLoginLink() {
+        String fullText = getString(R.string.j_possui_conta);
+        SpannableString spannableString = new SpannableString(fullText);
+
+        ClickableSpan clickableSpan = new ClickableSpan() {
             @Override
-            public void onClick(View v) {
+            public void onClick(@NonNull View widget) {
                 finish(); // Close RegisterActivity and go back to AutenticacaoActivity (Login)
             }
-        });
+
+            @Override
+            public void updateDrawState(@NonNull TextPaint ds) {
+                super.updateDrawState(ds);
+                ds.setUnderlineText(false);
+                ds.setColor(ContextCompat.getColor(RegisterActivity.this, R.color.link_blue));
+            }
+        };
+
+        // Find the start and end index of the word "Entrar" in the string resource.
+        // Assuming "j_possui_conta" is "Já possui conta? Entrar"
+        int startIndex = fullText.indexOf("Entrar");
+        if (startIndex != -1) {
+            int endIndex = startIndex + "Entrar".length();
+            spannableString.setSpan(clickableSpan, startIndex, endIndex, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        }
+
+        textLoginLink.setText(spannableString);
+        textLoginLink.setMovementMethod(LinkMovementMethod.getInstance());
     }
 
     private void createUser(final String nome, String email, String senha) {

@@ -52,13 +52,9 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
-            app:boxBackgroundMode="outline"
-            app:boxCornerRadiusBottomEnd="4dp"
-            app:boxCornerRadiusBottomStart="4dp"
-            app:boxCornerRadiusTopEnd="4dp"
-            app:boxCornerRadiusTopStart="4dp"
-            app:boxStrokeColor="@color/input_border_color"
-            app:hintEnabled="false"
+            app:hintEnabled="true"
+            app:hintTextAppearance="@style/TextAppearance.Medlife.InputHint"
+            app:boxBackgroundMode="none"
             app:layout_constraintTop_toBottomOf="@id/taglineText"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent">
@@ -67,36 +63,36 @@
                 android:id="@+id/editCadastroEmail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:hint="@string/email"
                 android:inputType="textEmailAddress"
-                android:textAppearance="@style/TextAppearance.Medlife.Body1"/>
+                android:background="@null"
+                android:paddingTop="12dp"
+                android:paddingBottom="12dp"
+                android:textAppearance="@style/TextAppearance.Medlife.Body1"
+                android:textColor="@color/text_primary_dark"/>
         </com.google.android.material.textfield.TextInputLayout>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/email"
-            android:textAppearance="@style/TextAppearance.Medlife.InputHint"
-            app:layout_constraintStart_toStartOf="@id/emailInputLayout"
+        <View
+            android:id="@+id/emailDivider"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:background="@color/input_border_color"
             app:layout_constraintTop_toBottomOf="@id/emailInputLayout"
-            android:layout_marginStart="4dp"
-            android:layout_marginTop="4dp"/>
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
 
         <!-- Password Input -->
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/passwordInputLayout"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            app:boxBackgroundMode="outline"
-            app:boxCornerRadiusBottomEnd="4dp"
-            app:boxCornerRadiusBottomStart="4dp"
-            app:boxCornerRadiusTopEnd="4dp"
-            app:boxCornerRadiusTopStart="4dp"
-            app:boxStrokeColor="@color/input_border_color"
-            app:hintEnabled="false"
+            android:layout_marginTop="26dp"
+            app:hintEnabled="true"
+            app:hintTextAppearance="@style/TextAppearance.Medlife.InputHint"
+            app:boxBackgroundMode="none"
             app:passwordToggleEnabled="true"
             app:passwordToggleTint="@color/text_secondary_dark"
-            app:layout_constraintTop_toBottomOf="@id/emailInputLayout"
+            app:layout_constraintTop_toBottomOf="@id/emailDivider"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent">
 
@@ -104,27 +100,31 @@
                 android:id="@+id/editCadastroSenha"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:hint="@string/senha"
                 android:inputType="textPassword"
-                android:textAppearance="@style/TextAppearance.Medlife.Body1"/>
+                android:background="@null"
+                android:paddingTop="12dp"
+                android:paddingBottom="12dp"
+                android:textAppearance="@style/TextAppearance.Medlife.Body1"
+                android:textColor="@color/text_primary_dark"/>
         </com.google.android.material.textfield.TextInputLayout>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/senha"
-            android:textAppearance="@style/TextAppearance.Medlife.InputHint"
-            app:layout_constraintStart_toStartOf="@id/passwordInputLayout"
+        <View
+            android:id="@+id/passwordDivider"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:background="@color/input_border_color"
             app:layout_constraintTop_toBottomOf="@id/passwordInputLayout"
-            android:layout_marginStart="4dp"
-            android:layout_marginTop="4dp"/>
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
 
         <LinearLayout
             android:id="@+id/linksLayout"
             android:layout_width="0dp"
+            android:layout_marginTop="26dp"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_marginTop="8dp"
-            app:layout_constraintTop_toBottomOf="@id/passwordInputLayout"
+            app:layout_constraintTop_toBottomOf="@id/passwordDivider"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent">
 
@@ -134,28 +134,30 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:text="@string/esqueceu_senha"
-                android:textAppearance="@style/TextAppearance.Medlife.Link" />
+                android:textAppearance="@style/TextAppearance.Medlife.Link"/>
 
             <TextView
                 android:id="@+id/registerLink"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:text="@string/registrar_se"
-                android:textAppearance="@style/TextAppearance.Medlife.Link" />
+                android:textAppearance="@style/TextAppearance.Medlife.Link"/>
         </LinearLayout>
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/buttonAcesso"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="80dp"
             android:text="@string/entrar_com_medlife"
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="29dp"
             android:backgroundTint="@color/medlife_blue_login"
             app:icon="@drawable/baseline_login_24"
             style="@style/Widget.Medlife.Button.Social"
+            app:cornerRadius="19dp"
             app:layout_constraintTop_toBottomOf="@id/linksLayout"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"/>
 
         <TextView
             android:id="@+id/socialDivider"
@@ -171,30 +173,34 @@
         <com.google.android.material.button.MaterialButton
             android:id="@+id/googleButton"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="80dp"
             android:text="@string/continuar_com_google"
             android:layout_marginTop="16dp"
             app:icon="@drawable/icons8_google_36"
             style="@style/Widget.Medlife.Button.Social"
             android:backgroundTint="@color/social_button_google"
+            app:cornerRadius="19dp"
             app:layout_constraintTop_toBottomOf="@id/socialDivider"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"/>
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/facebookButton"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="80dp"
             android:text="@string/continuar_com_facebook"
             android:layout_marginTop="16dp"
             app:icon="@drawable/icons8_facebook_36"
             app:iconTint="@null"
             style="@style/Widget.Medlife.Button.Social"
             android:backgroundTint="@color/social_button_facebook"
+            app:cornerRadius="19dp"
             app:layout_constraintTop_toBottomOf="@id/googleButton"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent" />
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHorizontal_bias="0.5" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
