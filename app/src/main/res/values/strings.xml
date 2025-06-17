@@ -51,4 +51,8 @@
     <string name="adicione_produtos_ao_carrinho">Adicione produtos ao seu carrinho</string>
     <string name="total">Total</string>
     <string name="finalizar_compra">Finalizar Compra</string>
+    <string name="editar_endere_o">Editar Endereço</string>
+    <string name="excluir_endere_o">Excluir Endereço</string>
+    <string name="ocultar_formul_rio">Ocultar Formulário</string>
+    <string name="adicionar_novo_endere_o">Adicionar Novo Endereço</string>
 </resources>
