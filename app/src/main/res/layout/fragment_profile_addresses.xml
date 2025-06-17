@@ -145,6 +145,17 @@
                 android:text="@string/adicionar_endere_o"
                 android:textSize="16sp" />
 
+            <Button
+                android:id="@+id/buttonSaveChanges"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/button_primary_bg"
+                android:fontFamily="@font/gilroysemibold"
+                android:text="@string/salvar_altera_es"
+                android:textSize="16sp"
+                android:visibility="gone"/>
+
         </LinearLayout>
     </ScrollView>
 

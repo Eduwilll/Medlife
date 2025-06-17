@@ -30,6 +30,7 @@ public class ProfileAddressesFragment extends Fragment {
     private ScrollView scrollViewAddAddress;
     private TextView textEmpty;
     private EditText editCep, editLogradouro, editNumero, editComplemento, editBairro, editCidade, editEstado;
+    private Button buttonSaveChanges;
     private FirebaseFirestore db;
     private Usuario usuarioAtual;
     private AddressAdapter addressAdapter;
@@ -54,6 +55,7 @@ public class ProfileAddressesFragment extends Fragment {
         editBairro = view.findViewById(R.id.editBairro);
         editCidade = view.findViewById(R.id.editCidade);
         editEstado = view.findViewById(R.id.editEstado);
+        buttonSaveChanges = view.findViewById(R.id.buttonSaveChanges);
 
         // Setup RecyclerView
         recyclerAddresses.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -65,15 +67,20 @@ public class ProfileAddressesFragment extends Fragment {
 
         // Set add address button click listener
         buttonAddAddress.setOnClickListener(v -> addNewAddress());
+        buttonSaveChanges.setOnClickListener(v -> saveEditedAddress());
 
         // Set toggle add address form button click listener
         buttonToggleAddAddress.setOnClickListener(v -> {
             if (scrollViewAddAddress.getVisibility() == View.GONE) {
                 scrollViewAddAddress.setVisibility(View.VISIBLE);
                 buttonToggleAddAddress.setText(R.string.ocultar_formul_rio);
+                buttonAddAddress.setVisibility(View.VISIBLE);
+                buttonSaveChanges.setVisibility(View.GONE);
             } else {
                 scrollViewAddAddress.setVisibility(View.GONE);
                 buttonToggleAddAddress.setText(R.string.adicionar_novo_endere_o);
+                buttonAddAddress.setVisibility(View.VISIBLE);
+                buttonSaveChanges.setVisibility(View.GONE);
                 clearAddressFields();
             }
         });
@@ -110,6 +117,7 @@ public class ProfileAddressesFragment extends Fragment {
     }
 
     private void addNewAddress() {
+        // Basic validation for required fields
         if (usuarioAtual != null) {
             Map<String, Object> novoEndereco = new HashMap<>();
             novoEndereco.put("cep", editCep.getText().toString());
@@ -119,6 +127,12 @@ public class ProfileAddressesFragment extends Fragment {
             novoEndereco.put("bairro", editBairro.getText().toString());
             novoEndereco.put("cidade", editCidade.getText().toString());
             novoEndereco.put("estado", editEstado.getText().toString());
+
+            // Validate required fields (example: CEP and Logradouro)
+            if (editCep.getText().toString().isEmpty() || editLogradouro.getText().toString().isEmpty()) {
+                Toast.makeText(getContext(), "CEP e Logradouro são obrigatórios.", Toast.LENGTH_SHORT).show();
+                return;
+            }
 
             if (usuarioAtual.getEndereco() == null) {
                 usuarioAtual.setEndereco(new ArrayList<>());
@@ -134,12 +148,51 @@ public class ProfileAddressesFragment extends Fragment {
                         loadUserAddresses(); // Reload addresses to update UI
                         scrollViewAddAddress.setVisibility(View.GONE); // Hide form after adding
                         buttonToggleAddAddress.setText(R.string.adicionar_novo_endere_o);
+                        buttonAddAddress.setVisibility(View.VISIBLE);
+                        buttonSaveChanges.setVisibility(View.GONE);
                     })
                     .addOnFailureListener(e -> {
                         Toast.makeText(getContext(), "Erro ao adicionar endereço: " + e.getMessage(), Toast.LENGTH_SHORT).show();
                     });
         } else {
             Toast.makeText(getContext(), "Erro: Usuário não autenticado.", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void saveEditedAddress() {
+        int editingPosition = (Integer) buttonSaveChanges.getTag(); // Retrieve the position of the address being edited
+        if (usuarioAtual != null && usuarioAtual.getEndereco() != null && editingPosition >= 0 && editingPosition < usuarioAtual.getEndereco().size()) {
+            Map<String, Object> editedAddress = usuarioAtual.getEndereco().get(editingPosition);
+
+            editedAddress.put("cep", editCep.getText().toString());
+            editedAddress.put("logradouro", editLogradouro.getText().toString());
+            editedAddress.put("numero", editNumero.getText().toString());
+            editedAddress.put("complemento", editComplemento.getText().toString());
+            editedAddress.put("bairro", editBairro.getText().toString());
+            editedAddress.put("cidade", editCidade.getText().toString());
+            editedAddress.put("estado", editEstado.getText().toString());
+
+            // Validate required fields
+            if (editCep.getText().toString().isEmpty() || editLogradouro.getText().toString().isEmpty()) {
+                Toast.makeText(getContext(), "CEP e Logradouro são obrigatórios.", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            db.collection("usuarios")
+                    .document(usuarioAtual.getUid())
+                    .set(usuarioAtual)
+                    .addOnSuccessListener(aVoid -> {
+                        Toast.makeText(getContext(), "Endereço atualizado com sucesso!", Toast.LENGTH_SHORT).show();
+                        clearAddressFields();
+                        loadUserAddresses();
+                        scrollViewAddAddress.setVisibility(View.GONE);
+                        buttonToggleAddAddress.setText(R.string.adicionar_novo_endere_o);
+                        buttonAddAddress.setVisibility(View.VISIBLE);
+                        buttonSaveChanges.setVisibility(View.GONE);
+                    })
+                    .addOnFailureListener(e -> Toast.makeText(getContext(), "Erro ao atualizar endereço: " + e.getMessage(), Toast.LENGTH_SHORT).show());
+        } else {
+            Toast.makeText(getContext(), "Erro ao salvar alterações. Endereço não encontrado ou usuário inválido.", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -229,9 +282,23 @@ public class ProfileAddressesFragment extends Fragment {
     }
 
     private void editAddress(Map<String, Object> address, int position) {
-        Toast.makeText(getContext(), "Editar endereço: " + address.get("logradouro"), Toast.LENGTH_SHORT).show();
-        // TODO: Implement navigation to an edit form, pre-filling data
+        // Show the form
+        scrollViewAddAddress.setVisibility(View.VISIBLE);
+        buttonToggleAddAddress.setText(R.string.ocultar_formul_rio);
 
+        // Pre-fill the form with address data
+        editCep.setText((String) address.get("cep"));
+        editLogradouro.setText((String) address.get("logradouro"));
+        editNumero.setText((String) address.get("numero"));
+        editComplemento.setText((String) address.get("complemento"));
+        editBairro.setText((String) address.get("bairro"));
+        editCidade.setText((String) address.get("cidade"));
+        editEstado.setText((String) address.get("estado"));
+
+        // Change button visibility
+        buttonAddAddress.setVisibility(View.GONE);
+        buttonSaveChanges.setVisibility(View.VISIBLE);
+        buttonSaveChanges.setTag(position); // Store the position of the address being edited
     }
 
     private void deleteAddress(Map<String, Object> address, int position) {
