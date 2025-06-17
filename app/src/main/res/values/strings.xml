@@ -56,4 +56,11 @@
     <string name="ocultar_formul_rio">Ocultar Formulário</string>
     <string name="adicionar_novo_endere_o">Adicionar Novo Endereço</string>
     <string name="salvar_altera_es">Salvar Alterações</string>
+    <string name="telefone">Telefone</string>
+    <string name="data_de_nascimento">Data de Nascimento</string>
+    <string name="cpf">CPF</string>
+    <string name="genero">Gênero</string>
+    <string name="salvar">Salvar</string>
+    <string name="editar_dados">Editar Dados</string>
+    <string name="outro_genero_opcional">Outro Gênero (Opcional)</string>
 </resources>

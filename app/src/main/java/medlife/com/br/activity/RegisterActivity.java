@@ -150,7 +150,7 @@ public class RegisterActivity extends AppCompatActivity {
                                             usuario.setUid(user.getUid());
                                             usuario.setNome(nome);
                                             usuario.setEmail(email);
-                                            usuario.setTelefone(new ArrayList<>());
+                                            usuario.setPhoneNumber("");
                                             usuario.setEndereco(new ArrayList<>());
 
                                             db.collection("usuarios")

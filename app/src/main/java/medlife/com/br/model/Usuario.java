@@ -12,7 +12,10 @@ public class Usuario {
     private String nome;
     private String email;
     private String genero;
-    private List<String> telefone;
+    private String otherGender;
+    private String phoneNumber;
+    private String dateOfBirth;
+    private String cpf;
     private List<Map<String, Object>> endereco;
     @ServerTimestamp
     private Timestamp criadoEm;
@@ -60,12 +63,28 @@ public class Usuario {
         this.genero = genero;
     }
 
-    public List<String> getTelefone() {
-        return telefone;
+    public String getPhoneNumber() {
+        return phoneNumber;
     }
 
-    public void setTelefone(List<String> telefone) {
-        this.telefone = telefone;
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public String getDateOfBirth() {
+        return dateOfBirth;
+    }
+
+    public void setDateOfBirth(String dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
+    }
+
+    public String getCpf() {
+        return cpf;
+    }
+
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
     }
 
     public List<Map<String, Object>> getEndereco() {
@@ -83,4 +102,8 @@ public class Usuario {
     public void setCriadoEm(Timestamp criadoEm) {
         this.criadoEm = criadoEm;
     }
-} 
+
+    public String getOtherGender() { return otherGender; }
+
+    public void setOtherGender(String outroGenero) { this.otherGender = outroGenero; }
+}

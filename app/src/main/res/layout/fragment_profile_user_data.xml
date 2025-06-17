@@ -10,26 +10,39 @@
         android:id="@+id/textTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Meus Dados"
+        android:text="Detalhes Pessoais"
         android:textColor="#181725"
         android:textSize="24sp"
         android:fontFamily="@font/gilroybold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <ImageButton
+        android:id="@+id/buttonEditData"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:contentDescription="@string/editar_dados"
+        android:src="@drawable/ic_edit"
+        app:tint="#7C7C7C"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/textTitle"
+        app:layout_constraintBottom_toBottomOf="@id/textTitle"/>
+
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/layoutNome"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
-        android:hint="Nome completo"
+        android:hint="@string/nome_completo"
         app:layout_constraintTop_toBottomOf="@id/textTitle">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/editNome"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textPersonName" />
+            android:inputType="textPersonName"
+            android:enabled="false"/>
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -38,7 +51,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:hint="E-mail"
+        android:hint="@string/email"
         app:layout_constraintTop_toBottomOf="@id/layoutNome">
 
         <com.google.android.material.textfield.TextInputEditText
@@ -51,18 +64,94 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/layoutGenero"
+        android:id="@+id/layoutTelefone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:hint="Gênero"
+        android:hint="@string/telefone"
         app:layout_constraintTop_toBottomOf="@id/layoutEmail">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/editTelefone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="phone"
+            android:maxLength="15"
+            android:enabled="false"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/layoutDataNascimento"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:hint="@string/data_de_nascimento"
+        app:layout_constraintTop_toBottomOf="@id/layoutTelefone">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/editDataNascimento"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="date"
+            android:focusable="false"
+            android:clickable="true"
+            android:enabled="false"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/layoutCpf"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:hint="@string/cpf"
+        app:layout_constraintTop_toBottomOf="@id/layoutDataNascimento">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/editCpf"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:maxLength="11"
+            android:enabled="false"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <!-- Gender input using AutoCompleteTextView for dropdown -->
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/layoutGenero"
+        style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:hint="@string/genero"
+        app:layout_constraintTop_toBottomOf="@id/layoutCpf">
+
+        <AutoCompleteTextView
             android:id="@+id/editGenero"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="text" />
+            android:inputType="none"
+            android:enabled="false"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/layoutOutroGenero"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:hint="@string/outro_genero_opcional"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@id/layoutGenero">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/editOutroGenero"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:enabled="false"/>
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -71,11 +160,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
-        android:text="Salvar"
-        android:textColor="#FFFFFF"
-        android:textSize="16sp"
+        android:text="@string/salvar"
+        android:background="@drawable/button_primary_bg"
         android:fontFamily="@font/gilroysemibold"
-        android:background="@drawable/common_google_signin_btn_icon_dark"
-        app:layout_constraintTop_toBottomOf="@id/layoutGenero" />
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@id/layoutOutroGenero" />
 
 </androidx.constraintlayout.widget.ConstraintLayout> 
