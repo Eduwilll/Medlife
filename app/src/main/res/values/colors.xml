@@ -14,6 +14,7 @@
     <color name="social_button_google">#5383EC</color>
     <color name="social_button_facebook">#1E56A0</color>
     <color name="link_blue">#1E56A0</color>
+    <color name="medlife_transparent_logout">#F2F3F2</color>
 
     <!-- Keeping existing specific blues for potential wider use, if not explicitly consolidated -->
     <color name="blue_500">#2196F3</color>
