@@ -30,6 +30,7 @@
             android:id="@+id/textHelpContent"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:text="Como usar o MEDLIFE:\n\n1. Compra de Medicamentos\n• Faça login na sua conta\n• Selecione os medicamentos desejados\n• Envie a receita médica digitalizada\n• Escolha a farmácia parceira\n• Realize o pagamento\n\n2. Entrega\n• Escolha o endereço de entrega\n• Acompanhe o status do pedido\n• Receba seu medicamento com segurança\n\n3. Suporte\n• Dúvidas sobre medicamentos\n• Problemas com pedidos\n• Informações sobre receitas\n• Contato com farmácias\n\nPara mais informações, entre em contato com nosso suporte através do e-mail: suporte@medlife.com.br"
             android:textColor="#181725"
             android:textSize="16sp"
             android:fontFamily="@font/gilroyregular"

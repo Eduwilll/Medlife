@@ -23,7 +23,7 @@
         android:layout_width="120dp"
         android:layout_height="120dp"
         android:layout_marginTop="32dp"
-        android:src="@mipmap/ic_launcher"
+        android:src="@drawable/logo"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/textTitle" />
@@ -53,6 +53,7 @@
             android:id="@+id/textAboutContent"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:text="MEDLIFE é um marketplace especializado na venda online de medicamentos que requerem prescrição médica. Nosso objetivo é facilitar o acesso a medicamentos essenciais, garantindo segurança e conformidade com as regulamentações vigentes.\n\nAtravés da nossa plataforma, você pode:\n\n• Comprar medicamentos com receita médica\n• Consultar preços e disponibilidade\n• Receber seus medicamentos com segurança\n• Ter acesso a farmácias parceiras confiáveis\n\nComprometemo-nos com a sua saúde e bem-estar, oferecendo um serviço confiável e seguro para suas necessidades médicas."
             android:textColor="#181725"
             android:textSize="16sp"
             android:fontFamily="@font/gilroyregular"
