@@ -6,13 +6,21 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import com.google.firebase.auth.FirebaseUser;
+import java.util.ArrayList;
+import java.util.List;
 import medlife.com.br.R;
+import medlife.com.br.adapter.ProductAdapter;
+import medlife.com.br.model.Product;
 import medlife.com.br.helper.UsuarioFirebase;
 
 public class HomeFragment extends Fragment {
-    private TextView welcomeText;
-    private TextView subtitleText;
+    private TextView locationText;
+    private RecyclerView categoriesRecycler;
+    private RecyclerView bestSellingRecycler;
+    private RecyclerView exclusiveOffersRecycler;
     private FirebaseUser usuarioAtual;
 
     @Override
@@ -20,18 +28,54 @@ public class HomeFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         
         // Initialize views
-        welcomeText = view.findViewById(R.id.welcomeText);
-        subtitleText = view.findViewById(R.id.subtitleText);
-        
+        locationText = view.findViewById(R.id.locationText);
+        categoriesRecycler = view.findViewById(R.id.categoriesRecycler);
+        bestSellingRecycler = view.findViewById(R.id.bestSellingRecycler);
+        exclusiveOffersRecycler = view.findViewById(R.id.exclusiveOffersRecycler);
 
-        // Get current user and update welcome message
+        // Get current user
         usuarioAtual = UsuarioFirebase.getUsuarioAtual();
 
-        if (usuarioAtual != null && usuarioAtual.getDisplayName() != null) {
-            String nomeUsuario = usuarioAtual.getDisplayName();
-            welcomeText.setText("Bem-vindo(a), " + nomeUsuario + "!");
-        }
+        // Setup location
+        setupLocation();
+
+        // Setup RecyclerViews
+        setupCategoriesRecycler();
+        setupBestSellingRecycler();
+        setupExclusiveOffersRecycler();
         
         return view;
+    }
+
+    private void setupLocation() {
+        // TODO: Implement location detection or user's saved location
+        locationText.setText("São Paulo, Campinas");
+    }
+
+    private void setupCategoriesRecycler() {
+        // TODO: Implement categories adapter and populate data
+        // Example categories: Antibióticos, Analgésicos, Vitaminas, etc.
+    }
+
+    private void setupBestSellingRecycler() {
+        List<Product> bestSellingProducts = new ArrayList<>();
+        bestSellingProducts.add(new Product(R.drawable.mock_invegasustena, "INVEGA SUSTENNA", "100mg", "R$1794.99"));
+        bestSellingProducts.add(new Product(R.drawable.mock_nervocalm, "NERVOCALM", "250mg, 20 Comprimidos", "R$45.79"));
+        bestSellingProducts.add(new Product(R.drawable.mock_johnsonssaboneteliquido, "Sabonete Líquido Johnson's", "Hora do Sono Frasco 200 ml", "R$14.90"));
+        bestSellingProducts.add(new Product(R.drawable.mock_febreedor, "Ácido Acetilsalicílico", "100mg, 30 Comprimidos", "R$5.90"));
+        ProductAdapter adapter = new ProductAdapter(getContext(), bestSellingProducts);
+        bestSellingRecycler.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+        bestSellingRecycler.setAdapter(adapter);
+    }
+
+    private void setupExclusiveOffersRecycler() {
+        List<Product> offers = new ArrayList<>();
+        offers.add(new Product(R.drawable.mock_medicamentogenerico, "Genérico Dipirona", "500mg, 20 Comprimidos", "R$7.99"));
+        offers.add(new Product(R.drawable.mock_melagriao, "Xarope Melagrião", "120ml", "R$19.90"));
+        offers.add(new Product(R.drawable.mock_protexbaby, "Shampoo Anticaspa", "200ml", "R$22.50"));
+        offers.add(new Product(R.drawable.mock_banho, "Higiene Pessoal Kit", "Sabonete + Shampoo", "R$29.90"));
+        ProductAdapter adapter = new ProductAdapter(getContext(), offers);
+        exclusiveOffersRecycler.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+        exclusiveOffersRecycler.setAdapter(adapter);
     }
 }
