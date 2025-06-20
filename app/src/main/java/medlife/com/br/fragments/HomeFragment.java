@@ -13,12 +13,15 @@ import java.util.ArrayList;
 import java.util.List;
 import medlife.com.br.R;
 import medlife.com.br.adapter.ProductAdapter;
+import medlife.com.br.adapter.CategoryAdapter;
 import medlife.com.br.model.Product;
+import medlife.com.br.model.Category;
 import medlife.com.br.helper.UsuarioFirebase;
 
 public class HomeFragment extends Fragment {
     private TextView locationText;
     private RecyclerView categoriesRecycler;
+    private RecyclerView subcategoriesRecycler;
     private RecyclerView bestSellingRecycler;
     private RecyclerView exclusiveOffersRecycler;
     private FirebaseUser usuarioAtual;
@@ -29,6 +32,7 @@ public class HomeFragment extends Fragment {
         
         // Initialize views
         locationText = view.findViewById(R.id.locationText);
+        subcategoriesRecycler = view.findViewById(R.id.subcategoriesRecycler);
         categoriesRecycler = view.findViewById(R.id.categoriesRecycler);
         bestSellingRecycler = view.findViewById(R.id.bestSellingRecycler);
         exclusiveOffersRecycler = view.findViewById(R.id.exclusiveOffersRecycler);
@@ -41,6 +45,7 @@ public class HomeFragment extends Fragment {
 
         // Setup RecyclerViews
         setupCategoriesRecycler();
+        setupSubcategoriesRecycler();
         setupBestSellingRecycler();
         setupExclusiveOffersRecycler();
         
@@ -52,9 +57,23 @@ public class HomeFragment extends Fragment {
         locationText.setText("São Paulo, Campinas");
     }
 
+    private void setupSubcategoriesRecycler() {
+
+        List<Category> categories = new ArrayList<>();
+        categories.add(new Category(R.drawable.mock_generico, "Antibióticos"));
+        categories.add(new Category(R.drawable.mock_medicamentogenerico, "Analgésicos"));
+        categories.add(new Category(R.drawable.mock_vitaminas, "Vitaminas"));
+        categories.add(new Category(R.drawable.mock_banho, "Higiene"));
+        categories.add(new Category(R.drawable.mock_melagriao, "Xaropes"));
+        categories.add(new Category(R.drawable.mock_medicamentogenerico, "Genéricos"));
+        CategoryAdapter adapter = new CategoryAdapter(getContext(), categories);
+        subcategoriesRecycler.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+        subcategoriesRecycler.setAdapter(adapter);
+
+    }
+
     private void setupCategoriesRecycler() {
-        // TODO: Implement categories adapter and populate data
-        // Example categories: Antibióticos, Analgésicos, Vitaminas, etc.
+
     }
 
     private void setupBestSellingRecycler() {
