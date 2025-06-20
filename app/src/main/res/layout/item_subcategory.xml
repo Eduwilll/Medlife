@@ -17,12 +17,14 @@
 
     <TextView
         android:id="@+id/textSubcategory"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:fontFamily="@font/gilroybold"
         android:textColor="#181725"
         android:textSize="16sp"
-        android:gravity="center" />
+        android:gravity="center"
+        android:maxLines="2"
+        android:ellipsize="end" />
 
 </LinearLayout> 
