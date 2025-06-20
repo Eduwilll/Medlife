@@ -17,12 +17,14 @@ import medlife.com.br.model.Product;
 import androidx.recyclerview.widget.GridLayoutManager;
 import android.widget.ImageView;
 
-public class SearchFragment extends Fragment {
+public class SearchFragment extends Fragment implements FilterFragment.FilterListener {
     private EditText searchEditText;
     private RecyclerView searchResultsRecycler;
     private ProductAdapter productAdapter;
     private List<Product> allMedicaments;
     private List<Product> filteredMedicaments;
+    private List<String> selectedCategories = new ArrayList<>();
+    private List<String> selectedBrands = new ArrayList<>();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -34,14 +36,14 @@ public class SearchFragment extends Fragment {
 
         // Initialize medicaments list (copy from HomeFragment)
         allMedicaments = new ArrayList<>();
-        allMedicaments.add(new Product(R.drawable.mock_invegasustena, "INVEGA SUSTENNA", "100mg", "R$1794.99"));
-        allMedicaments.add(new Product(R.drawable.mock_nervocalm, "NERVOCALM", "250mg, 20 Comprimidos", "R$45.79"));
-        allMedicaments.add(new Product(R.drawable.mock_johnsonssaboneteliquido, "Sabonete Líquido Johnson's", "Hora do Sono Frasco 200 ml", "R$14.90"));
-        allMedicaments.add(new Product(R.drawable.mock_febreedor, "Ácido Acetilsalicílico", "100mg, 30 Comprimidos", "R$5.90"));
-        allMedicaments.add(new Product(R.drawable.mock_medicamentogenerico, "Genérico Dipirona", "500mg, 20 Comprimidos", "R$7.99"));
-        allMedicaments.add(new Product(R.drawable.mock_melagriao, "Xarope Melagrião", "120ml", "R$19.90"));
-        allMedicaments.add(new Product(R.drawable.mock_protexbaby, "Shampoo Anticaspa", "200ml", "R$22.50"));
-        allMedicaments.add(new Product(R.drawable.mock_banho, "Higiene Pessoal Kit", "Sabonete + Shampoo", "R$29.90"));
+        allMedicaments.add(new Product(R.drawable.mock_invegasustena, "INVEGA SUSTENNA", "100mg", "R$1794.99", "Antidepressivos", "PFIZER"));
+        allMedicaments.add(new Product(R.drawable.mock_nervocalm, "NERVOCALM", "250mg, 20 Comprimidos", "R$45.79", "Fitoterápico", "EMS"));
+        allMedicaments.add(new Product(R.drawable.mock_johnsonssaboneteliquido, "Sabonete Líquido Johnson's", "Hora do Sono Frasco 200 ml", "R$14.90", "Perfumes", "EUROFARMA"));
+        allMedicaments.add(new Product(R.drawable.mock_febreedor, "Ácido Acetilsalicílico", "100mg, 30 Comprimidos", "R$5.90", "Fitoterápico", "NOVATIS"));
+        allMedicaments.add(new Product(R.drawable.mock_medicamentogenerico, "Genérico Dipirona", "500mg, 20 Comprimidos", "R$7.99", "Vitaminas", "EMS"));
+        allMedicaments.add(new Product(R.drawable.mock_melagriao, "Xarope Melagrião", "120ml", "R$19.90", "Fitoterápico", "PFIZER"));
+        allMedicaments.add(new Product(R.drawable.mock_protexbaby, "Shampoo Anticaspa", "200ml", "R$22.50", "Perfumes", "EUROFARMA"));
+        allMedicaments.add(new Product(R.drawable.mock_banho, "Higiene Pessoal Kit", "Sabonete + Shampoo", "R$29.90", "Perfumes", "NOVATIS"));
         // Add more products as needed
 
         filteredMedicaments = new ArrayList<>(allMedicaments);
@@ -58,7 +60,7 @@ public class SearchFragment extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                filterMedicaments(s.toString());
+                filterMedicaments(s.toString(), selectedCategories, selectedBrands);
             }
 
             @Override
@@ -67,23 +69,32 @@ public class SearchFragment extends Fragment {
 
         filterIcon.setOnClickListener(v -> {
             FilterFragment filterFragment = new FilterFragment();
+            filterFragment.setFilterListener(this);
             filterFragment.show(getParentFragmentManager(), "FilterFragment");
         });
 
         return view;
     }
 
-    private void filterMedicaments(String query) {
+    private void filterMedicaments(String query, List<String> categories, List<String> brands) {
         filteredMedicaments.clear();
-        if (query.isEmpty()) {
-            filteredMedicaments.addAll(allMedicaments);
-        } else {
-            for (Product product : allMedicaments) {
-                if (product.getName().toLowerCase().contains(query.toLowerCase())) {
-                    filteredMedicaments.add(product);
-                }
+
+        for (Product product : allMedicaments) {
+            boolean nameMatches = query.isEmpty() || product.getName().toLowerCase().contains(query.toLowerCase());
+            boolean categoryMatches = categories.isEmpty() || categories.contains(product.getCategory());
+            boolean brandMatches = brands.isEmpty() || brands.contains(product.getBrand());
+
+            if (nameMatches && categoryMatches && brandMatches) {
+                filteredMedicaments.add(product);
             }
         }
         productAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onFilterApplied(List<String> selectedCategories, List<String> selectedBrands) {
+        this.selectedCategories = selectedCategories;
+        this.selectedBrands = selectedBrands;
+        filterMedicaments(searchEditText.getText().toString(), selectedCategories, selectedBrands);
     }
 }
