@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+    <!-- Top Bar -->
+    <LinearLayout
+        android:id="@+id/topBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingTop="44dp"
+        android:paddingBottom="16dp"
+        android:gravity="center_vertical">
+
+        <ImageView
+            android:id="@+id/closeButton"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/ic_clear"
+            android:layout_marginStart="24dp"/>
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Filtros"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:fontFamily="@font/gilroybold"/>
+    </LinearLayout>
+
+    <!-- Filter Content -->
+    <ScrollView
+        android:id="@+id/filterScroll"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_above="@+id/applyButton"
+        android:layout_below="@id/topBar"
+        android:background="@drawable/bg_filter_rounded">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="24dp">
+
+            <TextView
+                android:text="Categorias"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:fontFamily="@font/gilroy"
+                android:textColor="#181725"
+                android:layout_marginBottom="8dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <!-- Categories Checkboxes -->
+            <CheckBox android:id="@+id/cb_fitoterapico" android:text="Fitoterápico" style="@style/FilterCheckBox"/>
+            <CheckBox android:id="@+id/cb_antidepressivos" android:text="Antidepressivos" style="@style/FilterCheckBox"/>
+            <CheckBox android:id="@+id/cb_vitaminas" android:text="Vitaminas" style="@style/FilterCheckBox"/>
+            <CheckBox android:id="@+id/cb_perfumes" android:text="Perfumes" style="@style/FilterCheckBox"/>
+
+            <TextView
+                android:text="Marcas"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:fontFamily="@font/gilroy"
+                android:textColor="#181725"
+                android:layout_marginTop="32dp"
+                android:layout_marginBottom="8dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <!-- Brands Checkboxes -->
+            <CheckBox android:id="@+id/cb_ems" android:text="EMS" style="@style/FilterCheckBox"/>
+            <CheckBox android:id="@+id/cb_pfizer" android:text="PFIZER" style="@style/FilterCheckBox"/>
+            <CheckBox android:id="@+id/cb_novatis" android:text="NOVATIS" style="@style/FilterCheckBox"/>
+            <CheckBox android:id="@+id/cb_eurofarma" android:text="EUROFARMA" style="@style/FilterCheckBox"/>
+        </LinearLayout>
+    </ScrollView>
+
+    <!-- Apply Button -->
+    <Button
+        android:id="@+id/applyButton"
+        android:layout_width="match_parent"
+        android:layout_height="67dp"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="25dp"
+        android:text="Aplicar filtro"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:fontFamily="@font/gilroy"
+        android:textColor="#FFF9FF"
+        android:background="@drawable/bg_filter_button"/>
+</RelativeLayout>
