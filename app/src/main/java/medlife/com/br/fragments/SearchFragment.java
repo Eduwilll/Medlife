@@ -25,6 +25,7 @@ public class SearchFragment extends Fragment implements FilterFragment.FilterLis
     private List<Product> filteredMedicaments;
     private List<String> selectedCategories = new ArrayList<>();
     private List<String> selectedBrands = new ArrayList<>();
+    private ImageView clearIcon;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -33,6 +34,7 @@ public class SearchFragment extends Fragment implements FilterFragment.FilterLis
         searchEditText = view.findViewById(R.id.searchEditText);
         searchResultsRecycler = view.findViewById(R.id.searchResultsRecycler);
         ImageView filterIcon = view.findViewById(R.id.filterIcon);
+        clearIcon = view.findViewById(R.id.clearIcon);
 
         // Initialize medicaments list (copy from HomeFragment)
         allMedicaments = new ArrayList<>();
@@ -60,12 +62,15 @@ public class SearchFragment extends Fragment implements FilterFragment.FilterLis
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
+                clearIcon.setVisibility(s.length() > 0 ? View.VISIBLE : View.GONE);
                 filterMedicaments(s.toString(), selectedCategories, selectedBrands);
             }
 
             @Override
             public void afterTextChanged(Editable s) {}
         });
+
+        clearIcon.setOnClickListener(v -> searchEditText.setText(""));
 
         filterIcon.setOnClickListener(v -> {
             FilterFragment filterFragment = new FilterFragment();

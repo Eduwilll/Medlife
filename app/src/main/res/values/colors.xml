@@ -24,4 +24,7 @@
 
     <color name="active_color">#1E56A0</color>
     <color name="inactive_color">#181725</color>
+
+    <color name="colorGray">#7C7C7C</color>
+    <color name="search_bar_background">#F2F3F2</color>
 </resources>

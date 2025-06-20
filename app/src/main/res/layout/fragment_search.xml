@@ -10,60 +10,59 @@
     <!-- Search Bar -->
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="56dp"
+        android:layout_height="52dp"
         android:layout_marginHorizontal="16dp"
         android:layout_marginBottom="16dp"
-        app:cardCornerRadius="28dp"
+        app:cardBackgroundColor="@color/search_bar_background"
+        app:cardCornerRadius="15dp"
         app:cardElevation="0dp">
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:paddingHorizontal="16dp"
-            android:gravity="center_vertical">
+            android:paddingHorizontal="16dp">
 
             <ImageView
                 android:id="@+id/searchIcon"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:layout_centerVertical="true"
-                android:src="@drawable/ic_home_search"
-                 />
+                android:layout_alignParentStart="true"
+                android:src="@drawable/ic_home_search" />
 
-            <EditText
-                android:id="@+id/searchEditText"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_toEndOf="@id/searchIcon"
-                android:layout_toStartOf="@id/clearIcon"
-                android:layout_marginStart="8dp"
-                android:layout_marginEnd="8dp"
-                android:background="@android:color/transparent"
-                android:hint="Buscar"
-                android:textColor="#181B19"
-                android:textColorHint="#7C7C7C"
-                android:textSize="16sp"
-                android:fontFamily="@font/gilroy"
-                android:inputType="text" />
+            <ImageView
+                android:id="@+id/filterIcon"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_centerVertical="true"
+                android:layout_alignParentEnd="true"
+                android:src="@drawable/ic_filter" />
 
             <ImageView
                 android:id="@+id/clearIcon"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:layout_centerVertical="true"
-                android:layout_alignParentEnd="true"
+                android:layout_toStartOf="@id/filterIcon"
+                android:layout_marginEnd="8dp"
                 android:src="@drawable/ic_clear"
                 android:visibility="gone" />
 
-            <ImageView
-                android:id="@+id/filterIcon"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
+            <EditText
+                android:id="@+id/searchEditText"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_toEndOf="@id/searchIcon"
+                android:layout_toStartOf="@id/clearIcon"
                 android:layout_marginStart="8dp"
-                android:src="@drawable/ic_filter"
-                android:layout_toEndOf="@id/clearIcon"/>
+                android:background="@android:color/transparent"
+                android:fontFamily="@font/gilroy"
+                android:hint="Buscar"
+                android:inputType="text"
+                android:textColor="#181B19"
+                android:textColorHint="#7C7C7C"
+                android:textSize="14sp" />
+
         </RelativeLayout>
     </androidx.cardview.widget.CardView>
 
