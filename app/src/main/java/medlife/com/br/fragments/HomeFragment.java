@@ -20,7 +20,7 @@ import medlife.com.br.helper.UsuarioFirebase;
 
 public class HomeFragment extends Fragment {
     private TextView locationText;
-    private RecyclerView categoriesRecycler;
+    private RecyclerView medicamentosRecycler;
     private RecyclerView subcategoriesRecycler;
     private RecyclerView bestSellingRecycler;
     private RecyclerView exclusiveOffersRecycler;
@@ -33,7 +33,7 @@ public class HomeFragment extends Fragment {
         // Initialize views
         locationText = view.findViewById(R.id.locationText);
         subcategoriesRecycler = view.findViewById(R.id.subcategoriesRecycler);
-        categoriesRecycler = view.findViewById(R.id.categoriesRecycler);
+        medicamentosRecycler = view.findViewById(R.id.medicamentosRecycler);
         bestSellingRecycler = view.findViewById(R.id.bestSellingRecycler);
         exclusiveOffersRecycler = view.findViewById(R.id.exclusiveOffersRecycler);
 
@@ -44,7 +44,7 @@ public class HomeFragment extends Fragment {
         setupLocation();
 
         // Setup RecyclerViews
-        setupCategoriesRecycler();
+        setupMedicamentosRecycler();
         setupSubcategoriesRecycler();
         setupBestSellingRecycler();
         setupExclusiveOffersRecycler();
@@ -72,8 +72,15 @@ public class HomeFragment extends Fragment {
 
     }
 
-    private void setupCategoriesRecycler() {
-
+    private void setupMedicamentosRecycler() {
+        List<Product> allSellingProducts = new ArrayList<>();
+        allSellingProducts.add(new Product(R.drawable.mock_invegasustena, "INVEGA SUSTENNA", "100mg", "R$1794.99"));
+        allSellingProducts.add(new Product(R.drawable.mock_nervocalm, "NERVOCALM", "250mg, 20 Comprimidos", "R$45.79"));
+        allSellingProducts.add(new Product(R.drawable.mock_johnsonssaboneteliquido, "Sabonete Líquido Johnson's", "Hora do Sono Frasco 200 ml", "R$14.90"));
+        allSellingProducts.add(new Product(R.drawable.mock_febreedor, "Ácido Acetilsalicílico", "100mg, 30 Comprimidos", "R$5.90"));
+        ProductAdapter adapter = new ProductAdapter(getContext(), allSellingProducts);
+        medicamentosRecycler.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+        medicamentosRecycler.setAdapter(adapter);
     }
 
     private void setupBestSellingRecycler() {
