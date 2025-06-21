@@ -44,6 +44,9 @@
         <activity 
             android:name=".activity.AutenticacaoActivity"
             android:theme="@style/Theme.Medlife.NoActionBar" />
+        <activity
+            android:name=".activity.ProductDetailActivity"
+            android:exported="false" />
     </application>
 
 </manifest>

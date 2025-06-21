@@ -95,4 +95,10 @@
         <item name="android:fontFamily">@font/gilroy</item>
         <item name="android:textStyle">bold</item>
     </style>
+
+    <style name="ReviewStar">
+        <item name="android:layout_width">15dp</item>
+        <item name="android:layout_height">15dp</item>
+        <item name="android:layout_marginEnd">4dp</item>
+    </style>
 </resources>
