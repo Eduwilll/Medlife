@@ -16,6 +16,9 @@ import medlife.com.br.model.CartItem;
 import android.widget.TextView;
 import java.text.NumberFormat;
 import java.util.Locale;
+import medlife.com.br.activity.OrderSuccessActivity;
+import android.content.Intent;
+import android.widget.Button;
 
 public class CartFragment extends Fragment implements CartAdapter.CartListener {
     private RecyclerView recyclerCartItems;
@@ -24,6 +27,7 @@ public class CartFragment extends Fragment implements CartAdapter.CartListener {
     private LinearLayout layoutEmpty;
     private LinearLayout layoutBottom;
     private TextView textTotal;
+    private Button buttonCheckout;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -33,8 +37,15 @@ public class CartFragment extends Fragment implements CartAdapter.CartListener {
         layoutEmpty = view.findViewById(R.id.layoutEmpty);
         layoutBottom = view.findViewById(R.id.layoutBottom);
         textTotal = view.findViewById(R.id.textTotal);
+        buttonCheckout = view.findViewById(R.id.buttonCheckout);
 
         setupCart();
+
+        buttonCheckout.setOnClickListener(v -> {
+            CartManager.getInstance().clearCart();
+            Intent intent = new Intent(getActivity(), OrderSuccessActivity.class);
+            startActivity(intent);
+        });
 
         return view;
     }

@@ -47,6 +47,9 @@
         <activity
             android:name=".activity.ProductDetailActivity"
             android:exported="false" />
+        <activity
+            android:name=".activity.OrderSuccessActivity"
+            android:exported="false" />
     </application>
 
 </manifest>

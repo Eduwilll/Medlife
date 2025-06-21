@@ -53,6 +53,10 @@ public class CartManager {
         return total;
     }
 
+    public void clearCart() {
+        cartItems.clear();
+    }
+
     public List<CartItem> getCartItems() {
         return cartItems;
     }
