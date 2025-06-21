@@ -16,9 +16,15 @@ import medlife.com.br.model.CartItem;
 import android.widget.TextView;
 import java.text.NumberFormat;
 import java.util.Locale;
+import java.util.Objects;
+import com.google.firebase.firestore.FirebaseFirestore;
+
 import medlife.com.br.activity.OrderSuccessActivity;
 import android.content.Intent;
 import android.widget.Button;
+import android.widget.Toast;
+import medlife.com.br.helper.OrderManager;
+import medlife.com.br.model.Order;
 
 public class CartFragment extends Fragment implements CartAdapter.CartListener {
     private RecyclerView recyclerCartItems;
@@ -28,6 +34,7 @@ public class CartFragment extends Fragment implements CartAdapter.CartListener {
     private LinearLayout layoutBottom;
     private TextView textTotal;
     private Button buttonCheckout;
+    private FirebaseFirestore db;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -38,13 +45,27 @@ public class CartFragment extends Fragment implements CartAdapter.CartListener {
         layoutBottom = view.findViewById(R.id.layoutBottom);
         textTotal = view.findViewById(R.id.textTotal);
         buttonCheckout = view.findViewById(R.id.buttonCheckout);
+        db = FirebaseFirestore.getInstance();
 
         setupCart();
 
         buttonCheckout.setOnClickListener(v -> {
-            CartManager.getInstance().clearCart();
-            Intent intent = new Intent(getActivity(), OrderSuccessActivity.class);
-            startActivity(intent);
+            Order newOrder = CartManager.getInstance().createOrderFromCart();
+            if (newOrder != null) {
+                Objects.requireNonNull(OrderManager.saveOrder(newOrder))
+                        .addOnSuccessListener(aVoid -> {
+                            CartManager.getInstance().clearCart();
+                            Intent intent = new Intent(getActivity(), OrderSuccessActivity.class);
+                            startActivity(intent);
+                            Toast.makeText(getContext(), "Pedido realizado com sucesso!", Toast.LENGTH_SHORT).show();
+                        })
+                        .addOnFailureListener(e -> {
+                            Toast.makeText(getContext(), "Falha ao realizar o pedido: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                            e.printStackTrace();
+                        });
+            } else {
+                Toast.makeText(getContext(), "Erro: Não foi possível criar o pedido", Toast.LENGTH_SHORT).show();
+            }
         });
 
         return view;

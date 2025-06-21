@@ -4,6 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 import medlife.com.br.model.CartItem;
 import medlife.com.br.model.Product;
+import medlife.com.br.model.Order;
+import medlife.com.br.model.OrderStatus;
+import java.util.HashMap;
+import java.util.Map;
 
 public class CartManager {
     private static CartManager instance;
@@ -59,5 +63,29 @@ public class CartManager {
 
     public List<CartItem> getCartItems() {
         return cartItems;
+    }
+
+    public Order createOrderFromCart() {
+        String userId = UsuarioFirebase.getIdUsuario();
+        if (userId == null || cartItems.isEmpty()) {
+            return null;
+        }
+
+        List<Map<String, Object>> orderItems = new ArrayList<>();
+        for (CartItem item : cartItems) {
+            Map<String, Object> orderItem = new HashMap<>();
+            orderItem.put("productName", item.getProduct().getName());
+            orderItem.put("quantity", item.getQuantity());
+            orderItem.put("price", item.getProduct().getPrice());
+            orderItems.add(orderItem);
+        }
+
+        Order order = new Order();
+        order.setUserId(userId);
+        order.setItems(orderItems);
+        order.setTotalPrice(getTotalPrice());
+        order.setStatus(OrderStatus.ORDER_CONFIRMED.toString());
+
+        return order;
     }
 } 

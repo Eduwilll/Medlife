@@ -17,6 +17,7 @@ public class Usuario {
     private String dateOfBirth;
     private String cpf;
     private List<Map<String, Object>> endereco;
+    private List<Order> orders;
     @ServerTimestamp
     private Timestamp criadoEm;
 
@@ -93,6 +94,14 @@ public class Usuario {
 
     public void setEndereco(List<Map<String, Object>> endereco) {
         this.endereco = endereco;
+    }
+
+    public List<Order> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(List<Order> orders) {
+        this.orders = orders;
     }
 
     public Timestamp getCriadoEm() {
