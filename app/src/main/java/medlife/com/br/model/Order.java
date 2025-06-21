@@ -1,7 +1,6 @@
 package medlife.com.br.model;
 
 import com.google.firebase.Timestamp;
-import com.google.firebase.firestore.ServerTimestamp;
 import java.util.List;
 import java.util.Map;
 
@@ -11,8 +10,6 @@ public class Order {
     private List<Map<String, Object>> items;
     private double totalPrice;
     private String status;
-
-    @ServerTimestamp
     private Timestamp createdAt;
 
     public Order() {

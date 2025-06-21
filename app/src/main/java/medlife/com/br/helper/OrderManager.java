@@ -1,13 +1,13 @@
 package medlife.com.br.helper;
 
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.FirebaseFirestore;
 import medlife.com.br.model.Order;
 import medlife.com.br.model.Usuario;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.UUID;
 
 public class OrderManager {
     public static Task<Void> saveOrder(Order order) {
@@ -18,17 +18,16 @@ public class OrderManager {
         
         FirebaseFirestore db = ConfiguracaoFirebase.getFirestore();
         
-        // Convert order to Map for simpler Firestore operations
-        Map<String, Object> orderMap = new HashMap<>();
-        orderMap.put("orderId", order.getOrderId());
-        orderMap.put("userId", order.getUserId());
-        orderMap.put("items", order.getItems());
-        orderMap.put("totalPrice", order.getTotalPrice());
-        orderMap.put("status", order.getStatus());
-        orderMap.put("createdAt", order.getCreatedAt());
+        // Generate a unique order ID if not already set
+        if (order.getOrderId() == null || order.getOrderId().isEmpty()) {
+            order.setOrderId(UUID.randomUUID().toString());
+        }
         
-        // Use arrayUnion to add the order to the user's orders array
+        // Set the current timestamp manually
+        order.setCreatedAt(Timestamp.now());
+        
+        // Save the Order object directly
         return db.collection("usuarios").document(userId)
-                .update("orders", com.google.firebase.firestore.FieldValue.arrayUnion(orderMap));
+                .update("orders", com.google.firebase.firestore.FieldValue.arrayUnion(order));
     }
 } 
