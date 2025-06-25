@@ -25,27 +25,32 @@ import android.widget.Button;
 import android.widget.Toast;
 import medlife.com.br.helper.OrderManager;
 import medlife.com.br.model.Order;
+import android.widget.ImageView;
 
 public class CartFragment extends Fragment implements CartAdapter.CartListener {
     private RecyclerView recyclerCartItems;
     private CartAdapter cartAdapter;
     private List<CartItem> cartItems;
-    private LinearLayout layoutEmpty;
-    private LinearLayout layoutBottom;
     private TextView textTotal;
     private Button buttonCheckout;
     private FirebaseFirestore db;
+    private TextView textEmptyCart;
+    private ImageView imageEmptyCart;
+    private LinearLayout layoutEmptyState;
+    private LinearLayout layoutMainContent;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_cart, container, false);
 
         recyclerCartItems = view.findViewById(R.id.recyclerCartItems);
-        layoutEmpty = view.findViewById(R.id.layoutEmpty);
-        layoutBottom = view.findViewById(R.id.layoutBottom);
         textTotal = view.findViewById(R.id.textTotal);
         buttonCheckout = view.findViewById(R.id.buttonCheckout);
         db = FirebaseFirestore.getInstance();
+        textEmptyCart = view.findViewById(R.id.textEmptyCart);
+        imageEmptyCart = view.findViewById(R.id.imageEmptyCart);
+        layoutEmptyState = view.findViewById(R.id.layoutEmptyState);
+        layoutMainContent = view.findViewById(R.id.layoutMainContent);
 
         setupCart();
 
@@ -75,13 +80,11 @@ public class CartFragment extends Fragment implements CartAdapter.CartListener {
         cartItems = CartManager.getInstance().getCartItems();
 
         if (cartItems.isEmpty()) {
-            layoutEmpty.setVisibility(View.VISIBLE);
-            recyclerCartItems.setVisibility(View.GONE);
-            layoutBottom.setVisibility(View.GONE);
+            layoutEmptyState.setVisibility(View.VISIBLE);
+            layoutMainContent.setVisibility(View.GONE);
         } else {
-            layoutEmpty.setVisibility(View.GONE);
-            recyclerCartItems.setVisibility(View.VISIBLE);
-            layoutBottom.setVisibility(View.VISIBLE);
+            layoutEmptyState.setVisibility(View.GONE);
+            layoutMainContent.setVisibility(View.VISIBLE);
 
             cartAdapter = new CartAdapter(getContext(), cartItems, this);
             recyclerCartItems.setLayoutManager(new LinearLayoutManager(getContext()));
