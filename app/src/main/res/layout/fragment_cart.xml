@@ -227,6 +227,7 @@
 
             <!-- Warning and Prescription Upload -->
             <LinearLayout
+                android:id="@+id/layoutPrescriptionWarning"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"

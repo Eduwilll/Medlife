@@ -26,6 +26,7 @@ import android.widget.Toast;
 import medlife.com.br.helper.OrderManager;
 import medlife.com.br.model.Order;
 import android.widget.ImageView;
+import medlife.com.br.model.Product;
 
 public class CartFragment extends Fragment implements CartAdapter.CartListener {
     private RecyclerView recyclerCartItems;
@@ -38,6 +39,7 @@ public class CartFragment extends Fragment implements CartAdapter.CartListener {
     private ImageView imageEmptyCart;
     private LinearLayout layoutEmptyState;
     private LinearLayout layoutMainContent;
+    private LinearLayout layoutPrescriptionWarning;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -51,6 +53,7 @@ public class CartFragment extends Fragment implements CartAdapter.CartListener {
         imageEmptyCart = view.findViewById(R.id.imageEmptyCart);
         layoutEmptyState = view.findViewById(R.id.layoutEmptyState);
         layoutMainContent = view.findViewById(R.id.layoutMainContent);
+        layoutPrescriptionWarning = view.findViewById(R.id.layoutPrescriptionWarning);
 
         setupCart();
 
@@ -91,12 +94,27 @@ public class CartFragment extends Fragment implements CartAdapter.CartListener {
             recyclerCartItems.setAdapter(cartAdapter);
         }
         updateTotal();
+        updatePrescriptionWarning();
     }
 
     private void updateTotal() {
         double totalPrice = CartManager.getInstance().getTotalPrice();
         NumberFormat format = NumberFormat.getCurrencyInstance(new Locale("pt", "BR"));
         textTotal.setText(format.format(totalPrice));
+    }
+
+    private void updatePrescriptionWarning() {
+        boolean needsPrescription = false;
+        for (CartItem item : cartItems) {
+            String tarja = item.getProduct().getTarja();
+            if (Product.TARJA_PRETA.equals(tarja) || Product.TARJA_VERMELHA_SEM_RETENCAO.equals(tarja) || Product.TARJA_VERMELHA_COM_RETENCAO.equals(tarja)) {
+                needsPrescription = true;
+                break;
+            }
+        }
+        if (layoutPrescriptionWarning != null) {
+            layoutPrescriptionWarning.setVisibility(needsPrescription ? View.VISIBLE : View.GONE);
+        }
     }
 
     @Override
