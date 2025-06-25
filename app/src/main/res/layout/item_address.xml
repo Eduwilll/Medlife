@@ -11,53 +11,63 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="16dp">
+        android:padding="12dp">
 
         <TextView
             android:id="@+id/textAddressLine1"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/gilroysemibold"
-            android:textColor="#181725"
+            android:text="Rua Exemplo, 123"
             android:textSize="16sp"
-            android:textStyle="bold"
-            android:text="Rua Exemplo, 123 - Complemento" />
+            android:fontFamily="@font/gilroybold"/>
 
         <TextView
             android:id="@+id/textAddressLine2"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:fontFamily="@font/gilroyregular"
-            android:textColor="#7C7C7C"
+            android:text="Bairro, Cidade - Estado, CEP"
             android:textSize="14sp"
-            android:text="Bairro, Cidade - Estado, CEP" />
+            android:fontFamily="@font/gilroyregular"
+            android:textColor="#7C7C7C"/>
+
+        <TextView
+            android:id="@+id/textPrincipal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Principal"
+            android:textColor="@color/blue_700"
+            android:fontFamily="@font/gilroybold"
+            android:visibility="gone"
+            android:layout_marginTop="4dp"/>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:gravity="end"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:layout_marginTop="8dp">
 
             <ImageButton
                 android:id="@+id/buttonEditAddress"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:contentDescription="@string/editar_endere_o"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:src="@drawable/ic_edit"
-                app:tint="#1E56A0" />
+                android:contentDescription="Editar"/>
 
             <ImageButton
                 android:id="@+id/buttonDeleteAddress"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:layout_marginStart="16dp"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:contentDescription="@string/excluir_endere_o"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:src="@drawable/ic_delete"
-                app:tint="#FF0000" />
+                android:contentDescription="Excluir"/>
+
+            <Button
+                android:id="@+id/buttonSetPrincipal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tornar principal"
+                android:layout_marginStart="16dp"
+                android:textSize="14sp"
+                android:fontFamily="@font/gilroysemibold"/>
         </LinearLayout>
     </LinearLayout>
 </androidx.cardview.widget.CardView> 

@@ -59,7 +59,7 @@ public class ProfileAddressesFragment extends Fragment {
 
         // Setup RecyclerView
         recyclerAddresses.setLayoutManager(new LinearLayoutManager(getContext()));
-        addressAdapter = new AddressAdapter(new ArrayList<>()); // Initialize with empty list
+        addressAdapter = new AddressAdapter(new ArrayList<>(), usuarioAtual); // Initialize with empty list and current user
         recyclerAddresses.setAdapter(addressAdapter);
 
         // Load user addresses
@@ -97,7 +97,7 @@ public class ProfileAddressesFragment extends Fragment {
                     if (documentSnapshot.exists()) {
                         usuarioAtual = documentSnapshot.toObject(Usuario.class);
                         if (usuarioAtual != null && usuarioAtual.getEndereco() != null && !usuarioAtual.getEndereco().isEmpty()) {
-                            addressAdapter.updateAddresses(usuarioAtual.getEndereco());
+                            addressAdapter.updateAddresses(usuarioAtual.getEndereco(), usuarioAtual);
                             recyclerAddresses.setVisibility(View.VISIBLE);
                             textEmpty.setVisibility(View.GONE);
                         } else {
@@ -209,29 +209,31 @@ public class ProfileAddressesFragment extends Fragment {
     // AddressAdapter class (to be implemented in more detail)
     private class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.AddressViewHolder> {
         private List<Map<String, Object>> addresses;
+        private Usuario usuarioAtual;
 
-        public AddressAdapter(List<Map<String, Object>> addresses) {
+        public AddressAdapter(List<Map<String, Object>> addresses, Usuario usuarioAtual) {
             this.addresses = addresses;
+            this.usuarioAtual = usuarioAtual;
         }
 
-        public void updateAddresses(List<Map<String, Object>> newAddresses) {
+        public void updateAddresses(List<Map<String, Object>> newAddresses, Usuario usuarioAtual) {
             this.addresses.clear();
             this.addresses.addAll(newAddresses);
+            this.usuarioAtual = usuarioAtual;
             notifyDataSetChanged();
         }
 
         @NonNull
         @Override
         public AddressViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_address, parent, false); // Create item_address.xml
+            View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_address, parent, false);
             return new AddressViewHolder(itemView);
         }
 
         @Override
         public void onBindViewHolder(@NonNull AddressViewHolder holder, int position) {
             Map<String, Object> address = addresses.get(position);
-            // Bind data to views in item_address.xml
-            holder.bind(address);
+            holder.bind(address, position, usuarioAtual);
         }
 
         @Override
@@ -244,6 +246,8 @@ public class ProfileAddressesFragment extends Fragment {
             private TextView textAddressLine2;
             private ImageButton buttonEditAddress;
             private ImageButton buttonDeleteAddress;
+            private Button buttonSetPrincipal;
+            private TextView textPrincipal;
 
             public AddressViewHolder(@NonNull View itemView) {
                 super(itemView);
@@ -251,9 +255,11 @@ public class ProfileAddressesFragment extends Fragment {
                 textAddressLine2 = itemView.findViewById(R.id.textAddressLine2);
                 buttonEditAddress = itemView.findViewById(R.id.buttonEditAddress);
                 buttonDeleteAddress = itemView.findViewById(R.id.buttonDeleteAddress);
+                buttonSetPrincipal = itemView.findViewById(R.id.buttonSetPrincipal);
+                textPrincipal = itemView.findViewById(R.id.textPrincipal);
             }
 
-            public void bind(Map<String, Object> address) {
+            public void bind(Map<String, Object> address, int position, Usuario usuarioAtual) {
                 String logradouro = (String) address.get("logradouro");
                 String numero = (String) address.get("numero");
                 String complemento = (String) address.get("complemento");
@@ -268,13 +274,17 @@ public class ProfileAddressesFragment extends Fragment {
                 textAddressLine1.setText(addressLine1);
                 textAddressLine2.setText(addressLine2);
 
+                boolean isPrincipal = (usuarioAtual != null && usuarioAtual.getEnderecoPrincipal() == position);
+                textPrincipal.setVisibility(isPrincipal ? View.VISIBLE : View.GONE);
+                buttonSetPrincipal.setVisibility(isPrincipal ? View.GONE : View.VISIBLE);
+
+                buttonSetPrincipal.setOnClickListener(v -> setPrincipalAddress(position));
+
                 buttonEditAddress.setOnClickListener(v -> {
-                    // Handle edit action
                     editAddress(address, getAdapterPosition());
                 });
 
                 buttonDeleteAddress.setOnClickListener(v -> {
-                    // Handle delete action
                     deleteAddress(address, getAdapterPosition());
                 });
             }
@@ -317,6 +327,23 @@ public class ProfileAddressesFragment extends Fragment {
                     });
         } else {
             Toast.makeText(getContext(), "Erro: Usuário ou endereços inválidos.", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void setPrincipalAddress(int position) {
+        if (usuarioAtual != null) {
+            usuarioAtual.setEnderecoPrincipal(position);
+            db.collection("usuarios")
+                .document(usuarioAtual.getUid())
+                .set(usuarioAtual)
+                .addOnSuccessListener(aVoid -> {
+                    Toast.makeText(getContext(), "Endereço principal atualizado!", Toast.LENGTH_SHORT).show();
+                    loadUserAddresses();
+                    addressAdapter.notifyDataSetChanged();
+                })
+                .addOnFailureListener(e -> {
+                    Toast.makeText(getContext(), "Erro ao atualizar endereço principal: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                });
         }
     }
 } 

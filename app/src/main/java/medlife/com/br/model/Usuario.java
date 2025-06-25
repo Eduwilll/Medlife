@@ -20,6 +20,7 @@ public class Usuario {
     private List<Order> orders;
     @ServerTimestamp
     private Timestamp criadoEm;
+    private int enderecoPrincipal = 0;
 
     public Usuario() {
         // Required empty constructor for Firestore
@@ -115,4 +116,12 @@ public class Usuario {
     public String getOtherGender() { return otherGender; }
 
     public void setOtherGender(String outroGenero) { this.otherGender = outroGenero; }
+
+    public int getEnderecoPrincipal() {
+        return enderecoPrincipal;
+    }
+
+    public void setEnderecoPrincipal(int enderecoPrincipal) {
+        this.enderecoPrincipal = enderecoPrincipal;
+    }
 }
