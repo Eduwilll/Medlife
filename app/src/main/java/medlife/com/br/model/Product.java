@@ -10,6 +10,12 @@ public class Product implements Parcelable {
     private String price;
     private String category;
     private String brand;
+    // Tarja constants (Tranformar Enum depois)
+    public static final String TARJA_SEM_TARJA = "SEM_TARJA";
+    public static final String TARJA_AMARELA = "AMARELA";
+    public static final String TARJA_VERMELHA_SEM_RETENCAO = "VERMELHA_SEM_RETENCAO";
+    public static final String TARJA_VERMELHA_COM_RETENCAO = "VERMELHA_COM_RETENCAO";
+    public static final String TARJA_PRETA = "PRETA";
     private String tarja;
 
     public Product(int image, String name, String description, String price, String category, String brand, String tarja) {
@@ -70,10 +76,6 @@ public class Product implements Parcelable {
 
     public String getTarja() {
         return tarja;
-    }
-
-    public void setTarja(String tarja) {
-        this.tarja = tarja;
     }
 
     @Override
