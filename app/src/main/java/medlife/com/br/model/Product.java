@@ -10,14 +10,16 @@ public class Product implements Parcelable {
     private String price;
     private String category;
     private String brand;
+    private String tarja;
 
-    public Product(int image, String name, String description, String price, String category, String brand) {
+    public Product(int image, String name, String description, String price, String category, String brand, String tarja) {
         this.image = image;
         this.name = name;
         this.description = description;
         this.price = price;
         this.category = category;
         this.brand = brand;
+        this.tarja = tarja;
     }
 
     protected Product(Parcel in) {
@@ -27,6 +29,7 @@ public class Product implements Parcelable {
         price = in.readString();
         category = in.readString();
         brand = in.readString();
+        tarja = in.readString();
     }
 
     public static final Creator<Product> CREATOR = new Creator<Product>() {
@@ -65,6 +68,14 @@ public class Product implements Parcelable {
         return brand;
     }
 
+    public String getTarja() {
+        return tarja;
+    }
+
+    public void setTarja(String tarja) {
+        this.tarja = tarja;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -78,5 +89,6 @@ public class Product implements Parcelable {
         dest.writeString(price);
         dest.writeString(category);
         dest.writeString(brand);
+        dest.writeString(tarja);
     }
 } 
