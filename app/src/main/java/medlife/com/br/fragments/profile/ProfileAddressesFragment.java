@@ -278,6 +278,9 @@ public class ProfileAddressesFragment extends Fragment {
                 textPrincipal.setVisibility(isPrincipal ? View.VISIBLE : View.GONE);
                 buttonSetPrincipal.setVisibility(isPrincipal ? View.GONE : View.VISIBLE);
 
+                // Optionally, highlight the background for the principal address
+                itemView.setBackgroundResource(isPrincipal ? R.drawable.bg_address_principal_card : android.R.color.transparent);
+
                 buttonSetPrincipal.setOnClickListener(v -> setPrincipalAddress(position));
 
                 buttonEditAddress.setOnClickListener(v -> {
