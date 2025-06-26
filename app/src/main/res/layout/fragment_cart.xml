@@ -44,12 +44,13 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:padding="16dp"
+                android:background="@drawable/profile_bg"
+
                 android:gravity="center_vertical">
                 <ImageView
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:src="@drawable/ic_location"
-                    android:background="@drawable/profile_bg"
+                    android:layout_width="112dp"
+                    android:layout_height="85dp"
+                    android:src="@drawable/ic_cart_location"
                     android:scaleType="centerInside" />
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -131,6 +132,12 @@
                 android:orientation="horizontal"
                 android:padding="16dp"
                 android:gravity="center_vertical">
+                <ImageView
+                    android:layout_width="28dp"
+                    android:layout_height="24dp"
+                    android:layout_marginEnd="10dp"
+                    android:src="@drawable/ic_credit_card" />
+
                 <TextView
                     android:id="@+id/textPaymentMethod"
                     android:layout_width="0dp"
@@ -190,10 +197,9 @@
                 android:padding="16dp"
                 android:gravity="center_horizontal">
                 <ImageView
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
+                    android:layout_width="46dp"
+                    android:layout_height="46dp"
                     android:src="@drawable/ic_warning"
-                    android:tint="#BF2F25"
                     android:layout_gravity="center_horizontal"/>
                 <TextView
                     android:id="@+id/textPrescriptionWarning"
@@ -201,11 +207,11 @@
                     android:layout_height="wrap_content"
                     android:text="Notamos que certos produtos no carrinho necessita de receita médica, para finalizar a compra, por favor insira as receitas!"
                     android:textColor="#BF2F25"
-                    android:textSize="14sp"
+                    android:textSize="16sp"
                     android:fontFamily="@font/gilroybold"
                     android:gravity="center"
                     android:layout_marginTop="8dp"
-                    android:layout_marginBottom="8dp"/>
+                    android:layout_marginBottom="40dp"/>
                 <Button
                     android:id="@+id/buttonUploadPrescription"
                     android:layout_width="match_parent"
