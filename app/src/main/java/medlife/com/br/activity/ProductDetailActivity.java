@@ -9,10 +9,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import medlife.com.br.R;
 import medlife.com.br.helper.CartManager;
 import medlife.com.br.model.Product;
-import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
-import java.util.HashSet;
-import java.util.Set;
 
 public class ProductDetailActivity extends AppCompatActivity {
 
@@ -36,7 +32,6 @@ public class ProductDetailActivity extends AppCompatActivity {
         ImageView pharmacyLogo = findViewById(R.id.imagePharmacyLogo);
         TextView pharmacyName = findViewById(R.id.textPharmacyName);
         TextView pharmacyLocation = findViewById(R.id.textPharmacyLocation);
-        ImageView favoriteIcon = findViewById(R.id.favorite_icon);
 
         Product product = getIntent().getParcelableExtra("product");
 
@@ -59,12 +54,6 @@ public class ProductDetailActivity extends AppCompatActivity {
                     pharmacyLogo.setImageResource(R.drawable.mock_logo_drogasil_2048);
                 }
             }
-
-            // Set favorite status
-            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-            Set<String> favorites = new HashSet<>(prefs.getStringSet("favorites", new HashSet<>()));
-            boolean isFavorite = favorites.contains(product.getName());
-            favoriteIcon.setImageResource(isFavorite ? R.drawable.ic_favorite : R.drawable.ic_favorite_border);
         }
 
         backArrow.setOnClickListener(v -> finish());
@@ -87,20 +76,6 @@ public class ProductDetailActivity extends AppCompatActivity {
                 Toast.makeText(this, "Adicionado ao carrinho", Toast.LENGTH_SHORT).show();
                 finish();
             }
-        });
-
-        favoriteIcon.setOnClickListener(v -> {
-            if (product == null) return;
-            Set<String> favs = new HashSet<>(prefs.getStringSet("favorites", new HashSet<>()));
-            boolean nowFavorite = favs.contains(product.getName());
-            if (nowFavorite) {
-                favs.remove(product.getName());
-                favoriteIcon.setImageResource(R.drawable.ic_favorite_border);
-            } else {
-                favs.add(product.getName());
-                favoriteIcon.setImageResource(R.drawable.ic_favorite);
-            }
-            prefs.edit().putStringSet("favorites", favs).apply();
         });
     }
 } 
