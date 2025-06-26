@@ -14,6 +14,7 @@ import medlife.com.br.model.Product;
 import medlife.com.br.model.Farmacia;
 import java.util.ArrayList;
 import java.util.List;
+import android.widget.LinearLayout;
 
 public class FavoriteFragment extends Fragment {
     @Override
@@ -44,6 +45,20 @@ public class FavoriteFragment extends Fragment {
         }
         ProductAdapter adapter = new ProductAdapter(getContext(), favoriteProducts, true);
         recyclerView.setAdapter(adapter);
+        // Open product detail on click
+        adapter.setOnItemClickListener(product -> {
+            android.content.Intent intent = new android.content.Intent(getContext(), medlife.com.br.activity.ProductDetailActivity.class);
+            intent.putExtra("product", product);
+            startActivity(intent);
+        });
+        LinearLayout emptyLayout = view.findViewById(R.id.emptyFavoriteLayout);
+        if (favoriteProducts.isEmpty()) {
+            emptyLayout.setVisibility(View.VISIBLE);
+            recyclerView.setVisibility(View.GONE);
+        } else {
+            emptyLayout.setVisibility(View.GONE);
+            recyclerView.setVisibility(View.VISIBLE);
+        }
         return view;
     }
 }

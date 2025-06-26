@@ -22,6 +22,14 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
     private List<Product> productList;
     private boolean favoriteMode = false;
 
+    public interface OnItemClickListener {
+        void onItemClick(Product product);
+    }
+    private OnItemClickListener onItemClickListener;
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        this.onItemClickListener = listener;
+    }
+
     public ProductAdapter(Context context, List<Product> productList) {
         this(context, productList, false);
     }
@@ -53,7 +61,9 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
         if (!favoriteMode && holder.textProductDesc != null) holder.textProductDesc.setText(product.getDescription());
 
         holder.itemView.setOnClickListener(v -> {
-            if (!favoriteMode) {
+            if (onItemClickListener != null) {
+                onItemClickListener.onItemClick(product);
+            } else if (!favoriteMode) {
                 Intent intent = new Intent(context, ProductDetailActivity.class);
                 intent.putExtra("product", product);
                 context.startActivity(intent);
