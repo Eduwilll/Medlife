@@ -246,6 +246,11 @@ public class CartFragment extends Fragment implements CartAdapter.CartListener {
         buttonDeliveryStorePickup.setBackgroundTintList(android.content.res.ColorStateList.valueOf(0xFFF5F5F5));
         buttonDeliveryScheduled.setBackgroundTintList(android.content.res.ColorStateList.valueOf(0xFFF5F5F5));
         
+        // Reset text colors to default
+        buttonDeliveryImmediate.setTextColor(0xFF1E56A0);
+        buttonDeliveryStorePickup.setTextColor(0xFF1E56A0);
+        buttonDeliveryScheduled.setTextColor(0xFF1E56A0);
+        
         // Highlight selected button
         switch (selectedDeliveryOption) {
             case "immediate":
