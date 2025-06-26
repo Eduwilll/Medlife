@@ -17,8 +17,9 @@ public class Product implements Parcelable {
     public static final String TARJA_VERMELHA_COM_RETENCAO = "VERMELHA_COM_RETENCAO";
     public static final String TARJA_PRETA = "PRETA";
     private String tarja;
+    private Farmacia farmacia;
 
-    public Product(int image, String name, String description, String price, String category, String brand, String tarja) {
+    public Product(int image, String name, String description, String price, String category, String brand, String tarja, Farmacia farmacia) {
         this.image = image;
         this.name = name;
         this.description = description;
@@ -26,6 +27,7 @@ public class Product implements Parcelable {
         this.category = category;
         this.brand = brand;
         this.tarja = tarja;
+        this.farmacia = farmacia;
     }
 
     protected Product(Parcel in) {
@@ -36,6 +38,7 @@ public class Product implements Parcelable {
         category = in.readString();
         brand = in.readString();
         tarja = in.readString();
+        farmacia = (Farmacia) in.readSerializable();
     }
 
     public static final Creator<Product> CREATOR = new Creator<Product>() {
@@ -78,6 +81,14 @@ public class Product implements Parcelable {
         return tarja;
     }
 
+    public Farmacia getFarmacia() {
+        return farmacia;
+    }
+
+    public void setFarmacia(Farmacia farmacia) {
+        this.farmacia = farmacia;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -92,5 +103,6 @@ public class Product implements Parcelable {
         dest.writeString(category);
         dest.writeString(brand);
         dest.writeString(tarja);
+        dest.writeSerializable(farmacia);
     }
 } 

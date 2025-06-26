@@ -172,9 +172,13 @@ public class CartFragment extends Fragment implements CartAdapter.CartListener {
             layoutEmptyState.setVisibility(View.GONE);
             layoutMainContent.setVisibility(View.VISIBLE);
 
-            cartAdapter = new CartAdapter(getContext(), cartItems, this);
-            recyclerCartItems.setLayoutManager(new LinearLayoutManager(getContext()));
-            recyclerCartItems.setAdapter(cartAdapter);
+            if (cartAdapter == null) {
+                cartAdapter = new CartAdapter(getContext(), cartItems, this);
+                recyclerCartItems.setLayoutManager(new LinearLayoutManager(getContext()));
+                recyclerCartItems.setAdapter(cartAdapter);
+            } else {
+                cartAdapter.updateCartItems(cartItems);
+            }
         }
         updateSummary();
         updatePrescriptionWarning();
@@ -210,6 +214,8 @@ public class CartFragment extends Fragment implements CartAdapter.CartListener {
         updateSummary();
         if (CartManager.getInstance().getCartItems().isEmpty()) {
             setupCart(); // Refresh the whole view if cart becomes empty
+        } else {
+            cartAdapter.updateCartItems(CartManager.getInstance().getCartItems());
         }
     }
 

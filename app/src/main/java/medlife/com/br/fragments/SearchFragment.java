@@ -16,6 +16,7 @@ import medlife.com.br.adapter.ProductAdapter;
 import medlife.com.br.model.Product;
 import androidx.recyclerview.widget.GridLayoutManager;
 import android.widget.ImageView;
+import medlife.com.br.model.Farmacia;
 
 public class SearchFragment extends Fragment implements FilterFragment.FilterListener {
     private EditText searchEditText;
@@ -31,6 +32,10 @@ public class SearchFragment extends Fragment implements FilterFragment.FilterLis
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_search, container, false);
 
+        // Mock pharmacies
+        Farmacia farmacia1 = new Farmacia("1", "Drogaria São Paulo", "Cidade Campinas");
+        Farmacia farmacia2 = new Farmacia("2", "Drogasil", "Cidade Americana");
+
         searchEditText = view.findViewById(R.id.searchEditText);
         searchResultsRecycler = view.findViewById(R.id.searchResultsRecycler);
         ImageView filterIcon = view.findViewById(R.id.filterIcon);
@@ -38,14 +43,14 @@ public class SearchFragment extends Fragment implements FilterFragment.FilterLis
 
         // Initialize medicaments list (copy from HomeFragment)
         allMedicaments = new ArrayList<>();
-        allMedicaments.add(new Product(R.drawable.mock_invegasustena, "INVEGA SUSTENNA", "100mg", "R$1794.99", "Antidepressivos", "PFIZER", Product.TARJA_PRETA));
-        allMedicaments.add(new Product(R.drawable.mock_nervocalm, "NERVOCALM", "250mg, 20 Comprimidos", "R$45.79", "Fitoterápico", "EMS", Product.TARJA_SEM_TARJA));
-        allMedicaments.add(new Product(R.drawable.mock_johnsonssaboneteliquido, "Sabonete Líquido Johnson's", "Hora do Sono Frasco 200 ml", "R$14.90", "Perfumes", "EUROFARMA", Product.TARJA_SEM_TARJA));
-        allMedicaments.add(new Product(R.drawable.mock_febreedor, "Ácido Acetilsalicílico", "100mg, 30 Comprimidos", "R$5.90", "Fitoterápico", "NOVATIS", Product.TARJA_AMARELA));
-        allMedicaments.add(new Product(R.drawable.mock_medicamentogenerico, "Genérico Dipirona", "500mg, 20 Comprimidos", "R$7.99", "Vitaminas", "EMS", Product.TARJA_AMARELA));
-        allMedicaments.add(new Product(R.drawable.mock_melagriao, "Xarope Melagrião", "120ml", "R$19.90", "Fitoterápico", "PFIZER", Product.TARJA_SEM_TARJA));
-        allMedicaments.add(new Product(R.drawable.mock_protexbaby, "Shampoo Anticaspa", "200ml", "R$22.50", "Perfumes", "EUROFARMA", Product.TARJA_SEM_TARJA));
-        allMedicaments.add(new Product(R.drawable.mock_banho, "Higiene Pessoal Kit", "Sabonete + Shampoo", "R$29.90", "Perfumes", "NOVATIS", Product.TARJA_SEM_TARJA));
+        allMedicaments.add(new Product(R.drawable.mock_invegasustena, "INVEGA SUSTENNA", "100mg", "R$1794.99", "Antidepressivos", "PFIZER", Product.TARJA_PRETA, farmacia1));
+        allMedicaments.add(new Product(R.drawable.mock_nervocalm, "NERVOCALM", "250mg, 20 Comprimidos", "R$45.79", "Fitoterápico", "EMS", Product.TARJA_SEM_TARJA, farmacia2));
+        allMedicaments.add(new Product(R.drawable.mock_johnsonssaboneteliquido, "Sabonete Líquido Johnson's", "Hora do Sono Frasco 200 ml", "R$14.90", "Perfumes", "EUROFARMA", Product.TARJA_SEM_TARJA, farmacia1));
+        allMedicaments.add(new Product(R.drawable.mock_febreedor, "Ácido Acetilsalicílico", "100mg, 30 Comprimidos", "R$5.90", "Fitoterápico", "NOVATIS", Product.TARJA_AMARELA, farmacia2));
+        allMedicaments.add(new Product(R.drawable.mock_medicamentogenerico, "Genérico Dipirona", "500mg, 20 Comprimidos", "R$7.99", "Vitaminas", "EMS", Product.TARJA_AMARELA, farmacia2));
+        allMedicaments.add(new Product(R.drawable.mock_melagriao, "Xarope Melagrião", "120ml", "R$19.90", "Fitoterápico", "PFIZER", Product.TARJA_SEM_TARJA, farmacia1));
+        allMedicaments.add(new Product(R.drawable.mock_protexbaby, "Shampoo Anticaspa", "200ml", "R$22.50", "Perfumes", "EUROFARMA", Product.TARJA_SEM_TARJA, farmacia2));
+        allMedicaments.add(new Product(R.drawable.mock_banho, "Higiene Pessoal Kit", "Sabonete + Shampoo", "R$29.90", "Perfumes", "NOVATIS", Product.TARJA_SEM_TARJA, farmacia1));
         // Add more products as needed
 
         filteredMedicaments = new ArrayList<>(allMedicaments);

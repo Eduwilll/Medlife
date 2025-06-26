@@ -16,6 +16,7 @@ import medlife.com.br.adapter.ProductAdapter;
 import medlife.com.br.adapter.CategoryAdapter;
 import medlife.com.br.model.Product;
 import medlife.com.br.model.Category;
+import medlife.com.br.model.Farmacia;
 import medlife.com.br.helper.UsuarioFirebase;
 
 public class HomeFragment extends Fragment {
@@ -73,33 +74,54 @@ public class HomeFragment extends Fragment {
     }
 
     private void setupMedicamentosRecycler() {
+        // Mock pharmacies
+        Farmacia farmacia1 = new Farmacia("1", "Drogaria São Paulo", "Cidade Campinas");
+        Farmacia farmacia2 = new Farmacia("2", "Drogasil", "Cidade Americana");
+        setupMedicamentosRecycler(farmacia1, farmacia2);
+    }
+
+    private void setupBestSellingRecycler() {
+        // Mock pharmacies
+        Farmacia farmacia1 = new Farmacia("1", "Drogaria São Paulo", "Cidade Campinas");
+        Farmacia farmacia2 = new Farmacia("2", "Drogasil", "Cidade Americana");
+        setupBestSellingRecycler(farmacia1, farmacia2);
+    }
+
+    private void setupExclusiveOffersRecycler() {
+        // Mock pharmacies
+        Farmacia farmacia1 = new Farmacia("1", "Drogaria São Paulo", "Cidade Campinas");
+        Farmacia farmacia2 = new Farmacia("2", "Drogasil", "Cidade Americana");
+        setupExclusiveOffersRecycler(farmacia1, farmacia2);
+    }
+
+    private void setupMedicamentosRecycler(Farmacia farmacia1, Farmacia farmacia2) {
         List<Product> allSellingProducts = new ArrayList<>();
-        allSellingProducts.add(new Product(R.drawable.mock_invegasustena, "INVEGA SUSTENNA", "100mg", "R$1794.99", "Antidepressivos", "PFIZER", Product.TARJA_PRETA));
-        allSellingProducts.add(new Product(R.drawable.mock_nervocalm, "NERVOCALM", "250mg, 20 Comprimidos", "R$45.79", "Fitoterápico", "EMS", Product.TARJA_SEM_TARJA));
-        allSellingProducts.add(new Product(R.drawable.mock_johnsonssaboneteliquido, "Sabonete Líquido Johnson's", "Hora do Sono Frasco 200 ml", "R$14.90", "Perfumes", "EUROFARMA", Product.TARJA_SEM_TARJA));
-        allSellingProducts.add(new Product(R.drawable.mock_febreedor, "Ácido Acetilsalicílico", "100mg, 30 Comprimidos", "R$5.90", "Fitoterápico", "NOVATIS", Product.TARJA_AMARELA));
+        allSellingProducts.add(new Product(R.drawable.mock_invegasustena, "INVEGA SUSTENNA", "100mg", "R$1794.99", "Antidepressivos", "PFIZER", Product.TARJA_PRETA, farmacia1));
+        allSellingProducts.add(new Product(R.drawable.mock_nervocalm, "NERVOCALM", "250mg, 20 Comprimidos", "R$45.79", "Fitoterápico", "EMS", Product.TARJA_SEM_TARJA, farmacia2));
+        allSellingProducts.add(new Product(R.drawable.mock_johnsonssaboneteliquido, "Sabonete Líquido Johnson's", "Hora do Sono Frasco 200 ml", "R$14.90", "Perfumes", "EUROFARMA", Product.TARJA_SEM_TARJA, farmacia1));
+        allSellingProducts.add(new Product(R.drawable.mock_febreedor, "Ácido Acetilsalicílico", "100mg, 30 Comprimidos", "R$5.90", "Fitoterápico", "NOVATIS", Product.TARJA_AMARELA, farmacia2));
         ProductAdapter adapter = new ProductAdapter(getContext(), allSellingProducts);
         medicamentosRecycler.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         medicamentosRecycler.setAdapter(adapter);
     }
 
-    private void setupBestSellingRecycler() {
+    private void setupBestSellingRecycler(Farmacia farmacia1, Farmacia farmacia2) {
         List<Product> bestSellingProducts = new ArrayList<>();
-        bestSellingProducts.add(new Product(R.drawable.mock_invegasustena, "INVEGA SUSTENNA", "100mg", "R$1794.99", "Antidepressivos", "PFIZER", Product.TARJA_PRETA));
-        bestSellingProducts.add(new Product(R.drawable.mock_nervocalm, "NERVOCALM", "250mg, 20 Comprimidos", "R$45.79", "Fitoterápico", "EMS", Product.TARJA_SEM_TARJA));
-        bestSellingProducts.add(new Product(R.drawable.mock_johnsonssaboneteliquido, "Sabonete Líquido Johnson's", "Hora do Sono Frasco 200 ml", "R$14.90", "Perfumes", "EUROFARMA", Product.TARJA_SEM_TARJA));
-        bestSellingProducts.add(new Product(R.drawable.mock_febreedor, "Ácido Acetilsalicílico", "100mg, 30 Comprimidos", "R$5.90", "Fitoterápico", "NOVATIS", Product.TARJA_AMARELA));
+        bestSellingProducts.add(new Product(R.drawable.mock_invegasustena, "INVEGA SUSTENNA", "100mg", "R$1794.99", "Antidepressivos", "PFIZER", Product.TARJA_PRETA, farmacia1));
+        bestSellingProducts.add(new Product(R.drawable.mock_nervocalm, "NERVOCALM", "250mg, 20 Comprimidos", "R$45.79", "Fitoterápico", "EMS", Product.TARJA_SEM_TARJA, farmacia2));
+        bestSellingProducts.add(new Product(R.drawable.mock_johnsonssaboneteliquido, "Sabonete Líquido Johnson's", "Hora do Sono Frasco 200 ml", "R$14.90", "Perfumes", "EUROFARMA", Product.TARJA_SEM_TARJA, farmacia1));
+        bestSellingProducts.add(new Product(R.drawable.mock_febreedor, "Ácido Acetilsalicílico", "100mg, 30 Comprimidos", "R$5.90", "Fitoterápico", "NOVATIS", Product.TARJA_AMARELA, farmacia2));
         ProductAdapter adapter = new ProductAdapter(getContext(), bestSellingProducts);
         bestSellingRecycler.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         bestSellingRecycler.setAdapter(adapter);
     }
 
-    private void setupExclusiveOffersRecycler() {
+    private void setupExclusiveOffersRecycler(Farmacia farmacia1, Farmacia farmacia2) {
         List<Product> offers = new ArrayList<>();
-        offers.add(new Product(R.drawable.mock_medicamentogenerico, "Genérico Dipirona", "500mg, 20 Comprimidos", "R$7.99", "Vitaminas", "EMS", Product.TARJA_AMARELA));
-        offers.add(new Product(R.drawable.mock_melagriao, "Xarope Melagrião", "120ml", "R$19.90", "Fitoterápico", "PFIZER", Product.TARJA_SEM_TARJA));
-        offers.add(new Product(R.drawable.mock_protexbaby, "Shampoo Anticaspa", "200ml", "R$22.50", "Perfumes", "EUROFARMA", Product.TARJA_SEM_TARJA));
-        offers.add(new Product(R.drawable.mock_banho, "Higiene Pessoal Kit", "Sabonete + Shampoo", "R$29.90", "Perfumes", "NOVATIS", Product.TARJA_SEM_TARJA));
+        offers.add(new Product(R.drawable.mock_medicamentogenerico, "Genérico Dipirona", "500mg, 20 Comprimidos", "R$7.99", "Vitaminas", "EMS", Product.TARJA_AMARELA, farmacia2));
+        offers.add(new Product(R.drawable.mock_melagriao, "Xarope Melagrião", "120ml", "R$19.90", "Fitoterápico", "PFIZER", Product.TARJA_SEM_TARJA, farmacia1));
+        offers.add(new Product(R.drawable.mock_protexbaby, "Shampoo Anticaspa", "200ml", "R$22.50", "Perfumes", "EUROFARMA", Product.TARJA_SEM_TARJA, farmacia2));
+        offers.add(new Product(R.drawable.mock_banho, "Higiene Pessoal Kit", "Sabonete + Shampoo", "R$29.90", "Perfumes", "NOVATIS", Product.TARJA_SEM_TARJA, farmacia1));
         ProductAdapter adapter = new ProductAdapter(getContext(), offers);
         exclusiveOffersRecycler.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         exclusiveOffersRecycler.setAdapter(adapter);

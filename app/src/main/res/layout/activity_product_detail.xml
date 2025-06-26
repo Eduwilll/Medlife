@@ -39,14 +39,28 @@
             android:layout_below="@id/top_section"
             android:padding="25dp">
 
-            <TextView
-                android:id="@+id/product_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Aspirina"
-                android:textSize="24sp"
-                android:fontFamily="@font/gilroybold"
-                android:textColor="#181725"/>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/product_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Aspirina"
+                    android:textSize="24sp"
+                    android:fontFamily="@font/gilroybold"
+                    android:textColor="#181725"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"/>
+                <ImageView
+                    android:id="@+id/favorite_icon"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_favorite"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:contentDescription="Favorite"/>
+            </RelativeLayout>
 
             <TextView
                 android:id="@+id/product_subtitle"
@@ -127,40 +141,44 @@
                 android:layout_marginTop="20dp"/>
 
             <!-- Seller Info -->
-            <RelativeLayout
+            <LinearLayout
+                android:id="@+id/layoutPharmacyHeader"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="80dp"
+                android:orientation="horizontal"
+                android:padding="16dp"
+                android:gravity="center_vertical"
                 android:layout_marginTop="20dp">
-
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/seller_image_card"
-                    android:layout_width="66dp"
-                    android:layout_height="66dp"
-                    app:cardCornerRadius="15dp"
-                    app:cardBackgroundColor="#F2F3F2"
-                    app:cardElevation="0dp">
-
-                    <ImageView
-                        android:id="@+id/seller_image"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:src="@drawable/mock_drogariasaopaulo"
-                        android:scaleType="centerInside"
-                        android:padding="8dp"/>
-                </androidx.cardview.widget.CardView>
-
-                <TextView
-                    android:id="@+id/seller_name"
+                <ImageView
+                    android:id="@+id/imagePharmacyLogo"
+                    android:layout_width="56dp"
+                    android:layout_height="56dp"
+                    android:src="@drawable/logo"
+                    android:background="@drawable/profile_bg"
+                    android:scaleType="centerCrop" />
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_toEndOf="@id/seller_image_card"
-                    android:layout_marginStart="20dp"
-                    android:layout_centerVertical="true"
-                    android:text="Drogaria São Paulo - \nCidade Campinas"
-                    android:textColor="#181725"
-                    android:textSize="16sp"
-                    android:fontFamily="@font/gilroybold"/>
-            </RelativeLayout>
+                    android:orientation="vertical"
+                    android:layout_marginStart="12dp">
+                    <TextView
+                        android:id="@+id/textPharmacyName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Farmácia"
+                        android:textColor="#181725"
+                        android:textSize="16sp"
+                        android:fontFamily="@font/gilroybold"/>
+                    <TextView
+                        android:id="@+id/textPharmacyLocation"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Localização"
+                        android:textColor="#7C7C7C"
+                        android:textSize="14sp"
+                        android:fontFamily="@font/gilroyregular"/>
+                </LinearLayout>
+            </LinearLayout>
 
             <View
                 android:layout_width="match_parent"
