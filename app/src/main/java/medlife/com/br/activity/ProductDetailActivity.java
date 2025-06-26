@@ -1,5 +1,6 @@
 package medlife.com.br.activity;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -7,6 +8,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import medlife.com.br.R;
+import medlife.com.br.adapter.ProductAdapter;
 import medlife.com.br.helper.CartManager;
 import medlife.com.br.model.Product;
 
@@ -14,6 +16,8 @@ public class ProductDetailActivity extends AppCompatActivity {
 
     private int quantity = 1;
     private TextView quantityText;
+    private boolean isFavorite = false;
+    private SharedPreferences prefs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +36,7 @@ public class ProductDetailActivity extends AppCompatActivity {
         ImageView pharmacyLogo = findViewById(R.id.imagePharmacyLogo);
         TextView pharmacyName = findViewById(R.id.textPharmacyName);
         TextView pharmacyLocation = findViewById(R.id.textPharmacyLocation);
+        ImageView favoriteIcon = findViewById(R.id.favorite_icon);
 
         Product product = getIntent().getParcelableExtra("product");
 
@@ -54,6 +59,11 @@ public class ProductDetailActivity extends AppCompatActivity {
                     pharmacyLogo.setImageResource(R.drawable.mock_logo_drogasil_2048);
                 }
             }
+
+            // Check if favorite
+            prefs = getSharedPreferences("favorites", MODE_PRIVATE);
+            isFavorite = prefs.getBoolean(product.getName(), false);
+            updateFavoriteIcon(favoriteIcon);
         }
 
         backArrow.setOnClickListener(v -> finish());
@@ -77,5 +87,26 @@ public class ProductDetailActivity extends AppCompatActivity {
                 finish();
             }
         });
+
+        favoriteIcon.setOnClickListener(v -> {
+            if (product != null) {
+                isFavorite = !isFavorite;
+                prefs.edit().putBoolean(product.getName(), isFavorite).apply();
+                updateFavoriteIcon(favoriteIcon);
+                if (isFavorite) {
+                    ProductAdapter.addFavoriteToFirestore(product);
+                } else {
+                    ProductAdapter.removeFavoriteFromFirestore(product);
+                }
+            }
+        });
+    }
+
+    private void updateFavoriteIcon(ImageView icon) {
+        if (isFavorite) {
+            icon.setColorFilter(getResources().getColor(R.color.blue_500, null));
+        } else {
+            icon.setColorFilter(getResources().getColor(R.color.colorGray, null));
+        }
     }
 } 

@@ -39,14 +39,28 @@
             android:layout_below="@id/top_section"
             android:padding="25dp">
 
-            <TextView
-                android:id="@+id/product_name"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Aspirina"
-                android:textSize="24sp"
-                android:fontFamily="@font/gilroybold"
-                android:textColor="#181725"/>
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+                <TextView
+                    android:id="@+id/product_name"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Aspirina"
+                    android:textSize="24sp"
+                    android:fontFamily="@font/gilroybold"
+                    android:textColor="#181725"/>
+                <ImageView
+                    android:id="@+id/favorite_icon"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_favorite"
+                    android:layout_marginStart="8dp"
+                    android:contentDescription="Favoritar"/>
+            </LinearLayout>
 
             <TextView
                 android:id="@+id/product_subtitle"
