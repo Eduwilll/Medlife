@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    app:cardCornerRadius="12dp"
+    app:cardElevation="4dp"
+    app:cardBackgroundColor="#FFFFFF">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <!-- Order Header -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:id="@+id/textOrderId"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Pedido #12345678"
+                android:textColor="#181725"
+                android:textSize="16sp"
+                android:fontFamily="@font/gilroybold" />
+
+            <TextView
+                android:id="@+id/textOrderStatus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Confirmado"
+                android:textColor="#1E56A0"
+                android:textSize="14sp"
+                android:fontFamily="@font/gilroysemibold"
+                android:background="@drawable/bg_filter_rounded"
+                android:padding="4dp"
+                android:layout_marginStart="8dp" />
+        </LinearLayout>
+
+        <!-- Order Date -->
+        <TextView
+            android:id="@+id/textOrderDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="12/01/2024 14:30"
+            android:textColor="#7C7C7C"
+            android:textSize="14sp"
+            android:fontFamily="@font/gilroyregular"
+            android:layout_marginTop="4dp" />
+
+        <!-- Order Details -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="12dp">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/textDeliveryOption"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Entrega Imediata"
+                    android:textColor="#181725"
+                    android:textSize="14sp"
+                    android:fontFamily="@font/gilroysemibold" />
+
+                <TextView
+                    android:id="@+id/textPaymentStatus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Pagamento Pendente"
+                    android:textColor="#BF2F25"
+                    android:textSize="12sp"
+                    android:fontFamily="@font/gilroyregular"
+                    android:layout_marginTop="2dp" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/textOrderTotal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="R$ 150,00"
+                android:textColor="#181725"
+                android:textSize="18sp"
+                android:fontFamily="@font/gilroybold"
+                android:gravity="end" />
+        </LinearLayout>
+
+        <!-- Order Items Preview (Optional) -->
+        <TextView
+            android:id="@+id/textOrderItemsPreview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="3 itens"
+            android:textColor="#7C7C7C"
+            android:textSize="12sp"
+            android:fontFamily="@font/gilroyregular"
+            android:layout_marginTop="8dp" />
+
+    </LinearLayout>
+</androidx.cardview.widget.CardView> 

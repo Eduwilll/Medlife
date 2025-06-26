@@ -77,6 +77,11 @@ public class CartManager {
             orderItem.put("productName", item.getProduct().getName());
             orderItem.put("quantity", item.getQuantity());
             orderItem.put("price", item.getProduct().getPrice());
+            orderItem.put("totalItemPrice", Double.parseDouble(item.getProduct().getPrice().replace("R$", "").replace(",", ".").trim()) * item.getQuantity());
+            orderItem.put("category", item.getProduct().getCategory());
+            orderItem.put("brand", item.getProduct().getBrand());
+            orderItem.put("tarja", item.getProduct().getTarja());
+            orderItem.put("description", item.getProduct().getDescription());
             orderItems.add(orderItem);
         }
 
@@ -85,6 +90,20 @@ public class CartManager {
         order.setItems(orderItems);
         order.setTotalPrice(getTotalPrice());
         order.setStatus(OrderStatus.ORDER_CONFIRMED.toString());
+        
+        // Set subtotal
+        order.setSubtotal(getTotalPrice());
+        
+        // Set default values for other fields
+        // These will be updated by CartFragment before saving
+        order.setDeliveryOption("immediate");
+        order.setDeliveryFee(7.00);
+        order.setDiscountAmount(0.0);
+        order.setPaymentMethod("Pendente");
+        order.setPaymentStatus("pending");
+        order.setStoreName("Drogaria São Paulo");
+        order.setStoreLocation("Cidade Campinas");
+        order.setRequiresPrescription(false);
 
         return order;
     }
