@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFFFFF">
+    >
 
     <LinearLayout
         android:orientation="vertical"
@@ -96,7 +96,7 @@
                     <LinearLayout
                         android:id="@+id/cardDeliveryImmediate"
                         android:layout_width="172dp"
-                        android:layout_height="99dp"
+                        android:layout_height="120dp"
                         android:orientation="vertical"
                         android:background="@drawable/bg_delivery_option_selected"
                         android:padding="16dp"
@@ -126,7 +126,6 @@
                             android:layout_height="wrap_content"
                             android:text="R$7.00"
                             android:textColor="#181725"
-                            android:textSize="16sp"
                             android:fontFamily="@font/gilroysemibold"
                             android:layout_marginTop="8dp"/>
                     </LinearLayout>
@@ -134,8 +133,8 @@
                     <!-- Retirar na Loja -->
                     <LinearLayout
                         android:id="@+id/cardDeliveryStorePickup"
-                        android:layout_width="171dp"
-                        android:layout_height="99dp"
+                        android:layout_width="172dp"
+                        android:layout_height="120dp"
                         android:orientation="vertical"
                         android:background="@drawable/bg_delivery_option_unselected"
                         android:padding="16dp"
@@ -165,7 +164,6 @@
                             android:layout_height="wrap_content"
                             android:text="R$--"
                             android:textColor="#181725"
-                            android:textSize="16sp"
                             android:fontFamily="@font/gilroysemibold"
                             android:layout_marginTop="8dp"/>
                     </LinearLayout>
@@ -174,7 +172,7 @@
                     <LinearLayout
                         android:id="@+id/cardDeliveryScheduled"
                         android:layout_width="172dp"
-                        android:layout_height="99dp"
+                        android:layout_height="120dp"
                         android:orientation="vertical"
                         android:background="@drawable/bg_delivery_option_unselected"
                         android:padding="16dp"
@@ -262,17 +260,81 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:padding="16dp">
-                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal">
-                    <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="Subtotal"  android:textSize="16sp" android:fontFamily="@font/gilroybold"/>
-                    <TextView android:id="@+id/textSubtotal" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="R$1.887,74" android:textColor="#B3B3B3" android:textSize="16sp" android:fontFamily="@font/gilroysemibold"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingStart="8dp"
+                    android:paddingEnd="8dp"
+                    android:minHeight="48dp"
+                    android:gravity="center_vertical">
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Subtotal"
+                        android:textSize="16sp"
+                        android:fontFamily="@font/gilroybold"/>
+                    <TextView
+                        android:id="@+id/textSubtotal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="R$1.887,74"
+                        android:textColor="#B3B3B3"
+                        android:textSize="16sp"
+                        android:fontFamily="@font/gilroysemibold"/>
                 </LinearLayout>
-                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal">
-                    <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="Taxa de entrega"  android:textSize="16sp" android:fontFamily="@font/gilroybold"/>
-                    <TextView android:id="@+id/textDeliveryFee" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="R$7,00" android:textColor="#B3B3B3" android:textSize="16sp" android:fontFamily="@font/gilroysemibold"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingStart="8dp"
+                    android:paddingEnd="8dp"
+                    android:minHeight="48dp"
+                    android:gravity="center_vertical">
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Taxa de entrega"
+                        android:textSize="16sp"
+                        android:fontFamily="@font/gilroybold"/>
+                    <TextView
+                        android:id="@+id/textDeliveryFee"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="R$7,00"
+                        android:textColor="#B3B3B3"
+                        android:textSize="16sp"
+                        android:fontFamily="@font/gilroysemibold"/>
                 </LinearLayout>
-                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal">
-                    <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="Desconto" android:textColor="#7C7C7C" android:textSize="16sp" android:fontFamily="@font/gilroybold"/>
-                    <TextView android:id="@+id/textDiscount" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="R$283,16" android:textColor="#B3B3B3" android:textSize="16sp" android:fontFamily="@font/gilroysemibold"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingStart="8dp"
+                    android:paddingEnd="8dp"
+                    android:minHeight="48dp"
+                    android:gravity="center_vertical">
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Desconto"
+                        android:textColor="#7C7C7C"
+                        android:textSize="16sp"
+                        android:fontFamily="@font/gilroybold"/>
+                    <TextView
+                        android:id="@+id/textDiscount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="R$283,16"
+                        android:textColor="#B3B3B3"
+                        android:textSize="16sp"
+                        android:fontFamily="@font/gilroysemibold"/>
                 </LinearLayout>
 
                 <!-- Divider -->
@@ -283,9 +345,30 @@
                     android:layout_marginBottom="12dp"
                     android:background="#E2E2E2" />
 
-                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal">
-                    <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="Total" android:textColor="#181725" android:textSize="18sp" android:fontFamily="@font/gilroysemibold"/>
-                    <TextView android:id="@+id/textTotal" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="R$1.611,58" android:textColor="#181725" android:textSize="18sp" android:fontFamily="@font/gilroysemibold"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingStart="8dp"
+                    android:paddingEnd="8dp"
+                    android:minHeight="48dp"
+                    android:gravity="center_vertical">
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Total"
+                        android:textColor="#181725"
+                        android:textSize="18sp"
+                        android:fontFamily="@font/gilroysemibold"/>
+                    <TextView
+                        android:id="@+id/textTotal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="R$1.611,58"
+                        android:textColor="#181725"
+                        android:textSize="18sp"
+                        android:fontFamily="@font/gilroysemibold"/>
                 </LinearLayout>
             </LinearLayout>
 
