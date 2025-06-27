@@ -49,9 +49,12 @@ public class CartFragment extends Fragment implements CartAdapter.CartListener {
     private TextView textSubtotal;
     private TextView textDeliveryFee;
     private TextView textDiscount;
-    private Button buttonDeliveryImmediate;
-    private Button buttonDeliveryStorePickup;
-    private Button buttonDeliveryScheduled;
+    private LinearLayout cardDeliveryImmediate;
+    private LinearLayout cardDeliveryStorePickup;
+    private LinearLayout cardDeliveryScheduled;
+    private TextView textDeliveryImmediateTitle;
+    private TextView textDeliveryStorePickupTitle;
+    private TextView textDeliveryScheduledTitle;
     private double deliveryFee = 7.00;
     private double discountAmount = 0.0;
     private String selectedDeliveryOption = "immediate"; // Default to immediate delivery
@@ -75,9 +78,12 @@ public class CartFragment extends Fragment implements CartAdapter.CartListener {
         textSubtotal = view.findViewById(R.id.textSubtotal);
         textDeliveryFee = view.findViewById(R.id.textDeliveryFee);
         textDiscount = view.findViewById(R.id.textDiscount);
-        buttonDeliveryImmediate = view.findViewById(R.id.buttonDeliveryImmediate);
-        buttonDeliveryStorePickup = view.findViewById(R.id.buttonDeliveryStorePickup);
-        buttonDeliveryScheduled = view.findViewById(R.id.buttonDeliveryScheduled);
+        cardDeliveryImmediate = view.findViewById(R.id.cardDeliveryImmediate);
+        cardDeliveryStorePickup = view.findViewById(R.id.cardDeliveryStorePickup);
+        cardDeliveryScheduled = view.findViewById(R.id.cardDeliveryScheduled);
+        textDeliveryImmediateTitle = view.findViewById(R.id.textDeliveryImmediateTitle);
+        textDeliveryStorePickupTitle = view.findViewById(R.id.textDeliveryStorePickupTitle);
+        textDeliveryScheduledTitle = view.findViewById(R.id.textDeliveryScheduledTitle);
 
         setupCart();
         loadUserPrincipalAddress();
@@ -220,65 +226,35 @@ public class CartFragment extends Fragment implements CartAdapter.CartListener {
     }
 
     private void setupDeliveryOptions() {
-        // Set initial selection
-        updateDeliveryButtonSelection();
-        updateDeliveryButtonTexts();
-        
-        buttonDeliveryImmediate.setOnClickListener(v -> {
+        updateDeliveryCardSelection();
+        cardDeliveryImmediate.setOnClickListener(v -> {
             selectedDeliveryOption = "immediate";
             deliveryFee = 7.00;
-            updateDeliveryButtonSelection();
+            updateDeliveryCardSelection();
             updateSummary();
         });
-        
-        buttonDeliveryStorePickup.setOnClickListener(v -> {
+        cardDeliveryStorePickup.setOnClickListener(v -> {
             selectedDeliveryOption = "pickup";
             deliveryFee = 0.00;
-            updateDeliveryButtonSelection();
+            updateDeliveryCardSelection();
             updateSummary();
         });
-        
-        buttonDeliveryScheduled.setOnClickListener(v -> {
+        cardDeliveryScheduled.setOnClickListener(v -> {
             selectedDeliveryOption = "scheduled";
             deliveryFee = 7.00;
-            updateDeliveryButtonSelection();
+            updateDeliveryCardSelection();
             updateSummary();
         });
     }
     
-    private void updateDeliveryButtonSelection() {
-        // Reset all buttons to default state
-        buttonDeliveryImmediate.setBackgroundTintList(android.content.res.ColorStateList.valueOf(0xFFF5F5F5));
-        buttonDeliveryStorePickup.setBackgroundTintList(android.content.res.ColorStateList.valueOf(0xFFF5F5F5));
-        buttonDeliveryScheduled.setBackgroundTintList(android.content.res.ColorStateList.valueOf(0xFFF5F5F5));
-        
-        // Reset text colors to default
-        buttonDeliveryImmediate.setTextColor(0xFF1E56A0);
-        buttonDeliveryStorePickup.setTextColor(0xFF1E56A0);
-        buttonDeliveryScheduled.setTextColor(0xFF1E56A0);
-        
-        // Highlight selected button
-        switch (selectedDeliveryOption) {
-            case "immediate":
-                buttonDeliveryImmediate.setBackgroundTintList(android.content.res.ColorStateList.valueOf(0xFF1E56A0));
-                buttonDeliveryImmediate.setTextColor(0xFFFFFFFF);
-                break;
-            case "pickup":
-                buttonDeliveryStorePickup.setBackgroundTintList(android.content.res.ColorStateList.valueOf(0xFF1E56A0));
-                buttonDeliveryStorePickup.setTextColor(0xFFFFFFFF);
-                break;
-            case "scheduled":
-                buttonDeliveryScheduled.setBackgroundTintList(android.content.res.ColorStateList.valueOf(0xFF1E56A0));
-                buttonDeliveryScheduled.setTextColor(0xFFFFFFFF);
-                break;
-        }
-    }
-
-    private void updateDeliveryButtonTexts() {
-        NumberFormat format = NumberFormat.getCurrencyInstance(new Locale("pt", "BR"));
-        buttonDeliveryImmediate.setText(String.format("Imediato\n%s", format.format(7.00)));
-        buttonDeliveryStorePickup.setText(String.format("Retirar na Loja\n%s", format.format(0.00)));
-        buttonDeliveryScheduled.setText(String.format("Agendado\n%s", format.format(7.00)));
+    private void updateDeliveryCardSelection() {
+        cardDeliveryImmediate.setBackgroundResource(selectedDeliveryOption.equals("immediate") ? R.drawable.bg_delivery_option_selected : R.drawable.bg_delivery_option_unselected);
+        cardDeliveryStorePickup.setBackgroundResource(selectedDeliveryOption.equals("pickup") ? R.drawable.bg_delivery_option_selected : R.drawable.bg_delivery_option_unselected);
+        cardDeliveryScheduled.setBackgroundResource(selectedDeliveryOption.equals("scheduled") ? R.drawable.bg_delivery_option_selected : R.drawable.bg_delivery_option_unselected);
+        // Update title color for selected
+        textDeliveryImmediateTitle.setTextColor(selectedDeliveryOption.equals("immediate") ? 0xFF1E56A0 : 0xFF1E56A0);
+        textDeliveryStorePickupTitle.setTextColor(selectedDeliveryOption.equals("pickup") ? 0xFF1E56A0 : 0xFF1E56A0);
+        textDeliveryScheduledTitle.setTextColor(selectedDeliveryOption.equals("scheduled") ? 0xFF1E56A0 : 0xFF1E56A0);
     }
 
     private void updateSummary() {

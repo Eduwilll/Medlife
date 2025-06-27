@@ -77,46 +77,138 @@
             </LinearLayout>
 
             <!-- Delivery Options -->
-            <LinearLayout
-                android:id="@+id/layoutDeliveryOptions"
+            <HorizontalScrollView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center"
-                android:padding="8dp">
-                <Button
-                    android:id="@+id/buttonDeliveryImmediate"
-                    android:layout_width="0dp"
+                android:overScrollMode="never"
+                android:scrollbars="none"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp">
+
+                <LinearLayout
+                    android:id="@+id/layoutDeliveryOptions"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Imediato\nR$7.00"
-                    android:textSize="14sp"
-                    android:fontFamily="@font/gilroysemibold"
-                    android:backgroundTint="#F5F5F5"
-                    android:textColor="#1E56A0"/>
-                <Space android:layout_width="8dp" android:layout_height="wrap_content"/>
-                <Button
-                    android:id="@+id/buttonDeliveryStorePickup"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Retirar na Loja\nR$--"
-                    android:textSize="14sp"
-                    android:fontFamily="@font/gilroysemibold"
-                    android:backgroundTint="#F5F5F5"
-                    android:textColor="#1E56A0"/>
-                <Space android:layout_width="8dp" android:layout_height="wrap_content"/>
-                <Button
-                    android:id="@+id/buttonDeliveryScheduled"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Agendado\nR$7.00"
-                    android:textSize="14sp"
-                    android:fontFamily="@font/gilroysemibold"
-                    android:backgroundTint="#F5F5F5"
-                    android:textColor="#1E56A0"/>
-            </LinearLayout>
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+
+                    <!-- Imediato -->
+                    <LinearLayout
+                        android:id="@+id/cardDeliveryImmediate"
+                        android:layout_width="172dp"
+                        android:layout_height="99dp"
+                        android:orientation="vertical"
+                        android:background="@drawable/bg_delivery_option_selected"
+                        android:padding="16dp"
+                        android:layout_marginEnd="12dp"
+                        android:gravity="center_vertical">
+
+                        <TextView
+                            android:id="@+id/textDeliveryImmediateTitle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Imediato"
+                            android:textColor="#1E56A0"
+                            android:textSize="16sp"
+                            android:fontFamily="@font/gilroybold"/>
+                        <TextView
+                            android:id="@+id/textDeliveryImmediateTime"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Hoje, 43 - 53 min"
+                            android:textColor="#7C7C7C"
+                            android:textSize="14sp"
+                            android:fontFamily="@font/gilroymedium"
+                            android:layout_marginTop="4dp"/>
+                        <TextView
+                            android:id="@+id/textDeliveryImmediatePrice"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="R$7.00"
+                            android:textColor="#181725"
+                            android:textSize="16sp"
+                            android:fontFamily="@font/gilroysemibold"
+                            android:layout_marginTop="8dp"/>
+                    </LinearLayout>
+
+                    <!-- Retirar na Loja -->
+                    <LinearLayout
+                        android:id="@+id/cardDeliveryStorePickup"
+                        android:layout_width="171dp"
+                        android:layout_height="99dp"
+                        android:orientation="vertical"
+                        android:background="@drawable/bg_delivery_option_unselected"
+                        android:padding="16dp"
+                        android:layout_marginEnd="12dp"
+                        android:gravity="center_vertical">
+
+                        <TextView
+                            android:id="@+id/textDeliveryStorePickupTitle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Retirar na Loja"
+                            android:textColor="#1E56A0"
+                            android:textSize="16sp"
+                            android:fontFamily="@font/gilroybold"/>
+                        <TextView
+                            android:id="@+id/textDeliveryStorePickupTime"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="--, -- min"
+                            android:textColor="#7C7C7C"
+                            android:textSize="14sp"
+                            android:fontFamily="@font/gilroymedium"
+                            android:layout_marginTop="4dp"/>
+                        <TextView
+                            android:id="@+id/textDeliveryStorePickupPrice"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="R$--"
+                            android:textColor="#181725"
+                            android:textSize="16sp"
+                            android:fontFamily="@font/gilroysemibold"
+                            android:layout_marginTop="8dp"/>
+                    </LinearLayout>
+
+                    <!-- Agendado -->
+                    <LinearLayout
+                        android:id="@+id/cardDeliveryScheduled"
+                        android:layout_width="172dp"
+                        android:layout_height="99dp"
+                        android:orientation="vertical"
+                        android:background="@drawable/bg_delivery_option_unselected"
+                        android:padding="16dp"
+                        android:gravity="center_vertical">
+
+                        <TextView
+                            android:id="@+id/textDeliveryScheduledTitle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Agendado"
+                            android:textColor="#1E56A0"
+                            android:textSize="16sp"
+                            android:fontFamily="@font/gilroybold"/>
+                        <TextView
+                            android:id="@+id/textDeliveryScheduledTime"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="--, -- min"
+                            android:textColor="#7C7C7C"
+                            android:textSize="14sp"
+                            android:fontFamily="@font/gilroymedium"
+                            android:layout_marginTop="4dp"/>
+                        <TextView
+                            android:id="@+id/textDeliveryScheduledPrice"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="R$7.00"
+                            android:textColor="#181725"
+                            android:textSize="16sp"
+                            android:fontFamily="@font/gilroysemibold"
+                            android:layout_marginTop="8dp"/>
+                    </LinearLayout>
+                </LinearLayout>
+            </HorizontalScrollView>
 
             <!-- Divider -->
             <View
@@ -171,20 +263,29 @@
                 android:orientation="vertical"
                 android:padding="16dp">
                 <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal">
-                    <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="Subtotal" android:textColor="#7C7C7C" android:textSize="16sp" android:fontFamily="@font/gilroyregular"/>
-                    <TextView android:id="@+id/textSubtotal" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="R$1.887,74" android:textColor="#B3B3B3" android:textSize="16sp" android:fontFamily="@font/gilroyregular"/>
+                    <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="Subtotal"  android:textSize="16sp" android:fontFamily="@font/gilroybold"/>
+                    <TextView android:id="@+id/textSubtotal" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="R$1.887,74" android:textColor="#B3B3B3" android:textSize="16sp" android:fontFamily="@font/gilroysemibold"/>
                 </LinearLayout>
                 <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal">
-                    <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="Taxa de entrega" android:textColor="#7C7C7C" android:textSize="16sp" android:fontFamily="@font/gilroyregular"/>
-                    <TextView android:id="@+id/textDeliveryFee" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="R$7,00" android:textColor="#B3B3B3" android:textSize="16sp" android:fontFamily="@font/gilroyregular"/>
+                    <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="Taxa de entrega"  android:textSize="16sp" android:fontFamily="@font/gilroybold"/>
+                    <TextView android:id="@+id/textDeliveryFee" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="R$7,00" android:textColor="#B3B3B3" android:textSize="16sp" android:fontFamily="@font/gilroysemibold"/>
                 </LinearLayout>
                 <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal">
-                    <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="Desconto" android:textColor="#7C7C7C" android:textSize="16sp" android:fontFamily="@font/gilroyregular"/>
-                    <TextView android:id="@+id/textDiscount" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="R$283,16" android:textColor="#B3B3B3" android:textSize="16sp" android:fontFamily="@font/gilroyregular"/>
+                    <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="Desconto" android:textColor="#7C7C7C" android:textSize="16sp" android:fontFamily="@font/gilroybold"/>
+                    <TextView android:id="@+id/textDiscount" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="R$283,16" android:textColor="#B3B3B3" android:textSize="16sp" android:fontFamily="@font/gilroysemibold"/>
                 </LinearLayout>
+
+                <!-- Divider -->
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="12dp"
+                    android:layout_marginBottom="12dp"
+                    android:background="#E2E2E2" />
+
                 <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal">
-                    <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="Total" android:textColor="#181725" android:textSize="18sp" android:fontFamily="@font/gilroybold"/>
-                    <TextView android:id="@+id/textTotal" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="R$1.611,58" android:textColor="#181725" android:textSize="18sp" android:fontFamily="@font/gilroybold"/>
+                    <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="Total" android:textColor="#181725" android:textSize="18sp" android:fontFamily="@font/gilroysemibold"/>
+                    <TextView android:id="@+id/textTotal" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="R$1.611,58" android:textColor="#181725" android:textSize="18sp" android:fontFamily="@font/gilroysemibold"/>
                 </LinearLayout>
             </LinearLayout>
 
