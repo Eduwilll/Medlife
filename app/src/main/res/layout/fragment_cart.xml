@@ -419,5 +419,12 @@
                 android:fontFamily="@font/gilroybold"
                 android:layout_margin="16dp"/>
         </LinearLayout>
+
+        <!-- Fragment Container for UploadPrescriptionFragment -->
+        <FrameLayout
+            android:id="@+id/fragment_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone" />
     </LinearLayout>
 </ScrollView>

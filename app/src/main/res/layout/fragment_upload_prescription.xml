@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:padding="24dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_marginBottom="32dp">
+        <ImageView
+            android:id="@+id/iconFile"
+            android:layout_width="72dp"
+            android:layout_height="72dp"
+            android:src="@drawable/ic_upload_file"
+            android:layout_marginEnd="24dp"/>
+        <ImageView
+            android:id="@+id/iconCamera"
+            android:layout_width="72dp"
+            android:layout_height="72dp"
+            android:src="@drawable/ic_camera"
+            android:layout_marginEnd="24dp"/>
+        <ImageView
+            android:id="@+id/iconQr"
+            android:layout_width="72dp"
+            android:layout_height="72dp"
+            android:src="@drawable/ic_qr_code"/>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btnUploadDigital"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:text="Fazer upload da receita digital"
+        android:textColor="#FFF9FF"
+        android:textSize="16sp"
+        android:fontFamily="@font/gilroysemibold"
+        android:backgroundTint="#1E56A0"
+        android:background="@drawable/bg_upload_button"
+        android:layout_marginBottom="16dp"/>
+
+    <Button
+        android:id="@+id/btnUploadScan"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:text="Fazer upload da receita digitalizada"
+        android:textColor="#FFF9FF"
+        android:textSize="16sp"
+        android:fontFamily="@font/gilroysemibold"
+        android:backgroundTint="#1E56A0"
+        android:background="@drawable/bg_upload_button"
+        android:layout_marginBottom="16dp"/>
+
+    <Button
+        android:id="@+id/btnUploadQr"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:text="Fazer upload da receita por QRCode"
+        android:textColor="#FFF9FF"
+        android:textSize="16sp"
+        android:fontFamily="@font/gilroysemibold"
+        android:backgroundTint="#1E56A0"
+        android:background="@drawable/bg_upload_button"
+        android:layout_marginBottom="16dp"/>
+
+    <Button
+        android:id="@+id/btnUploadPhoto"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:text="Fazer upload da receita por foto"
+        android:textColor="#FFF9FF"
+        android:textSize="16sp"
+        android:fontFamily="@font/gilroysemibold"
+        android:backgroundTint="#1E56A0"
+        android:background="@drawable/bg_upload_button"
+        android:layout_marginBottom="32dp"/>
+
+    <Button
+        android:id="@+id/btnBack"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:text="Voltar"
+        android:textColor="#1E56A0"
+        android:textSize="18sp"
+        android:fontFamily="@font/gilroysemibold"
+        android:backgroundTint="@color/white"
+        />
+
+</LinearLayout> 

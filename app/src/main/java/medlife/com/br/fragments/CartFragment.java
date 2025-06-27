@@ -30,6 +30,7 @@ import medlife.com.br.model.Product;
 import medlife.com.br.model.Usuario;
 import medlife.com.br.helper.UsuarioFirebase;
 import java.util.Map;
+import androidx.fragment.app.FragmentTransaction;
 
 public class CartFragment extends Fragment implements CartAdapter.CartListener {
     private RecyclerView recyclerCartItems;
@@ -58,6 +59,7 @@ public class CartFragment extends Fragment implements CartAdapter.CartListener {
     private double deliveryFee = 7.00;
     private double discountAmount = 0.0;
     private String selectedDeliveryOption = "immediate"; // Default to immediate delivery
+    private androidx.fragment.app.FragmentManager.OnBackStackChangedListener backStackListener;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -111,7 +113,43 @@ public class CartFragment extends Fragment implements CartAdapter.CartListener {
             }
         });
 
+        Button buttonUploadPrescription = view.findViewById(R.id.buttonUploadPrescription);
+        buttonUploadPrescription.setOnClickListener(v -> {
+            // Hide main content and show fragment container
+            layoutMainContent.setVisibility(View.GONE);
+            View fragmentContainer = view.findViewById(R.id.fragment_container);
+            fragmentContainer.setVisibility(View.VISIBLE);
+            
+            UploadPrescriptionFragment fragment = new UploadPrescriptionFragment();
+            FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
+            transaction.replace(R.id.fragment_container, fragment);
+            transaction.addToBackStack(null);
+            transaction.commit();
+        });
+
         return view;
+    }
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        
+        // Handle back navigation from prescription upload - moved here for safety
+        if (getParentFragmentManager() != null) {
+            backStackListener = () -> {
+                if (getParentFragmentManager() != null && getParentFragmentManager().getBackStackEntryCount() == 0) {
+                    // Back to cart view
+                    if (layoutMainContent != null) {
+                        layoutMainContent.setVisibility(View.VISIBLE);
+                    }
+                    View fragmentContainer = view.findViewById(R.id.fragment_container);
+                    if (fragmentContainer != null) {
+                        fragmentContainer.setVisibility(View.GONE);
+                    }
+                }
+            };
+            getParentFragmentManager().addOnBackStackChangedListener(backStackListener);
+        }
     }
 
     private void loadUserPrincipalAddress() {
@@ -383,5 +421,13 @@ public class CartFragment extends Fragment implements CartAdapter.CartListener {
             newOrder.setEstimatedDeliveryTime(com.google.firebase.Timestamp.now());
         }
         // For pickup, no estimated delivery time needed
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        if (backStackListener != null) {
+            getParentFragmentManager().removeOnBackStackChangedListener(backStackListener);
+        }
     }
 }
