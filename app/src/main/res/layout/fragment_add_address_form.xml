@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:background="@drawable/bg_filter_rounded"
+    android:elevation="4dp"
+    android:layout_margin="8dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Adicionar Novo Endereço"
+        android:textSize="20sp"
+        android:fontFamily="@font/gilroybold"
+        android:textColor="#181725"
+        android:layout_marginBottom="16dp"
+        android:gravity="center"/>
+
+    <EditText
+        android:id="@+id/editCep"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:autofillHints=""
+        android:hint="@string/cep"
+        android:inputType="number"
+        android:padding="12dp"
+        android:background="#FFFFFF"
+        android:layout_marginBottom="8dp"
+        android:fontFamily="@font/gilroymedium"
+        android:textSize="14sp" />
+
+    <EditText
+        android:id="@+id/editLogradouro"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:autofillHints=""
+        android:hint="@string/logradouro"
+        android:inputType="text"
+        android:padding="12dp"
+        android:background="#FFFFFF"
+        android:layout_marginBottom="8dp"
+        android:fontFamily="@font/gilroymedium"
+        android:textSize="14sp" />
+
+    <EditText
+        android:id="@+id/editNumero"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:autofillHints=""
+        android:hint="@string/n_mero"
+        android:inputType="number"
+        android:padding="12dp"
+        android:background="#FFFFFF"
+        android:layout_marginBottom="8dp"
+        android:fontFamily="@font/gilroymedium"
+        android:textSize="14sp" />
+
+    <EditText
+        android:id="@+id/editComplemento"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:autofillHints=""
+        android:hint="@string/complemento"
+        android:inputType="text"
+        android:padding="12dp"
+        android:background="#FFFFFF"
+        android:layout_marginBottom="8dp"
+        android:fontFamily="@font/gilroymedium"
+        android:textSize="14sp" />
+
+    <EditText
+        android:id="@+id/editBairro"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:autofillHints=""
+        android:hint="@string/bairro"
+        android:inputType="text"
+        android:padding="12dp"
+        android:background="#FFFFFF"
+        android:layout_marginBottom="8dp"
+        android:fontFamily="@font/gilroymedium"
+        android:textSize="14sp" />
+
+    <EditText
+        android:id="@+id/editCidade"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:autofillHints=""
+        android:hint="@string/cidade"
+        android:inputType="text"
+        android:padding="12dp"
+        android:background="#FFFFFF"
+        android:layout_marginBottom="8dp"
+        android:fontFamily="@font/gilroymedium"
+        android:textSize="14sp" />
+
+    <EditText
+        android:id="@+id/editEstado"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:autofillHints=""
+        android:hint="@string/estado"
+        android:inputType="text"
+        android:padding="12dp"
+        android:background="#FFFFFF"
+        android:layout_marginBottom="8dp"
+        android:fontFamily="@font/gilroymedium"
+        android:textSize="14sp" />
+
+    <Button
+        android:id="@+id/buttonAddAddress"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:background="@drawable/button_primary_bg"
+        android:fontFamily="@font/gilroysemibold"
+        android:text="@string/adicionar_endere_o"
+        android:textSize="16sp"
+        android:textColor="#FFFFFF" />
+
+    <Button
+        android:id="@+id/buttonSaveChanges"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/button_primary_bg"
+        android:fontFamily="@font/gilroysemibold"
+        android:text="@string/salvar_altera_es"
+        android:textSize="16sp"
+        android:textColor="#FFFFFF"
+        android:visibility="gone"/>
+
+</LinearLayout> 
