@@ -26,12 +26,15 @@ import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.DocumentSnapshot;
 
 import java.util.Objects;
 
 import medlife.com.br.R;
 import medlife.com.br.helper.ConfiguracaoFirebase;
 import medlife.com.br.helper.UsuarioFirebase;
+import medlife.com.br.model.Usuario;
 
 public class AutenticacaoActivity extends AppCompatActivity {
 
@@ -40,6 +43,7 @@ public class AutenticacaoActivity extends AppCompatActivity {
     private TextView registerLink, forgotPasswordLink;
     private MaterialButton googleButton, facebookButton;
     private FirebaseAuth autenticacao;
+    private FirebaseFirestore db;
     private GoogleSignInClient googleSignInClient;
     private static final int RC_SIGN_IN = 123;
 
@@ -51,6 +55,7 @@ public class AutenticacaoActivity extends AppCompatActivity {
         inicializaComponentes();
         configurarGoogleSignIn();
         autenticacao = ConfiguracaoFirebase.getFirebaseAutenticacao();
+        db = FirebaseFirestore.getInstance();
 //        autenticacao.signOut();
 
         //Verificar usuario logado
@@ -122,8 +127,13 @@ public class AutenticacaoActivity extends AppCompatActivity {
         autenticacao.signInWithCredential(credential)
                 .addOnCompleteListener(this, task -> {
                     if (task.isSuccessful()) {
-//                        FirebaseUser user = autenticacao.getCurrentUser();
-                        abrirTelaPrincipal();
+                        FirebaseUser user = autenticacao.getCurrentUser();
+                        if (user != null) {
+                            // Save user data to Firestore
+                            salvarUsuarioFirestore(user);
+                        } else {
+                            abrirTelaPrincipal();
+                        }
                     } else {
                         Toast.makeText(AutenticacaoActivity.this,
                                 "Erro ao autenticar com Google: " + Objects.requireNonNull(task.getException()).getMessage(),
@@ -137,10 +147,16 @@ public class AutenticacaoActivity extends AppCompatActivity {
                 email, senha
         ).addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
-                Toast.makeText(AutenticacaoActivity.this,
-                        "Logado com sucesso",
-                        Toast.LENGTH_SHORT).show();
-                abrirTelaPrincipal();
+                FirebaseUser user = autenticacao.getCurrentUser();
+                if (user != null) {
+                    // Check if user exists in Firestore, if not, save them
+                    verificarESalvarUsuarioFirestore(user);
+                } else {
+                    Toast.makeText(AutenticacaoActivity.this,
+                            "Logado com sucesso",
+                            Toast.LENGTH_SHORT).show();
+                    abrirTelaPrincipal();
+                }
             } else {
                 String erroExcecao;
                 try {
@@ -155,6 +171,74 @@ public class AutenticacaoActivity extends AppCompatActivity {
                         Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private void verificarESalvarUsuarioFirestore(FirebaseUser firebaseUser) {
+        db.collection("usuarios").document(firebaseUser.getUid())
+                .get()
+                .addOnSuccessListener(documentSnapshot -> {
+                    if (documentSnapshot.exists()) {
+                        // User already exists in Firestore, update lastLogin
+                        atualizarLastLogin(firebaseUser.getUid());
+                    } else {
+                        // User doesn't exist, save them
+                        salvarUsuarioFirestore(firebaseUser);
+                    }
+                })
+                .addOnFailureListener(e -> {
+                    // Error checking user, try to save anyway
+                    salvarUsuarioFirestore(firebaseUser);
+                });
+    }
+
+    private void salvarUsuarioFirestore(FirebaseUser firebaseUser) {
+        Usuario usuario = new Usuario();
+        usuario.setUid(firebaseUser.getUid());
+        usuario.setEmail(firebaseUser.getEmail());
+        
+        // Set name from display name or email
+        String nome = firebaseUser.getDisplayName();
+        if (nome == null || nome.isEmpty()) {
+            nome = firebaseUser.getEmail();
+        }
+        usuario.setNome(nome);
+        
+        // Set current timestamp as lastLogin
+        usuario.setLastLogin(com.google.firebase.Timestamp.now());
+
+        db.collection("usuarios").document(firebaseUser.getUid())
+                .set(usuario)
+                .addOnSuccessListener(aVoid -> {
+                    Toast.makeText(AutenticacaoActivity.this,
+                            "Usuário salvo com sucesso",
+                            Toast.LENGTH_SHORT).show();
+                    abrirTelaPrincipal();
+                })
+                .addOnFailureListener(e -> {
+                    Toast.makeText(AutenticacaoActivity.this,
+                            "Erro ao salvar usuário: " + e.getMessage(),
+                            Toast.LENGTH_SHORT).show();
+                    // Still open main screen even if save fails
+                    abrirTelaPrincipal();
+                });
+    }
+    
+    private void atualizarLastLogin(String userId) {
+        db.collection("usuarios").document(userId)
+                .update("lastLogin", com.google.firebase.Timestamp.now())
+                .addOnSuccessListener(aVoid -> {
+                    Toast.makeText(AutenticacaoActivity.this,
+                            "Logado com sucesso",
+                            Toast.LENGTH_SHORT).show();
+                    abrirTelaPrincipal();
+                })
+                .addOnFailureListener(e -> {
+                    // Even if update fails, still allow login
+                    Toast.makeText(AutenticacaoActivity.this,
+                            "Logado com sucesso",
+                            Toast.LENGTH_SHORT).show();
+                    abrirTelaPrincipal();
+                });
     }
 
     private void verificarUsuarioLogado() {

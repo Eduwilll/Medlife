@@ -17,6 +17,9 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.GeoPoint;
+import java.util.HashMap;
+import java.util.Map;
 
 public class UserLocationManager {
     private static final String TAG = "UserLocationManager";
@@ -48,6 +51,81 @@ public class UserLocationManager {
     }
     
     /**
+     * Save user's last location to Firestore
+     */
+    public void saveLastLocationToFirestore(String address, String city, String state, double latitude, double longitude) {
+        FirebaseUser currentUser = auth.getCurrentUser();
+        if (currentUser == null) {
+            Log.w(TAG, "User not authenticated, cannot save location to Firestore");
+            return;
+        }
+        
+        Map<String, Object> locationData = new HashMap<>();
+        locationData.put("address", address);
+        locationData.put("city", city);
+        locationData.put("state", state);
+        locationData.put("latitude", latitude);
+        locationData.put("longitude", longitude);
+        locationData.put("timestamp", System.currentTimeMillis());
+        locationData.put("fullAddress", address + ", " + city + ", " + state);
+        
+        // Save to Firestore in usuarios/{userId}/lastLocation/{locationId}
+        db.collection("usuarios")
+            .document(currentUser.getUid())
+            .collection("lastLocation")
+            .document("current")
+            .set(locationData)
+            .addOnSuccessListener(aVoid -> {
+                Log.d(TAG, "Last location saved to Firestore successfully");
+            })
+            .addOnFailureListener(e -> {
+                Log.e(TAG, "Error saving last location to Firestore", e);
+            });
+    }
+    
+    /**
+     * Get user's last location from Firestore
+     */
+    public void getLastLocationFromFirestore(OnLastLocationReceivedListener listener) {
+        FirebaseUser currentUser = auth.getCurrentUser();
+        if (currentUser == null) {
+            Log.w(TAG, "User not authenticated, cannot get location from Firestore");
+            listener.onLastLocationReceived(null, null, null, 0, 0);
+            return;
+        }
+        
+        db.collection("usuarios")
+            .document(currentUser.getUid())
+            .collection("lastLocation")
+            .document("current")
+            .get()
+            .addOnSuccessListener(documentSnapshot -> {
+                if (documentSnapshot.exists()) {
+                    String address = documentSnapshot.getString("address");
+                    String city = documentSnapshot.getString("city");
+                    String state = documentSnapshot.getString("state");
+                    Double latitude = documentSnapshot.getDouble("latitude");
+                    Double longitude = documentSnapshot.getDouble("longitude");
+                    
+                    if (address != null && city != null && state != null) {
+                        String fullAddress = address + ", " + city + ", " + state;
+                        listener.onLastLocationReceived(fullAddress, city, state, 
+                            latitude != null ? latitude : 0, 
+                            longitude != null ? longitude : 0);
+                    } else {
+                        listener.onLastLocationReceived(null, null, null, 0, 0);
+                    }
+                } else {
+                    listener.onLastLocationReceived(null, null, null, 0, 0);
+                }
+            })
+            .addOnFailureListener(e -> {
+                Log.e(TAG, "Error getting last location from Firestore", e);
+                listener.onLastLocationReceived(null, null, null, 0, 0);
+            });
+    }
+    
+    /**
      * Get user's saved address from SharedPreferences
      */
     public String getSavedAddress() {
@@ -75,6 +153,9 @@ public class UserLocationManager {
         editor.putString(KEY_USER_CITY, city);
         editor.putString(KEY_USER_STATE, state);
         editor.apply();
+        
+        // Also save to Firestore
+        saveLastLocationToFirestore(address, city, state, 0, 0);
     }
     
     /**
@@ -87,7 +168,7 @@ public class UserLocationManager {
             return;
         }
         
-        db.collection("users").document(currentUser.getUid())
+        db.collection("usuarios").document(currentUser.getUid())
             .get()
             .addOnSuccessListener(documentSnapshot -> {
                 if (documentSnapshot.exists()) {
@@ -132,6 +213,15 @@ public class UserLocationManager {
                     // In a real app, you would use reverse geocoding here
                     // to convert coordinates to address
                     String address = reverseGeocode(location);
+                    
+                    // Save the current location to Firestore
+                    String[] addressParts = address.split(", ");
+                    if (addressParts.length >= 2) {
+                        String city = addressParts[0];
+                        String state = addressParts[1];
+                        saveLastLocationToFirestore("", city, state, location.getLatitude(), location.getLongitude());
+                    }
+                    
                     if (locationCallback != null) {
                         locationCallback.onLocationReceived(address);
                     }
@@ -182,17 +272,29 @@ public class UserLocationManager {
             return;
         }
         
-        // Then, try to get from Firebase
-        getUserAddressFromFirebase(new OnAddressReceivedListener() {
+        // Then, try to get from Firestore lastLocation
+        getLastLocationFromFirestore(new OnLastLocationReceivedListener() {
             @Override
-            public void onAddressReceived(String address) {
-                if (address != null) {
+            public void onLastLocationReceived(String fullAddress, String city, String state, double latitude, double longitude) {
+                if (fullAddress != null) {
                     if (locationCallback != null) {
-                        locationCallback.onLocationReceived(address);
+                        locationCallback.onLocationReceived(fullAddress);
                     }
                 } else {
-                    // Finally, try to get current location
-                    getCurrentLocation();
+                    // Try to get from Firebase users collection
+                    getUserAddressFromFirebase(new OnAddressReceivedListener() {
+                        @Override
+                        public void onAddressReceived(String address) {
+                            if (address != null) {
+                                if (locationCallback != null) {
+                                    locationCallback.onLocationReceived(address);
+                                }
+                            } else {
+                                // Finally, try to get current location
+                                getCurrentLocation();
+                            }
+                        }
+                    });
                 }
             }
         });
@@ -200,5 +302,9 @@ public class UserLocationManager {
     
     public interface OnAddressReceivedListener {
         void onAddressReceived(String address);
+    }
+    
+    public interface OnLastLocationReceivedListener {
+        void onLastLocationReceived(String fullAddress, String city, String state, double latitude, double longitude);
     }
 } 

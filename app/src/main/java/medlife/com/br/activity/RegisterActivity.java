@@ -152,6 +152,7 @@ public class RegisterActivity extends AppCompatActivity {
                                             usuario.setEmail(email);
                                             usuario.setPhoneNumber("");
                                             usuario.setEndereco(new ArrayList<>());
+                                            usuario.setLastLogin(com.google.firebase.Timestamp.now());
 
                                             db.collection("usuarios")
                                                     .document(user.getUid())

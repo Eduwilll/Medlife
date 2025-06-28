@@ -25,6 +25,7 @@ import medlife.com.br.model.Category;
 import medlife.com.br.model.Farmacia;
 import medlife.com.br.helper.UsuarioFirebase;
 import medlife.com.br.helper.UserLocationManager;
+import medlife.com.br.activity.HomeActivity;
 
 public class HomeFragment extends Fragment {
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1001;
@@ -53,8 +54,15 @@ public class HomeFragment extends Fragment {
         // Get current user
         usuarioAtual = UsuarioFirebase.getUsuarioAtual();
 
-        // Initialize location manager
-        locationManager = new UserLocationManager(requireContext());
+        // Get location manager from activity
+        if (getActivity() instanceof HomeActivity) {
+            locationManager = ((HomeActivity) getActivity()).getLocationManager();
+        } else {
+            // Fallback: create new instance if not available from activity
+            locationManager = new UserLocationManager(requireContext());
+        }
+        
+        // Set up location callback
         locationManager.setLocationCallback(new UserLocationManager.LocationCallback() {
             @Override
             public void onLocationReceived(String address) {
@@ -158,10 +166,17 @@ public class HomeFragment extends Fragment {
             String selectedLocation = locations[which];
             locationText.setText(selectedLocation);
             
-            // Save the selected location
+            // Save the selected location to both SharedPreferences and Firestore
             String[] parts = selectedLocation.split(", ");
             if (parts.length >= 2) {
-                locationManager.saveAddress("", parts[0], parts[1]);
+                String city = parts[0];
+                String state = parts[1];
+                
+                // Save to SharedPreferences
+                locationManager.saveAddress("", city, state);
+                
+                // Save to Firestore with coordinates (0,0 for manual selection)
+                locationManager.saveLastLocationToFirestore("", city, state, 0, 0);
             }
         });
         

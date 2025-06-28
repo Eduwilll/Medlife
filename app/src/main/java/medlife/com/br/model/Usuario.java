@@ -20,6 +20,7 @@ public class Usuario {
     private List<Order> orders;
     @ServerTimestamp
     private Timestamp criadoEm;
+    private Timestamp lastLogin;
     private int enderecoPrincipal = 0;
 
     public Usuario() {
@@ -111,6 +112,14 @@ public class Usuario {
 
     public void setCriadoEm(Timestamp criadoEm) {
         this.criadoEm = criadoEm;
+    }
+
+    public Timestamp getLastLogin() {
+        return lastLogin;
+    }
+
+    public void setLastLogin(Timestamp lastLogin) {
+        this.lastLogin = lastLogin;
     }
 
     public String getOtherGender() { return otherGender; }

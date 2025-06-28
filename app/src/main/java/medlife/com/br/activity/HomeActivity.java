@@ -6,14 +6,24 @@ import android.os.Bundle;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import medlife.com.br.R;
 import medlife.com.br.fragments.*;
+import medlife.com.br.helper.UserLocationManager;
+import medlife.com.br.helper.UsuarioFirebase;
 
 public class HomeActivity extends AppCompatActivity {
 
     private BottomNavigationView bottomNavigationView;
+    private UserLocationManager locationManager;
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+        
+        // Update last login timestamp
+        UsuarioFirebase.atualizarLastLogin();
+        
+        // Initialize location manager
+        initializeLocationManager();
         
         setupBottomNavigation();
 
@@ -21,6 +31,24 @@ public class HomeActivity extends AppCompatActivity {
         if (savedInstanceState == null) {
             loadFragment(new HomeFragment());
         }
+    }
+    
+    private void initializeLocationManager() {
+        locationManager = new UserLocationManager(this);
+        
+        // Set up location callback for the activity
+        locationManager.setLocationCallback(new UserLocationManager.LocationCallback() {
+            @Override
+            public void onLocationReceived(String address) {
+                // Location received, can be used for app-wide location features
+                // The HomeFragment will handle its own location display
+            }
+
+            @Override
+            public void onLocationError(String error) {
+                // Handle location errors at activity level if needed
+            }
+        });
     }
 
     private void setupBottomNavigation() {
@@ -57,5 +85,12 @@ public class HomeActivity extends AppCompatActivity {
             return true;
         }
         return false;
+    }
+    
+    /**
+     * Get the location manager instance for use in fragments
+     */
+    public UserLocationManager getLocationManager() {
+        return locationManager;
     }
 }
