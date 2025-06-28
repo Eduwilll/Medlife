@@ -1,13 +1,19 @@
 package medlife.com.br.fragments;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.cardview.widget.CardView;
 import com.google.firebase.auth.FirebaseUser;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,14 +24,19 @@ import medlife.com.br.model.Product;
 import medlife.com.br.model.Category;
 import medlife.com.br.model.Farmacia;
 import medlife.com.br.helper.UsuarioFirebase;
+import medlife.com.br.helper.UserLocationManager;
 
 public class HomeFragment extends Fragment {
+    private static final int LOCATION_PERMISSION_REQUEST_CODE = 1001;
+    
     private TextView locationText;
+    private CardView searchBar;
     private RecyclerView medicamentosRecycler;
     private RecyclerView subcategoriesRecycler;
     private RecyclerView bestSellingRecycler;
     private RecyclerView exclusiveOffersRecycler;
     private FirebaseUser usuarioAtual;
+    private UserLocationManager locationManager;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -33,6 +44,7 @@ public class HomeFragment extends Fragment {
         
         // Initialize views
         locationText = view.findViewById(R.id.locationText);
+        searchBar = view.findViewById(R.id.searchBar);
         subcategoriesRecycler = view.findViewById(R.id.subcategoriesRecycler);
         medicamentosRecycler = view.findViewById(R.id.medicamentosRecycler);
         bestSellingRecycler = view.findViewById(R.id.bestSellingRecycler);
@@ -41,8 +53,33 @@ public class HomeFragment extends Fragment {
         // Get current user
         usuarioAtual = UsuarioFirebase.getUsuarioAtual();
 
+        // Initialize location manager
+        locationManager = new UserLocationManager(requireContext());
+        locationManager.setLocationCallback(new UserLocationManager.LocationCallback() {
+            @Override
+            public void onLocationReceived(String address) {
+                if (locationText != null) {
+                    locationText.setText(address);
+                }
+            }
+
+            @Override
+            public void onLocationError(String error) {
+                // Fallback to default location
+                if (locationText != null) {
+                    locationText.setText("São Paulo, Campinas");
+                }
+            }
+        });
+
         // Setup location
         setupLocation();
+
+        // Setup search bar click listener
+        setupSearchBar();
+
+        // Setup location bar click listener
+        setupLocationBar(view);
 
         // Setup RecyclerViews
         setupMedicamentosRecycler();
@@ -54,8 +91,84 @@ public class HomeFragment extends Fragment {
     }
 
     private void setupLocation() {
-        // TODO: Implement location detection or user's saved location
-        locationText.setText("São Paulo, Campinas");
+        // Check location permission first
+        if (checkLocationPermission()) {
+            // Show loading state
+            locationText.setText("Carregando localização...");
+            
+            // Get the best available location
+            locationManager.getBestAvailableLocation();
+        } else {
+            // Request permission
+            requestLocationPermission();
+        }
+    }
+
+    private boolean checkLocationPermission() {
+        return ContextCompat.checkSelfPermission(requireContext(), 
+            Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED;
+    }
+
+    private void requestLocationPermission() {
+        ActivityCompat.requestPermissions(requireActivity(),
+            new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+            LOCATION_PERMISSION_REQUEST_CODE);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        if (requestCode == LOCATION_PERMISSION_REQUEST_CODE) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                // Permission granted, get location
+                setupLocation();
+            } else {
+                // Permission denied, show default location
+                locationText.setText("São Paulo, Campinas");
+            }
+        }
+    }
+
+    private void setupSearchBar() {
+        searchBar.setOnClickListener(v -> {
+            // Navigate to SearchFragment
+            SearchFragment searchFragment = new SearchFragment();
+            FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
+            transaction.replace(R.id.contentFrame, searchFragment);
+            transaction.addToBackStack(null);
+            transaction.commit();
+        });
+    }
+
+    private void setupLocationBar(View view) {
+        View locationBar = view.findViewById(R.id.locationBar);
+        locationBar.setOnClickListener(v -> {
+            // Show location selection dialog or navigate to location settings
+            showLocationDialog();
+        });
+    }
+
+    private void showLocationDialog() {
+        // Create a simple dialog to allow users to select location
+        android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(requireContext());
+        builder.setTitle("Selecionar Localização");
+        
+        String[] locations = {"São Paulo, SP", "Campinas, SP", "Rio de Janeiro, RJ", "Belo Horizonte, MG", "Salvador, BA"};
+        
+        builder.setItems(locations, (dialog, which) -> {
+            String selectedLocation = locations[which];
+            locationText.setText(selectedLocation);
+            
+            // Save the selected location
+            String[] parts = selectedLocation.split(", ");
+            if (parts.length >= 2) {
+                locationManager.saveAddress("", parts[0], parts[1]);
+            }
+        });
+        
+        builder.setNegativeButton("Cancelar", (dialog, which) -> dialog.dismiss());
+        
+        android.app.AlertDialog dialog = builder.create();
+        dialog.show();
     }
 
     private void setupSubcategoriesRecycler() {
