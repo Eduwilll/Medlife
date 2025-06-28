@@ -22,7 +22,7 @@
             android:scaleType="centerCrop"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:src="@drawable/profile_image_bg" />
+            android:src="@drawable/ic_profile_placeholder" />
 
         <!-- User Name -->
         <TextView
