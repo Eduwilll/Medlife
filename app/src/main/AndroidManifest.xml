@@ -18,15 +18,6 @@
             android:name=".activity.RegisterActivity"
             android:exported="false" />
         <activity
-            android:name=".activity.NovoProdutoEmpresaActivity"
-            android:exported="false" />
-        <activity
-            android:name=".activity.ConfiguracoesEmpresaActivity"
-            android:exported="false" />
-        <activity
-            android:name=".activity.EmpresaActivity"
-            android:exported="false" />
-        <activity
             android:name=".activity.HomeActivity"
             android:exported="false">
             <meta-data

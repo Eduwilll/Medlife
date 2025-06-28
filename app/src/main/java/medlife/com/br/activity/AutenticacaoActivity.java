@@ -123,7 +123,7 @@ public class AutenticacaoActivity extends AppCompatActivity {
                 .addOnCompleteListener(this, task -> {
                     if (task.isSuccessful()) {
 //                        FirebaseUser user = autenticacao.getCurrentUser();
-                        abrirTelaPrincipal("U");
+                        abrirTelaPrincipal();
                     } else {
                         Toast.makeText(AutenticacaoActivity.this,
                                 "Erro ao autenticar com Google: " + Objects.requireNonNull(task.getException()).getMessage(),
@@ -140,8 +140,7 @@ public class AutenticacaoActivity extends AppCompatActivity {
                 Toast.makeText(AutenticacaoActivity.this,
                         "Logado com sucesso",
                         Toast.LENGTH_SHORT).show();
-                String tipoUsuario = Objects.requireNonNull(task.getResult().getUser()).getDisplayName();
-                abrirTelaPrincipal(tipoUsuario);
+                abrirTelaPrincipal();
             } else {
                 String erroExcecao;
                 try {
@@ -162,16 +161,12 @@ public class AutenticacaoActivity extends AppCompatActivity {
         FirebaseUser usuarioAtual = autenticacao.getCurrentUser();
         if (usuarioAtual != null) {
             String tipoUsuario = usuarioAtual.getDisplayName();
-            abrirTelaPrincipal(tipoUsuario);
+            abrirTelaPrincipal();
         }
     }
 
-    private void abrirTelaPrincipal(String tipoUsuario) {
-        if (tipoUsuario != null && tipoUsuario.equals("E")) {
-            startActivity(new Intent(getApplicationContext(), EmpresaActivity.class));
-        } else {
-            startActivity(new Intent(getApplicationContext(), HomeActivity.class));
-        }
+    private void abrirTelaPrincipal() {
+        startActivity(new Intent(getApplicationContext(), HomeActivity.class));
         finish();
     }
 
