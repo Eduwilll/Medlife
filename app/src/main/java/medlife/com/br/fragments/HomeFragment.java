@@ -67,7 +67,7 @@ public class HomeFragment extends Fragment {
             public void onLocationError(String error) {
                 // Fallback to default location
                 if (locationText != null) {
-                    locationText.setText("São Paulo, Campinas");
+                    locationText.setText("Erro ao obter localização");
                 }
             }
         });
@@ -123,7 +123,7 @@ public class HomeFragment extends Fragment {
                 setupLocation();
             } else {
                 // Permission denied, show default location
-                locationText.setText("São Paulo, Campinas");
+                locationText.setText("Adicione seu endereço");
             }
         }
     }
