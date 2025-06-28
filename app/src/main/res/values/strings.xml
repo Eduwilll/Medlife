@@ -63,4 +63,7 @@
     <string name="salvar">Salvar</string>
     <string name="editar_dados">Editar Dados</string>
     <string name="outro_genero_opcional">Outro Gênero (Opcional)</string>
+    <string name="remover_dos_favoritos">Remover dos favoritos</string>
+    <string name="nome_do_produto">Nome do produto</string>
+    <string name="descri_o_do_produto">Descrição do produto</string>
 </resources>
