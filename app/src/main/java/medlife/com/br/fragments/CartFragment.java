@@ -62,10 +62,12 @@ public class CartFragment extends Fragment implements CartAdapter.CartListener {
     private TextView textDeliveryScheduledTitle;
     private Button buttonAddAddress;
     private Button buttonAddAddressNoAddress;
+    private TextView textAddressWarning;
     private double deliveryFee = 7.00;
     private double discountAmount = 0.0;
     private String selectedDeliveryOption = "immediate"; // Default to immediate delivery
     private androidx.fragment.app.FragmentManager.OnBackStackChangedListener backStackListener;
+    private boolean hasAddress = false; // Track if user has an address
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -95,6 +97,7 @@ public class CartFragment extends Fragment implements CartAdapter.CartListener {
         textDeliveryScheduledTitle = view.findViewById(R.id.textDeliveryScheduledTitle);
         buttonAddAddress = view.findViewById(R.id.buttonAddAddress);
         buttonAddAddressNoAddress = view.findViewById(R.id.buttonAddAddressNoAddress);
+        textAddressWarning = view.findViewById(R.id.textAddressWarning);
 
         setupCart();
         loadUserPrincipalAddress();
@@ -102,6 +105,11 @@ public class CartFragment extends Fragment implements CartAdapter.CartListener {
         setupAddressButtons();
 
         buttonCheckout.setOnClickListener(v -> {
+            if (!hasAddress) {
+                Toast.makeText(getContext(), "Você precisa adicionar um endereço para continuar", Toast.LENGTH_LONG).show();
+                return;
+            }
+            
             Order newOrder = CartManager.getInstance().createOrderFromCart();
             if (newOrder != null) {
                 // Populate order with current cart information
@@ -164,30 +172,39 @@ public class CartFragment extends Fragment implements CartAdapter.CartListener {
                                 if (principalIndex >= 0 && principalIndex < usuario.getEndereco().size()) {
                                     Map<String, Object> principalAddress = usuario.getEndereco().get(principalIndex);
                                     displayAddress(principalAddress);
+                                    hasAddress = true;
                                 } else {
                                     // If principal index is invalid, show first address
                                     displayAddress(usuario.getEndereco().get(0));
+                                    hasAddress = true;
                                 }
                             } else {
                                 // No addresses found, show no address state
                                 layoutDeliveryAddress.setVisibility(View.GONE);
                                 layoutNoAddress.setVisibility(View.VISIBLE);
+                                hasAddress = false;
                             }
                         } else {
                             // User document doesn't exist, show no address state
                             layoutDeliveryAddress.setVisibility(View.GONE);
                             layoutNoAddress.setVisibility(View.VISIBLE);
+                            hasAddress = false;
                         }
+                        updateCheckoutButtonState();
                     })
                     .addOnFailureListener(e -> {
                         // Error loading user data, show no address state
                         layoutDeliveryAddress.setVisibility(View.GONE);
                         layoutNoAddress.setVisibility(View.VISIBLE);
+                        hasAddress = false;
+                        updateCheckoutButtonState();
                     });
         } else {
             // User not authenticated, show no address state
             layoutDeliveryAddress.setVisibility(View.GONE);
             layoutNoAddress.setVisibility(View.VISIBLE);
+            hasAddress = false;
+            updateCheckoutButtonState();
         }
     }
 
@@ -207,6 +224,8 @@ public class CartFragment extends Fragment implements CartAdapter.CartListener {
         textDeliveryAddress.setText(String.format("%s\n%s", addressLine1, addressLine2));
         layoutDeliveryAddress.setVisibility(View.VISIBLE);
         layoutNoAddress.setVisibility(View.GONE);
+        hasAddress = true;
+        updateCheckoutButtonState();
     }
 
     private void setupCart() {
@@ -229,6 +248,7 @@ public class CartFragment extends Fragment implements CartAdapter.CartListener {
         }
         updateSummary();
         updatePrescriptionWarning();
+        updateCheckoutButtonState();
     }
 
     private void updateTotal() {
@@ -263,6 +283,7 @@ public class CartFragment extends Fragment implements CartAdapter.CartListener {
             setupCart(); // Refresh the whole view if cart becomes empty
         } else {
             cartAdapter.updateCartItems(CartManager.getInstance().getCartItems());
+            updateCheckoutButtonState();
         }
     }
 
@@ -314,6 +335,28 @@ public class CartFragment extends Fragment implements CartAdapter.CartListener {
         // Calculate total
         double total = subtotal + deliveryFee - discountAmount;
         textTotal.setText(format.format(total));
+        
+        // Update checkout button state after summary update
+        updateCheckoutButtonState();
+    }
+
+    private void updateCheckoutButtonState() {
+        boolean cartNotEmpty = !CartManager.getInstance().getCartItems().isEmpty();
+        boolean canCheckout = hasAddress && cartNotEmpty;
+        
+        buttonCheckout.setEnabled(canCheckout);
+        buttonCheckout.setAlpha(canCheckout ? 1.0f : 0.5f);
+        
+        if (!hasAddress && cartNotEmpty) {
+            buttonCheckout.setText("Adicione um endereço para continuar");
+            textAddressWarning.setVisibility(View.VISIBLE);
+        } else if (hasAddress && cartNotEmpty) {
+            buttonCheckout.setText("Finalizar Compra");
+            textAddressWarning.setVisibility(View.GONE);
+        } else {
+            buttonCheckout.setText("Finalizar Compra");
+            textAddressWarning.setVisibility(View.GONE);
+        }
     }
 
     // Method to apply coupon discount

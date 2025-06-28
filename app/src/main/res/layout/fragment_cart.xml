@@ -109,14 +109,14 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Endereço de entrega"
-                        android:textColor="#7C7C7C"
+                        android:text="Endereço de entrega obrigatório"
+                        android:textColor="#BF2F25"
                         android:textSize="14sp"
-                        android:fontFamily="@font/gilroyregular"/>
+                        android:fontFamily="@font/gilroybold"/>
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Adicione um endereço para continuar"
+                        android:text="Adicione um endereço para finalizar a compra"
                         android:textColor="#181725"
                         android:textSize="16sp"
                         android:fontFamily="@font/gilroybold"/>
@@ -473,6 +473,19 @@
                 android:textSize="18sp"
                 android:fontFamily="@font/gilroybold"
                 android:layout_margin="16dp"/>
+
+            <!-- Address Requirement Warning -->
+            <TextView
+                android:id="@+id/textAddressWarning"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="⚠️ Endereço de entrega obrigatório para finalizar a compra"
+                android:textColor="#BF2F25"
+                android:textSize="14sp"
+                android:fontFamily="@font/gilroymedium"
+                android:gravity="center"
+                android:padding="8dp"
+                android:visibility="gone"/>
         </LinearLayout>
 
         <!-- Fragment Container for UploadPrescriptionFragment -->
