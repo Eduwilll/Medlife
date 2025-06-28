@@ -45,7 +45,6 @@
                 android:orientation="horizontal"
                 android:padding="16dp"
                 android:background="@drawable/profile_bg"
-
                 android:gravity="center_vertical">
                 <ImageView
                     android:layout_width="112dp"
@@ -53,8 +52,9 @@
                     android:src="@drawable/ic_cart_location"
                     android:scaleType="centerInside" />
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:orientation="vertical"
                     android:layout_marginStart="12dp">
                     <TextView
@@ -74,6 +74,61 @@
                         android:textSize="16sp"
                         android:fontFamily="@font/gilroybold"/>
                 </LinearLayout>
+                <Button
+                    android:id="@+id/buttonAddAddress"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Adicionar"
+                    android:textColor="#1E56A0"
+                    android:backgroundTint="#FFFFFF"
+                    android:fontFamily="@font/gilroysemibold"
+                    android:visibility="gone"/>
+            </LinearLayout>
+
+            <!-- No Address State -->
+            <LinearLayout
+                android:id="@+id/layoutNoAddress"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="16dp"
+                android:background="@drawable/profile_bg"
+                android:gravity="center_vertical"
+                android:visibility="gone">
+                <ImageView
+                    android:layout_width="112dp"
+                    android:layout_height="85dp"
+                    android:src="@drawable/ic_cart_location"
+                    android:scaleType="centerInside" />
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:layout_marginStart="12dp">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Endereço de entrega"
+                        android:textColor="#7C7C7C"
+                        android:textSize="14sp"
+                        android:fontFamily="@font/gilroyregular"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Adicione um endereço para continuar"
+                        android:textColor="#181725"
+                        android:textSize="16sp"
+                        android:fontFamily="@font/gilroybold"/>
+                </LinearLayout>
+                <Button
+                    android:id="@+id/buttonAddAddressNoAddress"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Adicionar"
+                    android:textColor="#1E56A0"
+                    android:backgroundTint="#FFFFFF"
+                    android:fontFamily="@font/gilroysemibold"/>
             </LinearLayout>
 
             <!-- Delivery Options -->

@@ -31,6 +31,9 @@ import medlife.com.br.model.Usuario;
 import medlife.com.br.helper.UsuarioFirebase;
 import java.util.Map;
 import androidx.fragment.app.FragmentTransaction;
+import medlife.com.br.fragments.SearchFragment;
+import medlife.com.br.fragments.UploadPrescriptionFragment;
+import medlife.com.br.fragments.profile.ProfileAddressesFragment;
 
 public class CartFragment extends Fragment implements CartAdapter.CartListener {
     private RecyclerView recyclerCartItems;
@@ -47,6 +50,7 @@ public class CartFragment extends Fragment implements CartAdapter.CartListener {
     private TextView textDeliveryAddress;
     private TextView textDeliveryAddressTitle;
     private LinearLayout layoutDeliveryAddress;
+    private LinearLayout layoutNoAddress;
     private TextView textSubtotal;
     private TextView textDeliveryFee;
     private TextView textDiscount;
@@ -56,6 +60,8 @@ public class CartFragment extends Fragment implements CartAdapter.CartListener {
     private TextView textDeliveryImmediateTitle;
     private TextView textDeliveryStorePickupTitle;
     private TextView textDeliveryScheduledTitle;
+    private Button buttonAddAddress;
+    private Button buttonAddAddressNoAddress;
     private double deliveryFee = 7.00;
     private double discountAmount = 0.0;
     private String selectedDeliveryOption = "immediate"; // Default to immediate delivery
@@ -77,6 +83,7 @@ public class CartFragment extends Fragment implements CartAdapter.CartListener {
         textDeliveryAddress = view.findViewById(R.id.textDeliveryAddress);
         textDeliveryAddressTitle = view.findViewById(R.id.textDeliveryAddressTitle);
         layoutDeliveryAddress = view.findViewById(R.id.layoutDeliveryAddress);
+        layoutNoAddress = view.findViewById(R.id.layoutNoAddress);
         textSubtotal = view.findViewById(R.id.textSubtotal);
         textDeliveryFee = view.findViewById(R.id.textDeliveryFee);
         textDiscount = view.findViewById(R.id.textDiscount);
@@ -86,10 +93,13 @@ public class CartFragment extends Fragment implements CartAdapter.CartListener {
         textDeliveryImmediateTitle = view.findViewById(R.id.textDeliveryImmediateTitle);
         textDeliveryStorePickupTitle = view.findViewById(R.id.textDeliveryStorePickupTitle);
         textDeliveryScheduledTitle = view.findViewById(R.id.textDeliveryScheduledTitle);
+        buttonAddAddress = view.findViewById(R.id.buttonAddAddress);
+        buttonAddAddressNoAddress = view.findViewById(R.id.buttonAddAddressNoAddress);
 
         setupCart();
         loadUserPrincipalAddress();
         setupDeliveryOptions();
+        setupAddressButtons();
 
         buttonCheckout.setOnClickListener(v -> {
             Order newOrder = CartManager.getInstance().createOrderFromCart();
@@ -171,21 +181,25 @@ public class CartFragment extends Fragment implements CartAdapter.CartListener {
                                     displayAddress(usuario.getEndereco().get(0));
                                 }
                             } else {
-                                // No addresses found, hide delivery address section
+                                // No addresses found, show no address state
                                 layoutDeliveryAddress.setVisibility(View.GONE);
+                                layoutNoAddress.setVisibility(View.VISIBLE);
                             }
                         } else {
-                            // User document doesn't exist, hide delivery address section
+                            // User document doesn't exist, show no address state
                             layoutDeliveryAddress.setVisibility(View.GONE);
+                            layoutNoAddress.setVisibility(View.VISIBLE);
                         }
                     })
                     .addOnFailureListener(e -> {
-                        // Error loading user data, hide delivery address section
+                        // Error loading user data, show no address state
                         layoutDeliveryAddress.setVisibility(View.GONE);
+                        layoutNoAddress.setVisibility(View.VISIBLE);
                     });
         } else {
-            // User not authenticated, hide delivery address section
+            // User not authenticated, show no address state
             layoutDeliveryAddress.setVisibility(View.GONE);
+            layoutNoAddress.setVisibility(View.VISIBLE);
         }
     }
 
@@ -204,6 +218,7 @@ public class CartFragment extends Fragment implements CartAdapter.CartListener {
 
         textDeliveryAddress.setText(String.format("%s\n%s", addressLine1, addressLine2));
         layoutDeliveryAddress.setVisibility(View.VISIBLE);
+        layoutNoAddress.setVisibility(View.GONE);
     }
 
     private void setupCart() {
@@ -394,6 +409,7 @@ public class CartFragment extends Fragment implements CartAdapter.CartListener {
             // Load user's principal address
             String userId = UsuarioFirebase.getIdUsuario();
             if (userId != null) {
+
                 db.collection("usuarios")
                         .document(userId)
                         .get()
@@ -421,6 +437,24 @@ public class CartFragment extends Fragment implements CartAdapter.CartListener {
             newOrder.setEstimatedDeliveryTime(com.google.firebase.Timestamp.now());
         }
         // For pickup, no estimated delivery time needed
+    }
+
+    private void setupAddressButtons() {
+        buttonAddAddress.setOnClickListener(v -> navigateToAddressesFragment());
+        buttonAddAddressNoAddress.setOnClickListener(v -> navigateToAddressesFragment());
+    }
+
+    private void navigateToAddressesFragment() {
+        // Navigate directly to ProfileAddressesFragment
+        if (getActivity() != null) {
+            androidx.fragment.app.FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+            ProfileAddressesFragment addressesFragment = new ProfileAddressesFragment();
+            
+            fragmentManager.beginTransaction()
+                .replace(R.id.contentFrame, addressesFragment)
+                .addToBackStack(null)
+                .commit();
+        }
     }
 
     @Override
