@@ -19,8 +19,11 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         
-        // Update last login timestamp
-        UsuarioFirebase.atualizarLastLogin();
+        // Update last login timestamp safely without overwriting other data
+        String userId = UsuarioFirebase.getIdUsuario();
+        if (userId != null) {
+            UsuarioFirebase.atualizarLastLoginSeguro(userId);
+        }
         
         // Initialize location manager
         initializeLocationManager();

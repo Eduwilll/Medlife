@@ -178,20 +178,39 @@ public class AutenticacaoActivity extends AppCompatActivity {
                 .get()
                 .addOnSuccessListener(documentSnapshot -> {
                     if (documentSnapshot.exists()) {
-                        // User already exists in Firestore, update lastLogin
+                        // User already exists in Firestore, update lastLogin only
                         atualizarLastLogin(firebaseUser.getUid());
                     } else {
-                        // User doesn't exist, save them
-                        salvarUsuarioFirestore(firebaseUser);
+                        // User doesn't exist, create new user document
+                        criarNovoUsuarioFirestore(firebaseUser);
                     }
                 })
                 .addOnFailureListener(e -> {
-                    // Error checking user, try to save anyway
-                    salvarUsuarioFirestore(firebaseUser);
+                    // Error checking user, try to create new user
+                    criarNovoUsuarioFirestore(firebaseUser);
                 });
     }
 
     private void salvarUsuarioFirestore(FirebaseUser firebaseUser) {
+        // Check if user already exists to avoid overwriting
+        db.collection("usuarios").document(firebaseUser.getUid())
+                .get()
+                .addOnSuccessListener(documentSnapshot -> {
+                    if (documentSnapshot.exists()) {
+                        // User exists, only update lastLogin
+                        atualizarLastLogin(firebaseUser.getUid());
+                    } else {
+                        // User doesn't exist, create new user
+                        criarNovoUsuarioFirestore(firebaseUser);
+                    }
+                })
+                .addOnFailureListener(e -> {
+                    // Error checking, create new user
+                    criarNovoUsuarioFirestore(firebaseUser);
+                });
+    }
+    
+    private void criarNovoUsuarioFirestore(FirebaseUser firebaseUser) {
         Usuario usuario = new Usuario();
         usuario.setUid(firebaseUser.getUid());
         usuario.setEmail(firebaseUser.getEmail());
@@ -210,13 +229,13 @@ public class AutenticacaoActivity extends AppCompatActivity {
                 .set(usuario)
                 .addOnSuccessListener(aVoid -> {
                     Toast.makeText(AutenticacaoActivity.this,
-                            "Usuário salvo com sucesso",
+                            "Usuário criado com sucesso",
                             Toast.LENGTH_SHORT).show();
                     abrirTelaPrincipal();
                 })
                 .addOnFailureListener(e -> {
                     Toast.makeText(AutenticacaoActivity.this,
-                            "Erro ao salvar usuário: " + e.getMessage(),
+                            "Erro ao criar usuário: " + e.getMessage(),
                             Toast.LENGTH_SHORT).show();
                     // Still open main screen even if save fails
                     abrirTelaPrincipal();

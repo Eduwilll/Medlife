@@ -106,18 +106,6 @@ public class CartFragment extends Fragment implements CartAdapter.CartListener {
             if (newOrder != null) {
                 // Populate order with current cart information
                 populateOrderDetails(newOrder);
-                
-                Objects.requireNonNull(OrderManager.saveOrder(newOrder))
-                        .addOnSuccessListener(aVoid -> {
-                            CartManager.getInstance().clearCart();
-                            Intent intent = new Intent(getActivity(), OrderSuccessActivity.class);
-                            startActivity(intent);
-                            Toast.makeText(getContext(), "Pedido realizado com sucesso!", Toast.LENGTH_SHORT).show();
-                        })
-                        .addOnFailureListener(e -> {
-                            Toast.makeText(getContext(), "Falha ao realizar o pedido: " + e.getMessage(), Toast.LENGTH_LONG).show();
-                            e.printStackTrace();
-                        });
             } else {
                 Toast.makeText(getContext(), "Erro: Não foi possível criar o pedido", Toast.LENGTH_SHORT).show();
             }
@@ -406,10 +394,9 @@ public class CartFragment extends Fragment implements CartAdapter.CartListener {
         
         // Set delivery address if available
         if (layoutDeliveryAddress.getVisibility() == View.VISIBLE) {
-            // Load user's principal address
+            // Load user's principal address and save order after getting it
             String userId = UsuarioFirebase.getIdUsuario();
             if (userId != null) {
-
                 db.collection("usuarios")
                         .document(userId)
                         .get()
@@ -421,11 +408,47 @@ public class CartFragment extends Fragment implements CartAdapter.CartListener {
                                     if (principalIndex >= 0 && principalIndex < usuario.getEndereco().size()) {
                                         Map<String, Object> principalAddress = usuario.getEndereco().get(principalIndex);
                                         newOrder.setDeliveryAddress(principalAddress);
+                                        
+                                        // Log the address being set
+                                        System.out.println("Setting delivery address: " + principalAddress.toString());
+                                        
+                                        // Now save the order with the address
+                                        saveOrderWithAddress(newOrder);
+                                    } else {
+                                        // Use first address if principal index is invalid
+                                        Map<String, Object> firstAddress = usuario.getEndereco().get(0);
+                                        newOrder.setDeliveryAddress(firstAddress);
+                                        
+                                        // Log the address being set
+                                        System.out.println("Setting first address (invalid principal index): " + firstAddress.toString());
+                                        
+                                        saveOrderWithAddress(newOrder);
                                     }
+                                } else {
+                                    // No addresses available, save order without address
+                                    System.out.println("No addresses available for user");
+                                    saveOrderWithAddress(newOrder);
                                 }
+                            } else {
+                                // User document doesn't exist, save order without address
+                                System.out.println("User document doesn't exist");
+                                saveOrderWithAddress(newOrder);
                             }
+                        })
+                        .addOnFailureListener(e -> {
+                            // Error loading user data, save order without address
+                            System.out.println("Error loading user data: " + e.getMessage());
+                            saveOrderWithAddress(newOrder);
                         });
+            } else {
+                // User not authenticated, save order without address
+                System.out.println("User not authenticated");
+                saveOrderWithAddress(newOrder);
             }
+        } else {
+            // No delivery address available, save order without address
+            System.out.println("No delivery address UI visible");
+            saveOrderWithAddress(newOrder);
         }
         
         // Set estimated delivery time based on delivery option
@@ -437,6 +460,24 @@ public class CartFragment extends Fragment implements CartAdapter.CartListener {
             newOrder.setEstimatedDeliveryTime(com.google.firebase.Timestamp.now());
         }
         // For pickup, no estimated delivery time needed
+    }
+    
+    private void saveOrderWithAddress(Order newOrder) {
+        // Log the order details before saving
+        System.out.println("Saving order with delivery address: " + 
+            (newOrder.getDeliveryAddress() != null ? newOrder.getDeliveryAddress().toString() : "null"));
+        
+        Objects.requireNonNull(OrderManager.saveOrder(newOrder))
+                .addOnSuccessListener(aVoid -> {
+                    CartManager.getInstance().clearCart();
+                    Intent intent = new Intent(getActivity(), OrderSuccessActivity.class);
+                    startActivity(intent);
+                    Toast.makeText(getContext(), "Pedido realizado com sucesso!", Toast.LENGTH_SHORT).show();
+                })
+                .addOnFailureListener(e -> {
+                    Toast.makeText(getContext(), "Falha ao realizar o pedido: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                    e.printStackTrace();
+                });
     }
 
     private void setupAddressButtons() {

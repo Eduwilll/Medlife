@@ -27,6 +27,9 @@ public class OrderManager {
         // Set the current timestamp manually
         order.setCreatedAt(Timestamp.now());
         
+        // Ensure userId is set in the order
+        order.setUserId(userId);
+        
         // Save to orders collection
         Task<Void> saveToOrders = db.collection("orders")
                 .document(order.getOrderId())

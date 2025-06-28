@@ -90,6 +90,13 @@ public class ProfileAddressesFragment extends Fragment {
 
     private void loadUserAddresses() {
         String userId = UsuarioFirebase.getIdUsuario();
+        if (userId == null) {
+            Toast.makeText(getContext(), "Erro: Usuário não autenticado.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        
+        System.out.println("Loading addresses for user: " + userId);
+        
         db.collection("usuarios")
                 .document(userId)
                 .get()
@@ -97,19 +104,23 @@ public class ProfileAddressesFragment extends Fragment {
                     if (documentSnapshot.exists()) {
                         usuarioAtual = documentSnapshot.toObject(Usuario.class);
                         if (usuarioAtual != null && usuarioAtual.getEndereco() != null && !usuarioAtual.getEndereco().isEmpty()) {
+                            System.out.println("Found " + usuarioAtual.getEndereco().size() + " addresses for user");
                             addressAdapter.updateAddresses(usuarioAtual.getEndereco(), usuarioAtual);
                             recyclerAddresses.setVisibility(View.VISIBLE);
                             textEmpty.setVisibility(View.GONE);
                         } else {
+                            System.out.println("No addresses found for user");
                             recyclerAddresses.setVisibility(View.GONE);
                             textEmpty.setVisibility(View.VISIBLE);
                         }
                     } else {
+                        System.out.println("User document doesn't exist");
                         recyclerAddresses.setVisibility(View.GONE);
                         textEmpty.setVisibility(View.VISIBLE);
                     }
                 })
                 .addOnFailureListener(e -> {
+                    System.out.println("Error loading addresses: " + e.getMessage());
                     Toast.makeText(getContext(), "Erro ao carregar endereços: " + e.getMessage(), Toast.LENGTH_SHORT).show();
                     recyclerAddresses.setVisibility(View.GONE);
                     textEmpty.setVisibility(View.VISIBLE);
@@ -134,36 +145,95 @@ public class ProfileAddressesFragment extends Fragment {
                 return;
             }
 
-            if (usuarioAtual.getEndereco() == null) {
-                usuarioAtual.setEndereco(new ArrayList<>());
-            }
-            usuarioAtual.getEndereco().add(novoEndereco);
+            // Log the address being added
+            System.out.println("Adding new address: " + novoEndereco.toString());
 
+            // Check if user document exists and has endereco field
             db.collection("usuarios")
                     .document(usuarioAtual.getUid())
-                    .set(usuarioAtual)
-                    .addOnSuccessListener(aVoid -> {
-                        Toast.makeText(getContext(), "Endereço adicionado com sucesso!", Toast.LENGTH_SHORT).show();
-                        clearAddressFields();
-                        loadUserAddresses(); // Reload addresses to update UI
-                        scrollViewAddAddress.setVisibility(View.GONE); // Hide form after adding
-                        buttonToggleAddAddress.setText(R.string.adicionar_novo_endere_o);
-                        buttonAddAddress.setVisibility(View.VISIBLE);
-                        buttonSaveChanges.setVisibility(View.GONE);
+                    .get()
+                    .addOnSuccessListener(documentSnapshot -> {
+                        if (documentSnapshot.exists()) {
+                            // User document exists, add address to array
+                            addAddressToExistingUser(novoEndereco);
+                        } else {
+                            // User document doesn't exist, create it with the address
+                            createUserWithAddress(novoEndereco);
+                        }
                     })
                     .addOnFailureListener(e -> {
-                        Toast.makeText(getContext(), "Erro ao adicionar endereço: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                        System.out.println("Error checking user document: " + e.getMessage());
+                        Toast.makeText(getContext(), "Erro ao verificar usuário: " + e.getMessage(), Toast.LENGTH_SHORT).show();
                     });
         } else {
             Toast.makeText(getContext(), "Erro: Usuário não autenticado.", Toast.LENGTH_SHORT).show();
         }
     }
+    
+    private void addAddressToExistingUser(Map<String, Object> novoEndereco) {
+        // Use arrayUnion to add the new address to the endereco array
+        db.collection("usuarios")
+                .document(usuarioAtual.getUid())
+                .update("endereco", com.google.firebase.firestore.FieldValue.arrayUnion(novoEndereco))
+                .addOnSuccessListener(aVoid -> {
+                    System.out.println("Address added successfully to Firestore");
+                    Toast.makeText(getContext(), "Endereço adicionado com sucesso!", Toast.LENGTH_SHORT).show();
+                    clearAddressFields();
+                    loadUserAddresses(); // Reload addresses to update UI
+                    scrollViewAddAddress.setVisibility(View.GONE); // Hide form after adding
+                    buttonToggleAddAddress.setText(R.string.adicionar_novo_endere_o);
+                    buttonAddAddress.setVisibility(View.VISIBLE);
+                    buttonSaveChanges.setVisibility(View.GONE);
+                })
+                .addOnFailureListener(e -> {
+                    System.out.println("Error adding address: " + e.getMessage());
+                    Toast.makeText(getContext(), "Erro ao adicionar endereço: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                });
+    }
+    
+    private void createUserWithAddress(Map<String, Object> novoEndereco) {
+        // Create new user document with the address
+        List<Map<String, Object>> enderecos = new ArrayList<>();
+        enderecos.add(novoEndereco);
+        
+        Map<String, Object> userData = new HashMap<>();
+        userData.put("uid", usuarioAtual.getUid());
+        userData.put("nome", usuarioAtual.getNome());
+        userData.put("email", usuarioAtual.getEmail());
+        userData.put("endereco", enderecos);
+        userData.put("enderecoPrincipal", 0); // Set first address as principal
+        
+        db.collection("usuarios")
+                .document(usuarioAtual.getUid())
+                .set(userData)
+                .addOnSuccessListener(aVoid -> {
+                    System.out.println("User created with address successfully");
+                    Toast.makeText(getContext(), "Usuário criado com endereço!", Toast.LENGTH_SHORT).show();
+                    clearAddressFields();
+                    loadUserAddresses(); // Reload addresses to update UI
+                    scrollViewAddAddress.setVisibility(View.GONE); // Hide form after adding
+                    buttonToggleAddAddress.setText(R.string.adicionar_novo_endere_o);
+                    buttonAddAddress.setVisibility(View.VISIBLE);
+                    buttonSaveChanges.setVisibility(View.GONE);
+                })
+                .addOnFailureListener(e -> {
+                    System.out.println("Error creating user with address: " + e.getMessage());
+                    Toast.makeText(getContext(), "Erro ao criar usuário: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                });
+    }
 
     private void saveEditedAddress() {
         int editingPosition = (Integer) buttonSaveChanges.getTag(); // Retrieve the position of the address being edited
         if (usuarioAtual != null && usuarioAtual.getEndereco() != null && editingPosition >= 0 && editingPosition < usuarioAtual.getEndereco().size()) {
-            Map<String, Object> editedAddress = usuarioAtual.getEndereco().get(editingPosition);
+            
+            // Validate required fields
+            if (editCep.getText().toString().isEmpty() || editLogradouro.getText().toString().isEmpty()) {
+                Toast.makeText(getContext(), "CEP e Logradouro são obrigatórios.", Toast.LENGTH_SHORT).show();
+                return;
+            }
 
+            // Create the updated address
+            Map<String, Object> editedAddress = new HashMap<>();
             editedAddress.put("cep", editCep.getText().toString());
             editedAddress.put("logradouro", editLogradouro.getText().toString());
             editedAddress.put("numero", editNumero.getText().toString());
@@ -172,15 +242,14 @@ public class ProfileAddressesFragment extends Fragment {
             editedAddress.put("cidade", editCidade.getText().toString());
             editedAddress.put("estado", editEstado.getText().toString());
 
-            // Validate required fields
-            if (editCep.getText().toString().isEmpty() || editLogradouro.getText().toString().isEmpty()) {
-                Toast.makeText(getContext(), "CEP e Logradouro são obrigatórios.", Toast.LENGTH_SHORT).show();
-                return;
-            }
+            // Get current addresses and update the specific position
+            List<Map<String, Object>> currentAddresses = new ArrayList<>(usuarioAtual.getEndereco());
+            currentAddresses.set(editingPosition, editedAddress);
 
+            // Update the entire endereco array
             db.collection("usuarios")
                     .document(usuarioAtual.getUid())
-                    .set(usuarioAtual)
+                    .update("endereco", currentAddresses)
                     .addOnSuccessListener(aVoid -> {
                         Toast.makeText(getContext(), "Endereço atualizado com sucesso!", Toast.LENGTH_SHORT).show();
                         clearAddressFields();
@@ -316,11 +385,24 @@ public class ProfileAddressesFragment extends Fragment {
 
     private void deleteAddress(Map<String, Object> address, int position) {
         if (usuarioAtual != null && usuarioAtual.getEndereco() != null) {
-            usuarioAtual.getEndereco().remove(position);
+            // Get current addresses and remove the specific position
+            List<Map<String, Object>> currentAddresses = new ArrayList<>(usuarioAtual.getEndereco());
+            currentAddresses.remove(position);
+            
+            // Update the enderecoPrincipal index if needed
+            int currentPrincipal = usuarioAtual.getEnderecoPrincipal();
+            if (currentPrincipal == position) {
+                // If we're deleting the principal address, set it to 0 (first address) or -1 if no addresses left
+                usuarioAtual.setEnderecoPrincipal(currentAddresses.isEmpty() ? -1 : 0);
+            } else if (currentPrincipal > position) {
+                // If principal address is after the deleted one, adjust the index
+                usuarioAtual.setEnderecoPrincipal(currentPrincipal - 1);
+            }
 
+            // Update both endereco array and enderecoPrincipal
             db.collection("usuarios")
                     .document(usuarioAtual.getUid())
-                    .set(usuarioAtual)
+                    .update("endereco", currentAddresses, "enderecoPrincipal", usuarioAtual.getEnderecoPrincipal())
                     .addOnSuccessListener(aVoid -> {
                         Toast.makeText(getContext(), "Endereço removido com sucesso!", Toast.LENGTH_SHORT).show();
                         loadUserAddresses(); // Reload addresses to update UI
@@ -335,10 +417,9 @@ public class ProfileAddressesFragment extends Fragment {
 
     private void setPrincipalAddress(int position) {
         if (usuarioAtual != null) {
-            usuarioAtual.setEnderecoPrincipal(position);
             db.collection("usuarios")
                 .document(usuarioAtual.getUid())
-                .set(usuarioAtual)
+                .update("enderecoPrincipal", position)
                 .addOnSuccessListener(aVoid -> {
                     Toast.makeText(getContext(), "Endereço principal atualizado!", Toast.LENGTH_SHORT).show();
                     loadUserAddresses();
