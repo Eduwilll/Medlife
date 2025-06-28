@@ -68,6 +68,7 @@ public class CartFragment extends Fragment implements CartAdapter.CartListener {
     private String selectedDeliveryOption = "immediate"; // Default to immediate delivery
     private androidx.fragment.app.FragmentManager.OnBackStackChangedListener backStackListener;
     private boolean hasAddress = false; // Track if user has an address
+    private List<String> uploadedPrescriptions = new java.util.ArrayList<>(); // Track uploaded prescriptions
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -404,6 +405,25 @@ public class CartFragment extends Fragment implements CartAdapter.CartListener {
         return discountAmount;
     }
 
+    // Method to add prescription ID
+    public void addPrescription(String prescriptionId) {
+        if (!uploadedPrescriptions.contains(prescriptionId)) {
+            uploadedPrescriptions.add(prescriptionId);
+            System.out.println("Prescription added: " + prescriptionId);
+            System.out.println("Total prescriptions: " + uploadedPrescriptions.size());
+        }
+    }
+
+    // Method to get uploaded prescriptions
+    public List<String> getUploadedPrescriptions() {
+        return uploadedPrescriptions;
+    }
+
+    // Method to check if prescriptions are uploaded
+    public boolean hasUploadedPrescriptions() {
+        return !uploadedPrescriptions.isEmpty();
+    }
+
     private void populateOrderDetails(Order newOrder) {
         // Set delivery information
         newOrder.setDeliveryOption(selectedDeliveryOption);
@@ -434,6 +454,18 @@ public class CartFragment extends Fragment implements CartAdapter.CartListener {
             }
         }
         newOrder.setRequiresPrescription(needsPrescription);
+        
+        // Set prescription information
+        if (needsPrescription && hasUploadedPrescriptions()) {
+            newOrder.setPrescriptionIds(uploadedPrescriptions);
+            newOrder.setPrescriptionStatus("pending");
+            newOrder.setPrescriptionUploadDate(com.google.firebase.Timestamp.now());
+            System.out.println("Setting prescription IDs: " + uploadedPrescriptions.toString());
+        } else if (needsPrescription && !hasUploadedPrescriptions()) {
+            // Order requires prescription but none uploaded
+            newOrder.setPrescriptionStatus("missing");
+            System.out.println("Order requires prescription but none uploaded");
+        }
         
         // Set delivery address if available
         if (layoutDeliveryAddress.getVisibility() == View.VISIBLE) {

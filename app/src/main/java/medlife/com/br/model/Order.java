@@ -34,6 +34,11 @@ public class Order {
     private String notes;
     private Timestamp estimatedDeliveryTime;
     private boolean requiresPrescription;
+    
+    // Prescription Information
+    private List<String> prescriptionIds; // List of prescription IDs (QR codes, file paths, etc.)
+    private String prescriptionStatus; // "pending", "approved", "rejected"
+    private Timestamp prescriptionUploadDate;
 
     public Order() {
         // Required empty public constructor
@@ -101,4 +106,14 @@ public class Order {
     
     public boolean isRequiresPrescription() { return requiresPrescription; }
     public void setRequiresPrescription(boolean requiresPrescription) { this.requiresPrescription = requiresPrescription; }
+    
+    // Prescription Information
+    public List<String> getPrescriptionIds() { return prescriptionIds; }
+    public void setPrescriptionIds(List<String> prescriptionIds) { this.prescriptionIds = prescriptionIds; }
+    
+    public String getPrescriptionStatus() { return prescriptionStatus; }
+    public void setPrescriptionStatus(String prescriptionStatus) { this.prescriptionStatus = prescriptionStatus; }
+    
+    public Timestamp getPrescriptionUploadDate() { return prescriptionUploadDate; }
+    public void setPrescriptionUploadDate(Timestamp prescriptionUploadDate) { this.prescriptionUploadDate = prescriptionUploadDate; }
 } 

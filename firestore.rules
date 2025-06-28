@@ -12,6 +12,74 @@ service cloud.firestore {
         (resource == null || resource.data.userId == request.auth.uid);
     }
     
+    // Prescriptions collection - users can manage their own prescriptions
+    match /prescriptions/{prescriptionId} {
+      // Allow users to create prescriptions (QR code uploads)
+      allow create: if request.auth != null && 
+        request.resource.data.userId == request.auth.uid &&
+        request.resource.data.prescriptionId is string &&
+        request.resource.data.prescriptionId.size() >= 8 &&
+        request.resource.data.scanDate is timestamp &&
+        request.resource.data.status == "pending" &&
+        request.resource.data.type == "qr_code";
+      
+      // Allow users to read their own prescriptions
+      allow read: if request.auth != null && 
+        resource.data.userId == request.auth.uid;
+      
+      // Allow users to update their own prescriptions (status changes, etc.)
+      allow update: if request.auth != null && 
+        resource.data.userId == request.auth.uid &&
+        request.resource.data.userId == request.auth.uid &&
+        request.resource.data.prescriptionId == resource.data.prescriptionId &&
+        request.resource.data.scanDate == resource.data.scanDate;
+      
+      // Allow users to delete their own prescriptions
+      allow delete: if request.auth != null && 
+        resource.data.userId == request.auth.uid;
+    }
+    
+    // Enhanced orders collection with prescription support
+    match /orders/{orderId} {
+      // Allow users to create orders with prescription data
+      allow create: if request.auth != null && 
+        request.resource.data.userId == request.auth.uid &&
+        (
+          // If order requires prescription, prescription data must be present
+          (request.resource.data.requiresPrescription == true && 
+           request.resource.data.prescriptionIds is list &&
+           request.resource.data.prescriptionIds.size() > 0 &&
+           request.resource.data.prescriptionStatus in ["pending", "missing"]) ||
+          // If order doesn't require prescription, no prescription data needed
+          (request.resource.data.requiresPrescription == false)
+        ) &&
+        // Validate required fields
+        request.resource.data.totalPrice is number &&
+        request.resource.data.totalPrice > 0 &&
+        request.resource.data.status is string &&
+        request.resource.data.createdAt is timestamp;
+      
+      // Allow users to read their own orders
+      allow read: if request.auth != null && 
+        (resource == null || resource.data.userId == request.auth.uid);
+      
+      // Allow users to update their own orders (status changes, prescription updates)
+      allow update: if request.auth != null && 
+        resource.data.userId == request.auth.uid &&
+        request.resource.data.userId == request.auth.uid &&
+        request.resource.data.orderId == resource.data.orderId &&
+        request.resource.data.createdAt == resource.data.createdAt &&
+        // Allow prescription status updates
+        (
+          request.resource.data.prescriptionStatus in ["pending", "approved", "rejected", "missing"] ||
+          !("prescriptionStatus" in request.resource.data.diff(resource.data).affectedKeys())
+        );
+      
+      // Allow users to delete their own orders (if needed)
+      allow delete: if request.auth != null && 
+        resource.data.userId == request.auth.uid;
+    }
+    
     // Allow reading products (assuming they're public)
     match /produtos/{productId} {
       allow read: if true; // Anyone can read products
