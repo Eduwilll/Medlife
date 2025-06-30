@@ -82,6 +82,7 @@ public class CartManager {
             orderItem.put("brand", item.getProduct().getBrand());
             orderItem.put("tarja", item.getProduct().getTarja());
             orderItem.put("description", item.getProduct().getDescription());
+            orderItem.put("farmacia", item.getProduct().getFarmacia());
             orderItems.add(orderItem);
         }
 
@@ -101,8 +102,6 @@ public class CartManager {
         order.setDiscountAmount(0.0);
         order.setPaymentMethod("Pendente");
         order.setPaymentStatus("pending");
-        order.setStoreName("Drogaria São Paulo");
-        order.setStoreLocation("Cidade Campinas");
         order.setRequiresPrescription(false);
 
         return order;

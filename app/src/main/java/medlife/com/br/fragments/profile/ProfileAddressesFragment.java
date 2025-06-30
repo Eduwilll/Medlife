@@ -184,6 +184,9 @@ public class ProfileAddressesFragment extends Fragment {
                     buttonToggleAddAddress.setText(R.string.adicionar_novo_endere_o);
                     buttonAddAddress.setVisibility(View.VISIBLE);
                     buttonSaveChanges.setVisibility(View.GONE);
+                    
+                    // Show Snackbar with navigation option
+                    showAddressAddedSnackbar();
                 })
                 .addOnFailureListener(e -> {
                     System.out.println("Error adding address: " + e.getMessage());
@@ -428,6 +431,21 @@ public class ProfileAddressesFragment extends Fragment {
                 .addOnFailureListener(e -> {
                     Toast.makeText(getContext(), "Erro ao atualizar endereço principal: " + e.getMessage(), Toast.LENGTH_SHORT).show();
                 });
+        }
+    }
+
+    private void showAddressAddedSnackbar() {
+        if (getView() != null) {
+            com.google.android.material.snackbar.Snackbar.make(
+                getView(),
+                "Endereço adicionado! Voltar ao carrinho?",
+                com.google.android.material.snackbar.Snackbar.LENGTH_LONG
+            ).setAction("Voltar", v -> {
+                // Navigate back to cart
+                if (getActivity() != null) {
+                    getActivity().onBackPressed();
+                }
+            }).show();
         }
     }
 } 

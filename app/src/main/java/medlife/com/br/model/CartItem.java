@@ -3,6 +3,9 @@ package medlife.com.br.model;
 public class CartItem {
     private Product product;
     private int quantity;
+    private double price;
+
+
 
     public CartItem(Product product, int quantity) {
         this.product = product;
@@ -20,4 +23,5 @@ public class CartItem {
     public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
-} 
+
+}

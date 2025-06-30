@@ -34,6 +34,7 @@ import androidx.fragment.app.FragmentTransaction;
 import medlife.com.br.fragments.SearchFragment;
 import medlife.com.br.fragments.UploadPrescriptionFragment;
 import medlife.com.br.fragments.profile.ProfileAddressesFragment;
+import medlife.com.br.activity.HomeActivity;
 
 public class CartFragment extends Fragment implements CartAdapter.CartListener {
     private RecyclerView recyclerCartItems;
@@ -111,12 +112,19 @@ public class CartFragment extends Fragment implements CartAdapter.CartListener {
                 return;
             }
             
+            // Show loading state
+            buttonCheckout.setEnabled(false);
+            buttonCheckout.setText("Processando...");
+            
             Order newOrder = CartManager.getInstance().createOrderFromCart();
             if (newOrder != null) {
                 // Populate order with current cart information
                 populateOrderDetails(newOrder);
             } else {
                 Toast.makeText(getContext(), "Erro: Não foi possível criar o pedido", Toast.LENGTH_SHORT).show();
+                // Reset button state
+                buttonCheckout.setEnabled(true);
+                buttonCheckout.setText("Finalizar Compra");
             }
         });
 
@@ -130,7 +138,7 @@ public class CartFragment extends Fragment implements CartAdapter.CartListener {
             UploadPrescriptionFragment fragment = new UploadPrescriptionFragment();
             FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
             transaction.replace(R.id.fragment_container, fragment);
-            transaction.addToBackStack(null);
+            transaction.addToBackStack("prescription_upload");
             transaction.commit();
         });
 
@@ -144,14 +152,24 @@ public class CartFragment extends Fragment implements CartAdapter.CartListener {
         // Handle back navigation from prescription upload - moved here for safety
         if (getParentFragmentManager() != null) {
             backStackListener = () -> {
+                // Check if we're back to the cart view
                 if (getParentFragmentManager() != null && getParentFragmentManager().getBackStackEntryCount() == 0) {
-                    // Back to cart view
+                    // Back to cart view - show main content
                     if (layoutMainContent != null) {
                         layoutMainContent.setVisibility(View.VISIBLE);
                     }
                     View fragmentContainer = view.findViewById(R.id.fragment_container);
                     if (fragmentContainer != null) {
                         fragmentContainer.setVisibility(View.GONE);
+                    }
+                } else {
+                    // Still in a sub-fragment - hide main content
+                    if (layoutMainContent != null) {
+                        layoutMainContent.setVisibility(View.GONE);
+                    }
+                    View fragmentContainer = view.findViewById(R.id.fragment_container);
+                    if (fragmentContainer != null) {
+                        fragmentContainer.setVisibility(View.VISIBLE);
                     }
                 }
             };
@@ -275,6 +293,22 @@ public class CartFragment extends Fragment implements CartAdapter.CartListener {
         super.onResume();
         setupCart();
         loadUserPrincipalAddress(); // Reload address when returning to fragment
+        
+        // Show feedback if user just added an address
+        if (hasAddress && !CartManager.getInstance().getCartItems().isEmpty()) {
+            showAddressAddedFeedback();
+        }
+    }
+
+    private void showAddressAddedFeedback() {
+        // Show Snackbar with success message
+        if (getView() != null) {
+            com.google.android.material.snackbar.Snackbar.make(
+                getView(),
+                "Endereço adicionado com sucesso! Você pode continuar com a compra.",
+                com.google.android.material.snackbar.Snackbar.LENGTH_LONG
+            ).show();
+        }
     }
 
     @Override
@@ -285,6 +319,15 @@ public class CartFragment extends Fragment implements CartAdapter.CartListener {
         } else {
             cartAdapter.updateCartItems(CartManager.getInstance().getCartItems());
             updateCheckoutButtonState();
+        }
+        
+        // Update cart badge in HomeActivity
+        updateCartBadge();
+    }
+
+    private void updateCartBadge() {
+        if (getActivity() instanceof HomeActivity) {
+            ((HomeActivity) getActivity()).updateCartBadge();
         }
     }
 
@@ -351,12 +394,20 @@ public class CartFragment extends Fragment implements CartAdapter.CartListener {
         if (!hasAddress && cartNotEmpty) {
             buttonCheckout.setText("Adicione um endereço para continuar");
             textAddressWarning.setVisibility(View.VISIBLE);
+            // Make address buttons more visible
+            buttonAddAddress.setVisibility(View.VISIBLE);
+            buttonAddAddressNoAddress.setVisibility(View.VISIBLE);
         } else if (hasAddress && cartNotEmpty) {
             buttonCheckout.setText("Finalizar Compra");
             textAddressWarning.setVisibility(View.GONE);
+            // Hide address buttons when address is available
+            buttonAddAddress.setVisibility(View.GONE);
+            buttonAddAddressNoAddress.setVisibility(View.GONE);
         } else {
             buttonCheckout.setText("Finalizar Compra");
             textAddressWarning.setVisibility(View.GONE);
+            buttonAddAddress.setVisibility(View.GONE);
+            buttonAddAddressNoAddress.setVisibility(View.GONE);
         }
     }
 
@@ -439,9 +490,9 @@ public class CartFragment extends Fragment implements CartAdapter.CartListener {
         newOrder.setPaymentStatus("pending");
         
         // Set store information
-        newOrder.setStoreName("Drogaria São Paulo");
-        newOrder.setStoreLocation("Cidade Campinas");
-        
+//        newOrder.setStoreName("Drogaria São Paulo");
+//        newOrder.setStoreLocation("Cidade Campinas");
+
         // Check if prescription is required
         boolean needsPrescription = false;
         for (CartItem item : cartItems) {
@@ -552,6 +603,9 @@ public class CartFragment extends Fragment implements CartAdapter.CartListener {
                 .addOnFailureListener(e -> {
                     Toast.makeText(getContext(), "Falha ao realizar o pedido: " + e.getMessage(), Toast.LENGTH_LONG).show();
                     e.printStackTrace();
+                    // Reset button state on failure
+                    buttonCheckout.setEnabled(true);
+                    buttonCheckout.setText("Finalizar Compra");
                 });
     }
 
@@ -561,14 +615,17 @@ public class CartFragment extends Fragment implements CartAdapter.CartListener {
     }
 
     private void navigateToAddressesFragment() {
-        // Navigate directly to ProfileAddressesFragment
+        // Navigate directly to ProfileAddressesFragment with proper back stack management
         if (getActivity() != null) {
             androidx.fragment.app.FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
             ProfileAddressesFragment addressesFragment = new ProfileAddressesFragment();
             
+            // Clear any existing back stack entries to prevent overlapping
+            fragmentManager.popBackStackImmediate(null, androidx.fragment.app.FragmentManager.POP_BACK_STACK_INCLUSIVE);
+            
             fragmentManager.beginTransaction()
                 .replace(R.id.contentFrame, addressesFragment)
-                .addToBackStack(null)
+                .addToBackStack("addresses")
                 .commit();
         }
     }

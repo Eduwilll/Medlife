@@ -79,10 +79,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Adicionar"
-                    android:textColor="#1E56A0"
-                    android:backgroundTint="#FFFFFF"
+                    android:textColor="#FFFFFF"
+                    android:backgroundTint="#1E56A0"
                     android:fontFamily="@font/gilroysemibold"
-                    android:visibility="gone"/>
+                    android:visibility="gone"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp"
+                    android:paddingTop="8dp"
+                    android:paddingBottom="8dp"/>
             </LinearLayout>
 
             <!-- No Address State -->
@@ -126,9 +130,13 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Adicionar"
-                    android:textColor="#1E56A0"
-                    android:backgroundTint="#FFFFFF"
-                    android:fontFamily="@font/gilroysemibold"/>
+                    android:textColor="#FFFFFF"
+                    android:backgroundTint="#1E56A0"
+                    android:fontFamily="@font/gilroysemibold"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp"
+                    android:paddingTop="8dp"
+                    android:paddingBottom="8dp"/>
             </LinearLayout>
 
             <!-- Delivery Options -->

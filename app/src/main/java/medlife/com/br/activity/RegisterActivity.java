@@ -221,5 +221,35 @@ public class RegisterActivity extends AppCompatActivity {
         checkboxConsent = findViewById(R.id.checkboxConsent);
         buttonRegister = findViewById(R.id.buttonRegister);
         textLoginLink = findViewById(R.id.textLoginLink);
+        
+        // Make Terms of Use text clickable
+        TextView textConsent = findViewById(R.id.textConsent);
+        setupClickableTermsOfUse(textConsent);
+    }
+
+    private void setupClickableTermsOfUse(TextView textConsent) {
+        String fullText = getString(R.string.politica_de_privacidade);
+        SpannableString spannableString = new SpannableString(fullText);
+
+        ClickableSpan clickableSpan = new ClickableSpan() {
+            @Override
+            public void onClick(@NonNull View widget) {
+                // Toggle checkbox when text is clicked
+                checkboxConsent.setChecked(!checkboxConsent.isChecked());
+            }
+
+            @Override
+            public void updateDrawState(@NonNull TextPaint ds) {
+                super.updateDrawState(ds);
+                ds.setUnderlineText(true);
+                ds.setColor(ContextCompat.getColor(RegisterActivity.this, R.color.link_blue));
+            }
+        };
+
+        // Make the entire text clickable
+        spannableString.setSpan(clickableSpan, 0, fullText.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+        textConsent.setText(spannableString);
+        textConsent.setMovementMethod(LinkMovementMethod.getInstance());
     }
 }
