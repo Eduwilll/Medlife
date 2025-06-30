@@ -74,6 +74,13 @@ dependencies {
     
     /*Guava for ListenableFuture*/
     implementation 'com.google.guava:guava:31.1-android'
+
+    // For unit tests
+    testImplementation 'org.mockito:mockito-core:5.2.0'
+    testImplementation 'org.mockito:mockito-inline:5.2.0'
+
+    // For Android instrumented tests (if needed)
+    androidTestImplementation 'org.mockito:mockito-android:5.2.0'
 }
 configurations.configureEach {
     resolutionStrategy {
