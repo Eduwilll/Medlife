@@ -12,6 +12,7 @@ public class Category {
     public int getImageResId() {
         return imageResId;
     }
+    public void setImageResId(int imageResId) { this.imageResId = imageResId; }
 
     public void setName(String name) { this.name = name; }
 
