@@ -55,5 +55,120 @@ public class OrderTest {
         assertEquals(now, order.getCreatedAt());
     }
 
-    // Add more tests for other fields as needed
+    @Test
+    public void testSetAndGetDeliveryOption() {
+        order.setDeliveryOption("immediate");
+        assertEquals("immediate", order.getDeliveryOption());
+    }
+
+    @Test
+    public void testSetAndGetDeliveryFee() {
+        order.setDeliveryFee(5.50);
+        assertEquals(5.50, order.getDeliveryFee(), 0.001);
+    }
+
+    @Test
+    public void testSetAndGetDeliveryAddress() {
+        Map<String, Object> address = new HashMap<>();
+        address.put("street", "Rua Teste");
+        address.put("city", "São Paulo");
+        order.setDeliveryAddress(address);
+        assertEquals(address, order.getDeliveryAddress());
+    }
+
+    @Test
+    public void testSetAndGetPaymentMethod() {
+        order.setPaymentMethod("credit_card");
+        assertEquals("credit_card", order.getPaymentMethod());
+    }
+
+    @Test
+    public void testSetAndGetPaymentStatus() {
+        order.setPaymentStatus("paid");
+        assertEquals("paid", order.getPaymentStatus());
+    }
+
+    @Test
+    public void testSetAndGetSubtotal() {
+        order.setSubtotal(85.50);
+        assertEquals(85.50, order.getSubtotal(), 0.001);
+    }
+
+    @Test
+    public void testSetAndGetDiscountAmount() {
+        order.setDiscountAmount(10.00);
+        assertEquals(10.00, order.getDiscountAmount(), 0.001);
+    }
+
+    @Test
+    public void testSetAndGetCouponCode() {
+        order.setCouponCode("SAVE10");
+        assertEquals("SAVE10", order.getCouponCode());
+    }
+
+    @Test
+    public void testSetAndGetStoreName() {
+        order.setStoreName("Farmacia Central");
+        assertEquals("Farmacia Central", order.getStoreName());
+    }
+
+    @Test
+    public void testSetAndGetStoreLocation() {
+        order.setStoreLocation("Shopping Center");
+        assertEquals("Shopping Center", order.getStoreLocation());
+    }
+
+    @Test
+    public void testSetAndGetNotes() {
+        order.setNotes("Leave at front door");
+        assertEquals("Leave at front door", order.getNotes());
+    }
+
+    @Test
+    public void testSetAndGetEstimatedDeliveryTime() {
+        Timestamp deliveryTime = Timestamp.now();
+        order.setEstimatedDeliveryTime(deliveryTime);
+        assertEquals(deliveryTime, order.getEstimatedDeliveryTime());
+    }
+
+    @Test
+    public void testSetAndGetRequiresPrescription() {
+        order.setRequiresPrescription(true);
+        assertTrue(order.isRequiresPrescription());
+        
+        order.setRequiresPrescription(false);
+        assertFalse(order.isRequiresPrescription());
+    }
+
+    @Test
+    public void testSetAndGetPrescriptionIds() {
+        List<String> prescriptionIds = Arrays.asList("presc1", "presc2");
+        order.setPrescriptionIds(prescriptionIds);
+        assertEquals(prescriptionIds, order.getPrescriptionIds());
+    }
+
+    @Test
+    public void testSetAndGetPrescriptionStatus() {
+        order.setPrescriptionStatus("approved");
+        assertEquals("approved", order.getPrescriptionStatus());
+    }
+
+    @Test
+    public void testSetAndGetPrescriptionUploadDate() {
+        Timestamp uploadDate = Timestamp.now();
+        order.setPrescriptionUploadDate(uploadDate);
+        assertEquals(uploadDate, order.getPrescriptionUploadDate());
+    }
+
+    @Test
+    public void testDefaultConstructor() {
+        Order newOrder = new Order();
+        assertNotNull(newOrder);
+        assertNull(newOrder.getOrderId());
+        assertNull(newOrder.getUserId());
+        assertNull(newOrder.getItems());
+        assertEquals(0.0, newOrder.getTotalPrice(), 0.001);
+        assertNull(newOrder.getStatus());
+        assertNull(newOrder.getCreatedAt());
+    }
 } 
