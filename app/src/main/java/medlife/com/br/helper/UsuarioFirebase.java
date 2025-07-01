@@ -20,20 +20,7 @@ public class UsuarioFirebase {
         return  usuario.getCurrentUser();
     }
 
-    public static  boolean atualizarTipoUsuario(String tipo){
-        try {
-            FirebaseUser user = getUsuarioAtual();
-            UserProfileChangeRequest profile = new UserProfileChangeRequest.Builder()
-                    .setDisplayName(tipo)
-                    .build();
-            user.updateProfile(profile);
-            return  true;
-        }catch (Exception e){
-            e.printStackTrace();
-            return false;
-        }
-    }
-    
+
     /**
      * Update the lastLogin timestamp for the current user
      */
