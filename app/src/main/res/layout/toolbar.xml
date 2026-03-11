@@ -9,9 +9,10 @@
         android:layout_height="?attr/actionBarSize"
         android:background="?attr/colorPrimary"
          />
-    <com.miguelcatalan.materialsearchview.MaterialSearchView
-        android:id="@+id/materialSearchView"
+    <androidx.appcompat.widget.SearchView
+        android:id="@+id/searchView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:background="@android:color/white" />
 
 </FrameLayout>

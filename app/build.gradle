@@ -95,11 +95,11 @@ dependencies {
     implementation 'com.google.guava:guava:31.1-android'
 
     // For unit tests
-    testImplementation 'org.mockito:mockito-core:5.2.0'
-    testImplementation 'org.mockito:mockito-inline:5.2.0'
+    testImplementation 'org.mockito:mockito-core:5.7.0'
+    testImplementation 'org.mockito:mockito-inline:5.2.0' // 5.2.0 is the latest inline
 
     // For Android instrumented tests (if needed)
-    androidTestImplementation 'org.mockito:mockito-android:5.2.0'
+    androidTestImplementation 'org.mockito:mockito-android:5.7.0'
 }
 configurations.configureEach {
     resolutionStrategy {
