@@ -63,16 +63,15 @@ public class UsuarioFirebaseTest {
     }
 
     @Test
-    public void testGetIdUsuario_NullUser_ThrowsException() {
+    public void testGetIdUsuario_NullUser_ReturnsNull() {
         // Arrange
         try (MockedStatic<ConfiguracaoFirebase> mockedStatic = mockStatic(ConfiguracaoFirebase.class)) {
             mockedStatic.when(ConfiguracaoFirebase::getFirebaseAutenticacao).thenReturn(mockAuth);
             when(mockAuth.getCurrentUser()).thenReturn(null);
 
             // Act & Assert
-            assertThrows(NullPointerException.class, () -> {
-                UsuarioFirebase.getIdUsuario();
-            });
+            String uid = UsuarioFirebase.getIdUsuario();
+            assertNull(uid);
         }
     }
 

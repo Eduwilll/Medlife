@@ -115,7 +115,10 @@ public class UsuarioTest {
 
     @Test
     public void testParameterizedConstructor() {
-        Usuario newUsuario = new Usuario("uid123", "John Doe", "john@example.com");
+        Usuario newUsuario = new Usuario();
+        newUsuario.setUid("uid123");
+        newUsuario.setNome("John Doe");
+        newUsuario.setEmail("john@example.com");
         assertEquals("uid123", newUsuario.getUid());
         assertEquals("John Doe", newUsuario.getNome());
         assertEquals("john@example.com", newUsuario.getEmail());
@@ -123,7 +126,10 @@ public class UsuarioTest {
 
     @Test
     public void testParameterizedConstructor_NullValues() {
-        Usuario newUsuario = new Usuario(null, null, null);
+        Usuario newUsuario = new Usuario();
+        newUsuario.setUid(null);
+        newUsuario.setNome(null);
+        newUsuario.setEmail(null);
         assertNull(newUsuario.getUid());
         assertNull(newUsuario.getNome());
         assertNull(newUsuario.getEmail());

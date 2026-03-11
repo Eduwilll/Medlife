@@ -73,7 +73,7 @@ public class CategoryAdapterTest {
 
         CategoryAdapter.CategoryViewHolder holder = new CategoryAdapter.CategoryViewHolder(mockView);
         
-        assertNotNull(holder.imageSubcategory);
-        assertNotNull(holder.textSubcategory);
+        assertNotNull(holder.getImageSubcategory());
+        assertNotNull(holder.getTextSubcategory());
     }
 } 

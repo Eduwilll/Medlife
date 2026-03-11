@@ -58,7 +58,7 @@ public class ProductAdapterTest {
         productList = new ArrayList<>();
         productList.add(product);
         
-        productAdapter = new ProductAdapter(mockContext, productList);
+        productAdapter = new ProductAdapter(mockContext, productList, false);
     }
 
     @Test
@@ -90,12 +90,12 @@ public class ProductAdapterTest {
 
         ProductAdapter.ProductViewHolder holder = new ProductAdapter.ProductViewHolder(mockView);
         
-        assertNotNull(holder.imageProduct);
-        assertNotNull(holder.textProductName);
-        assertNotNull(holder.textProductDesc);
-        assertNotNull(holder.textProductPrice);
-        assertNotNull(holder.addButton);
-        assertNotNull(holder.favoriteIcon);
+        assertNotNull(holder.getImageProduct());
+        assertNotNull(holder.getTextProductName());
+        assertNotNull(holder.getTextProductDesc());
+        assertNotNull(holder.getTextProductPrice());
+        assertNotNull(holder.getAddButton());
+        assertNotNull(holder.getFavoriteIcon());
     }
 
     @Test

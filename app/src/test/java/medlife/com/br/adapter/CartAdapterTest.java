@@ -93,13 +93,13 @@ public class CartAdapterTest {
 
         CartAdapter.CartViewHolder holder = new CartAdapter.CartViewHolder(mockView);
         
-        assertNotNull(holder.productImage);
-        assertNotNull(holder.productName);
-        assertNotNull(holder.productPrice);
-        assertNotNull(holder.quantityText);
-        assertNotNull(holder.plusButton);
-        assertNotNull(holder.minusButton);
-        assertNotNull(holder.deleteButton);
+        assertNotNull(holder.getProductImage());
+        assertNotNull(holder.getProductName());
+        assertNotNull(holder.getProductPrice());
+        assertNotNull(holder.getQuantityText());
+        assertNotNull(holder.getPlusButton());
+        assertNotNull(holder.getMinusButton());
+        assertNotNull(holder.getDeleteButton());
     }
 
     @Test
@@ -110,8 +110,8 @@ public class CartAdapterTest {
 
         CartAdapter.PharmacyHeaderViewHolder holder = new CartAdapter.PharmacyHeaderViewHolder(mockView);
         
-        assertNotNull(holder.textPharmacyName);
-        assertNotNull(holder.textPharmacyLocation);
-        assertNotNull(holder.imagePharmacyLogo);
+        assertNotNull(holder.getTextPharmacyName());
+        assertNotNull(holder.getTextPharmacyLocation());
+        assertNotNull(holder.getImagePharmacyLogo());
     }
 } 
