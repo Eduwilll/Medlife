@@ -1,6 +1,5 @@
 plugins {
     id 'com.android.application'
-    id 'org.jetbrains.kotlin.android'
     id 'kotlin-parcelize'
     id 'com.google.gms.google-services'
 }
@@ -15,7 +14,7 @@ android {
 
     defaultConfig {
         applicationId "medlife.com.br"
-        minSdk 21
+        minSdk 23
         targetSdk 35
         versionCode 1
         versionName "1.0"
@@ -36,9 +35,7 @@ android {
         sourceCompatibility JavaVersion.VERSION_17
         targetCompatibility JavaVersion.VERSION_17
     }
-    kotlinOptions {
-        jvmTarget = '17'
-    }
+
     dependenciesInfo {
         includeInApk true
         includeInBundle true
@@ -71,11 +68,11 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.0'
 
     /*Firebase*/
-    implementation platform('com.google.firebase:firebase-bom:32.3.1')
+    implementation platform('com.google.firebase:firebase-bom:34.10.0')
     implementation 'com.google.firebase:firebase-auth'
     implementation 'com.google.firebase:firebase-storage'
     implementation 'com.google.firebase:firebase-database'
-
+    implementation 'com.google.firebase:firebase-firestore'
     /*Google Sign In*/
     implementation 'com.google.android.gms:play-services-auth:20.7.0'
     
@@ -101,13 +98,7 @@ dependencies {
     // For Android instrumented tests (if needed)
     androidTestImplementation 'org.mockito:mockito-android:5.7.0'
 }
-configurations.configureEach {
-    resolutionStrategy {
-        force 'org.jetbrains.kotlin:kotlin-stdlib:1.8.22'
-        force 'org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.8.22'
-        force 'org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.8.22'
-    }
-}
+
 tasks.configureEach { task ->
     if (task.name == 'mapDebugSourceSetPaths') {
         task.dependsOn 'processDebugGoogleServices'
