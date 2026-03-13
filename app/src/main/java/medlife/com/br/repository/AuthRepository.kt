@@ -8,8 +8,8 @@ import medlife.com.br.model.Usuario
 
 class AuthRepository {
 
-    private val auth: FirebaseAuth by lazy { ConfiguracaoFirebase.firebaseAutenticacao }
-    private val db: FirebaseFirestore by lazy { ConfiguracaoFirebase.firestore }
+    private val auth: FirebaseAuth = ConfiguracaoFirebase.firebaseAutenticacao
+    private val db: FirebaseFirestore = ConfiguracaoFirebase.firestore
 
     fun getCurrentUser() = auth.currentUser
 
