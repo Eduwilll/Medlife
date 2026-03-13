@@ -6,6 +6,6 @@ import medlife.com.br.helper.CartManager
 class HomeViewModel : ViewModel() {
 
     fun getCartItemCount(): Int {
-        return CartManager.getInstance().cartItems.size
+        return CartManager.getCartItems().size
     }
 }

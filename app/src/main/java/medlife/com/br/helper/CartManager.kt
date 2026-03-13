@@ -10,7 +10,7 @@ object CartManager {
     private val cartItems: MutableList<CartItem> = mutableListOf()
 
     fun addProduct(product: Product, quantity: Int) {
-        val existing = cartItems.find { it.product.name == product.name }
+        val existing = cartItems.find { it.product?.name == product.name }
         if (existing != null) {
             existing.quantity += quantity
         } else {
@@ -32,10 +32,10 @@ object CartManager {
 
     fun getTotalPrice(): Double {
         return cartItems.sumOf { item ->
-            val priceString = item.product.price
-                .replace("R$", "")
-                .replace(",", ".")
-                .trim()
+            val priceString = item.product?.price
+                ?.replace("R$", "")
+                ?.replace(",", ".")
+                ?.trim() ?: return@sumOf 0.0
             try {
                 priceString.toDouble() * item.quantity
             } catch (e: NumberFormatException) {
@@ -51,25 +51,26 @@ object CartManager {
     fun getCartItems(): List<CartItem> = cartItems
 
     fun createOrderFromCart(): Order? {
-        val userId = UsuarioFirebase.getIdUsuario() ?: return null
+        val userId = UsuarioFirebase.idUsuario ?: return null
         if (cartItems.isEmpty()) return null
 
-        val orderItems: List<Map<String, Any>> = cartItems.map { item ->
-            val price = item.product.price
-                .replace("R$", "")
-                .replace(",", ".")
-                .trim()
-                .toDoubleOrNull() ?: 0.0
+        val orderItems: List<Map<String, Any>> = cartItems.mapNotNull { item ->
+            val product = item.product ?: return@mapNotNull null
+            val price = product.price
+                ?.replace("R$", "")
+                ?.replace(",", ".")
+                ?.trim()
+                ?.toDoubleOrNull() ?: 0.0
             mapOf(
-                "productName" to (item.product.name ?: ""),
+                "productName" to (product.name ?: ""),
                 "quantity" to item.quantity,
-                "price" to (item.product.price ?: ""),
+                "price" to (product.price ?: ""),
                 "totalItemPrice" to (price * item.quantity),
-                "category" to (item.product.category ?: ""),
-                "brand" to (item.product.brand ?: ""),
-                "tarja" to (item.product.tarja ?: ""),
-                "description" to (item.product.description ?: ""),
-                "farmacia" to (item.product.farmacia ?: "")
+                "category" to (product.category ?: ""),
+                "brand" to (product.brand ?: ""),
+                "tarja" to (product.tarja ?: ""),
+                "description" to (product.description ?: ""),
+                "farmacia" to (product.farmacia ?: "")
             )
         }
 
@@ -84,7 +85,7 @@ object CartManager {
             this.discountAmount = 0.0
             this.paymentMethod = "Pendente"
             this.paymentStatus = "pending"
-            this.requiresPrescription = false
+            this.isRequiresPrescription = false
         }
     }
 }

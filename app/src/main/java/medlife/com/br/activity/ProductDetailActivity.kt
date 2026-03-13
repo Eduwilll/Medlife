@@ -83,7 +83,7 @@ class ProductDetailActivity : AppCompatActivity() {
 
         addToCartButton.setOnClickListener {
             if (product != null) {
-                CartManager.getInstance().addProduct(product, quantity)
+                CartManager.addProduct(product, quantity)
                 Toast.makeText(this, "Adicionado ao carrinho", Toast.LENGTH_SHORT).show()
                 finish()
             }

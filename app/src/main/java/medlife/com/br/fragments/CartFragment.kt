@@ -117,7 +117,7 @@ class CartFragment : Fragment(), CartAdapter.CartListener {
             buttonCheckout.isEnabled = false
             buttonCheckout.text = "Processando..."
 
-            val newOrder = CartManager.getInstance().createOrderFromCart()
+            val newOrder = CartManager.createOrderFromCart()
             if (newOrder != null) {
                 populateOrderDetails(newOrder)
             } else {
@@ -223,7 +223,7 @@ class CartFragment : Fragment(), CartAdapter.CartListener {
     }
 
     private fun setupCart() {
-        cartItems = CartManager.getInstance().cartItems
+        cartItems = CartManager.getCartItems()
 
         if (cartItems.isEmpty()) {
             layoutEmptyState.visibility = View.VISIBLE
@@ -260,7 +260,7 @@ class CartFragment : Fragment(), CartAdapter.CartListener {
         setupCart()
         loadUserPrincipalAddress()
 
-        if (hasAddress && CartManager.getInstance().cartItems.isNotEmpty()) {
+        if (hasAddress && CartManager.getCartItems().isNotEmpty()) {
             showAddressAddedFeedback()
         }
     }
@@ -277,10 +277,10 @@ class CartFragment : Fragment(), CartAdapter.CartListener {
 
     override fun onCartUpdated() {
         updateSummary()
-        if (CartManager.getInstance().cartItems.isEmpty()) {
+        if (CartManager.getCartItems().isEmpty()) {
             setupCart()
         } else {
-            cartAdapter?.updateCartItems(CartManager.getInstance().cartItems)
+            cartAdapter?.updateCartItems(CartManager.getCartItems())
             updateCheckoutButtonState()
         }
         updateCartBadge()
@@ -326,7 +326,7 @@ class CartFragment : Fragment(), CartAdapter.CartListener {
     private fun updateSummary() {
         val format = NumberFormat.getCurrencyInstance(Locale("pt", "BR"))
         
-        val subtotal = CartManager.getInstance().totalPrice
+        val subtotal = CartManager.getTotalPrice()
         textSubtotal.text = format.format(subtotal)
         textDeliveryFee.text = format.format(currentDeliveryFee)
         textDiscount.text = format.format(currentDiscount)
@@ -338,7 +338,7 @@ class CartFragment : Fragment(), CartAdapter.CartListener {
     }
 
     private fun updateCheckoutButtonState() {
-        val cartNotEmpty = CartManager.getInstance().cartItems.isNotEmpty()
+        val cartNotEmpty = CartManager.getCartItems().isNotEmpty()
         val canCheckout = hasAddress && cartNotEmpty
 
         buttonCheckout.isEnabled = canCheckout
@@ -378,7 +378,7 @@ class CartFragment : Fragment(), CartAdapter.CartListener {
 
     fun applyCouponCode(couponCode: String): Boolean {
         if ("DESCONTO10" == couponCode) {
-            val subtotal = CartManager.getInstance().totalPrice
+            val subtotal = CartManager.getTotalPrice()
             this.currentDiscount = subtotal * 0.10
             updateSummary()
             return true
@@ -391,7 +391,7 @@ class CartFragment : Fragment(), CartAdapter.CartListener {
     }
 
     fun getCurrentTotal(): Double {
-        val subtotal = CartManager.getInstance().totalPrice
+        val subtotal = CartManager.getTotalPrice()
         return subtotal + currentDeliveryFee - currentDiscount
     }
 
@@ -414,7 +414,7 @@ class CartFragment : Fragment(), CartAdapter.CartListener {
     private fun populateOrderDetails(newOrder: Order) {
         newOrder.deliveryOption = selectedDeliveryOption
         newOrder.deliveryFee = currentDeliveryFee
-        newOrder.subtotal = CartManager.getInstance().totalPrice
+        newOrder.subtotal = CartManager.getTotalPrice()
         newOrder.discountAmount = currentDiscount
         newOrder.totalPrice = getCurrentTotal()
         newOrder.paymentMethod = "Pendente"
@@ -486,7 +486,7 @@ class CartFragment : Fragment(), CartAdapter.CartListener {
         println("Saving order with delivery address: ${newOrder.deliveryAddress}")
 
         OrderManager.saveOrder(newOrder)?.addOnSuccessListener {
-            CartManager.getInstance().clearCart()
+            CartManager.clearCart()
             val intent = Intent(activity, OrderSuccessActivity::class.java)
             startActivity(intent)
             Toast.makeText(context, "Pedido realizado com sucesso!", Toast.LENGTH_SHORT).show()

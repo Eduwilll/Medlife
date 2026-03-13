@@ -88,19 +88,19 @@ class CartAdapter(
             itemHolder.quantityText.text = cartItem.quantity.toString()
 
             itemHolder.plusButton.setOnClickListener {
-                CartManager.getInstance().updateQuantity(cartItem, cartItem.quantity + 1)
+                CartManager.updateQuantity(cartItem, cartItem.quantity + 1)
                 notifyDataSetChanged()
                 listener.onCartUpdated()
             }
 
             itemHolder.minusButton.setOnClickListener {
-                CartManager.getInstance().updateQuantity(cartItem, cartItem.quantity - 1)
+                CartManager.updateQuantity(cartItem, cartItem.quantity - 1)
                 notifyDataSetChanged()
                 listener.onCartUpdated()
             }
 
             itemHolder.deleteButton.setOnClickListener {
-                CartManager.getInstance().removeProduct(cartItem)
+                CartManager.removeProduct(cartItem)
                 notifyDataSetChanged()
                 listener.onCartUpdated()
             }
