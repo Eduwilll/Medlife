@@ -1,8 +1,9 @@
 {
   "project_info": {
     "project_number": "727714709876",
+    "firebase_url": "https://medlife-tgii-default-rtdb.firebaseio.com",
     "project_id": "medlife-tgii",
-    "storage_bucket": "medlife-tgii.appspot.com"
+    "storage_bucket": "medlife-tgii.firebasestorage.app"
   },
   "client": [
     {
@@ -12,7 +13,36 @@
           "package_name": "medlife.com.br"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "727714709876-4ln6ai1obue6k6o46gltsktbch45l2u4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "medlife.com.br",
+            "certificate_hash": "2bce24c723c12935f479bf1d19b9068e1348568b"
+          }
+        },
+        {
+          "client_id": "727714709876-iar8m4as8jkgn001tp1fs31d1mtfjqot.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "medlife.com.br",
+            "certificate_hash": "1a7b9a4a4ae84fe32842859e43b50c1b3239dc1a"
+          }
+        },
+        {
+          "client_id": "727714709876-tj7bo6mie7hon9sfe619j1d892b51cif.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "medlife.com.br",
+            "certificate_hash": "43b9d7e8800a986d191739fd1086b83a50705fa4"
+          }
+        },
+        {
+          "client_id": "727714709876-2hc54lir19914kb8qft75jkn4eom76jt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyDKoWXeQd0Pfpj33NkoIwmSpCq_ymLVOIU"
@@ -20,7 +50,12 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "727714709876-2hc54lir19914kb8qft75jkn4eom76jt.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }

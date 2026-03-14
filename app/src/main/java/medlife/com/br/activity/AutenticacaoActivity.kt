@@ -6,15 +6,17 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import com.google.android.gms.auth.api.signin.GoogleSignIn
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount
-import com.google.android.gms.auth.api.signin.GoogleSignInClient
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions
-import com.google.android.gms.common.api.ApiException
-import com.google.android.gms.tasks.Task
+import androidx.credentials.CredentialManager
+import androidx.credentials.CustomCredential
+import androidx.credentials.GetCredentialRequest
+import androidx.credentials.exceptions.GetCredentialException
+import androidx.lifecycle.lifecycleScope
+import com.google.android.libraries.identity.googleid.GetGoogleIdOption
+import com.google.android.libraries.identity.googleid.GoogleIdTokenCredential
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
+import kotlinx.coroutines.launch
 import medlife.com.br.R
 import medlife.com.br.viewmodel.AuthViewModel
 
@@ -28,19 +30,13 @@ class AutenticacaoActivity : AppCompatActivity() {
     private lateinit var googleButton: MaterialButton
     private lateinit var facebookButton: MaterialButton
 
-    private lateinit var googleSignInClient: GoogleSignInClient
     private val authViewModel: AuthViewModel by viewModels()
-
-    companion object {
-        private const val RC_SIGN_IN = 123
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_autenticacao)
 
         inicializaComponentes()
-        configurarGoogleSignIn()
 
         verificarUsuarioLogado()
         setupObservers()
@@ -90,32 +86,35 @@ class AutenticacaoActivity : AppCompatActivity() {
         }
     }
 
-    private fun configurarGoogleSignIn() {
-        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestIdToken(getString(R.string.default_web_client_id))
-            .requestEmail()
-            .build()
-        googleSignInClient = GoogleSignIn.getClient(this, gso)
-    }
-
     private fun signInWithGoogle() {
-        val signInIntent = googleSignInClient.signInIntent
-        startActivityForResult(signInIntent, RC_SIGN_IN)
-    }
+        val credentialManager = CredentialManager.create(this)
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
+        val googleIdOption: GetGoogleIdOption = GetGoogleIdOption.Builder()
+            .setFilterByAuthorizedAccounts(false)
+            .setServerClientId(getString(R.string.default_web_client_id))
+            .setAutoSelectEnabled(true)
+            .build()
 
-        if (requestCode == RC_SIGN_IN) {
-            val task: Task<GoogleSignInAccount> = GoogleSignIn.getSignedInAccountFromIntent(data)
+        val request = GetCredentialRequest.Builder()
+            .addCredentialOption(googleIdOption)
+            .build()
+
+        lifecycleScope.launch {
             try {
-                val account = task.getResult(ApiException::class.java)
-                val idToken = account?.idToken
-                if (idToken != null) {
+                val result = credentialManager.getCredential(this@AutenticacaoActivity, request)
+                val credential = result.credential
+
+                if (credential is CustomCredential && credential.type == GoogleIdTokenCredential.TYPE_GOOGLE_ID_TOKEN_CREDENTIAL) {
+                    val googleIdTokenCredential = GoogleIdTokenCredential.createFrom(credential.data)
+                    val idToken = googleIdTokenCredential.idToken
                     authViewModel.signInWithGoogle(idToken)
+                } else {
+                    Toast.makeText(this@AutenticacaoActivity, "Tipo de credencial não suportado", Toast.LENGTH_SHORT).show()
                 }
-            } catch (e: ApiException) {
-                Toast.makeText(this, "Erro ao fazer login com Google: ${e.message}", Toast.LENGTH_SHORT).show()
+            } catch (e: GetCredentialException) {
+                Toast.makeText(this@AutenticacaoActivity, "Erro ao obter credencial: ${e.message}", Toast.LENGTH_SHORT).show()
+            } catch (e: Exception) {
+                Toast.makeText(this@AutenticacaoActivity, "Erro inesperado: ${e.message}", Toast.LENGTH_SHORT).show()
             }
         }
     }
