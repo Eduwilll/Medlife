@@ -1,237 +1,276 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/white">
+    android:background="@color/medlife_surface_variant"
+    android:fillViewport="true">
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:paddingBottom="80dp">
 
-        <!-- Logo at the top -->
-        <ImageView
-            android:id="@+id/logoImage"
-            android:layout_width="120dp"
-            android:layout_height="80dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="24dp"
-            android:src="@drawable/logo_small" />
-
-        <!-- Location Bar -->
-        <LinearLayout
-            android:id="@+id/locationBar"
-            android:layout_width="wrap_content"
+        <!-- Top Bar -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/topBar"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="16dp"
-            android:gravity="center"
-            android:orientation="horizontal"
-            android:padding="8dp"
-            android:background="?android:attr/selectableItemBackground"
-            android:clickable="true"
-            android:focusable="true">
+            android:padding="20dp"
+            app:layout_constraintTop_toTopOf="parent">
 
             <ImageView
-                android:id="@+id/locationIcon"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:src="@drawable/ic_location" />
+                android:id="@+id/logoSmall"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/logo_small"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-            <TextView
-                android:id="@+id/locationText"
+            <LinearLayout
+                android:id="@+id/locationBar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:fontFamily="@font/gilroy"
-                android:text="São Paulo, Campinas"
-                android:textColor="#4C4F4D"
-                android:textSize="18sp" />
+                android:gravity="center"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Sua localização"
+                    android:textAppearance="@style/TextAppearance.Medlife.Caption" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:src="@drawable/ic_location"
+                        app:tint="@color/medlife_primary" />
+
+                    <TextView
+                        android:id="@+id/locationText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="4dp"
+                        android:text="Campinas, SP"
+                        android:textAppearance="@style/TextAppearance.Medlife.Body2"
+                        android:textStyle="bold"
+                        android:textColor="@color/medlife_on_surface" />
+                </LinearLayout>
+            </LinearLayout>
 
             <ImageView
-                android:layout_width="16dp"
-                android:layout_height="16dp"
-                android:layout_marginStart="4dp"
-                android:src="@drawable/ic_arrow_down"
-                android:alpha="0.6" />
-        </LinearLayout>
+                android:id="@+id/notificationBell"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/baseline_login_24"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:tint="@color/medlife_on_surface" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <!-- Search Bar -->
         <androidx.cardview.widget.CardView
             android:id="@+id/searchBar"
+            style="@style/Widget.Medlife.Card"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginHorizontal="24dp"
-            android:layout_marginTop="16dp"
-            app:cardBackgroundColor="#F2F3F2"
-            app:cardCornerRadius="15dp">
+            android:layout_height="54dp"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="8dp"
+            app:cardCornerRadius="27dp"
+            app:cardElevation="2dp"
+            app:layout_constraintTop_toBottomOf="@id/topBar">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
-                android:paddingHorizontal="16dp">
+                android:paddingHorizontal="20dp">
 
                 <ImageView
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:src="@drawable/ic_home_search" />
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/ic_home_search"
+                    app:tint="@color/medlife_on_surface_variant" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:fontFamily="@font/gilroy"
+                    android:layout_marginStart="12dp"
                     android:text="Buscar remédios ou farmácia"
-                    android:textColor="#7C7C7C"
-                    android:textSize="14sp" />
+                    android:textAppearance="@style/TextAppearance.Medlife.Body2" />
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
-        <!-- Subcategories Section (above Ofertas Exclusivas) -->
+        <!-- Hero Banner Slot -->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/bannerCard"
+            android:layout_width="match_parent"
+            android:layout_height="160dp"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="24dp"
+            app:cardCornerRadius="20dp"
+            app:cardElevation="0dp"
+            app:cardBackgroundColor="@color/medlife_primary_container"
+            app:layout_constraintTop_toBottomOf="@id/searchBar">
+            
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:src="@drawable/bg_header_gradient"
+                android:alpha="0.1"/>
+                
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="Banner Promocional"
+                android:textAppearance="@style/TextAppearance.Medlife.SectionTitle"
+                android:textColor="@color/medlife_primary" />
+        </androidx.cardview.widget.CardView>
+
+        <!-- Categories Section -->
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/subcategoriesRecycler"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="16dp"
+            android:layout_marginTop="24dp"
             android:clipToPadding="false"
             android:orientation="horizontal"
-            android:paddingHorizontal="16dp" />
+            android:paddingHorizontal="16dp"
+            app:layout_constraintTop_toBottomOf="@id/bannerCard"
+            tools:listitem="@layout/item_product" />
 
         <!-- Exclusive Offers Section -->
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/exclusiveHeader"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="24dp"
-            android:paddingHorizontal="24dp"
-            android:gravity="center_vertical">
+            android:layout_marginTop="32dp"
+            android:paddingHorizontal="20dp"
+            app:layout_constraintTop_toBottomOf="@id/subcategoriesRecycler">
 
             <TextView
-                android:id="@+id/exclusiveOffersTitle"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:fontFamily="@font/gilroy"
                 android:text="Ofertas Exclusivas"
-                android:textColor="#181725"
-                android:textSize="24sp" />
+                android:textAppearance="@style/TextAppearance.Medlife.SectionTitle"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/seeAllOffers"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/gilroy"
                 android:text="Ver tudo"
-                android:textColor="#1E56A0"
-                android:textSize="16sp"
-                android:layout_marginStart="8dp" />
-        </LinearLayout>
+                android:textAppearance="@style/TextAppearance.Medlife.Link"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/exclusiveOffersRecycler"
             android:layout_width="match_parent"
-            android:layout_height="248dp"
-            android:layout_marginTop="8dp"
-            android:paddingHorizontal="16dp"
+            android:layout_height="260dp"
+            android:layout_marginTop="12dp"
             android:clipToPadding="false"
-            android:orientation="horizontal" />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="32dp" />
+            android:orientation="horizontal"
+            android:paddingHorizontal="12dp"
+            app:layout_constraintTop_toBottomOf="@id/exclusiveHeader" />
 
         <!-- Best Selling Section -->
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/bestSellingHeader"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="24dp"
-            android:paddingHorizontal="24dp"
-            android:gravity="center_vertical">
+            android:layout_marginTop="32dp"
+            android:paddingHorizontal="20dp"
+            app:layout_constraintTop_toBottomOf="@id/exclusiveOffersRecycler">
 
             <TextView
-                android:id="@+id/bestSellingTitle"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:fontFamily="@font/gilroy"
-                android:text="Os mais vendidos"
-                android:textColor="#181725"
-                android:textSize="24sp" />
+                android:text="Mais Vendidos"
+                android:textAppearance="@style/TextAppearance.Medlife.SectionTitle"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/seeAllBestSelling"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/gilroy"
-                android:text="Ver Tudo"
-                android:textColor="#1E56A0"
-                android:textSize="16sp"
-                android:layout_marginStart="8dp" />
-        </LinearLayout>
+                android:text="Ver tudo"
+                android:textAppearance="@style/TextAppearance.Medlife.Link"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/bestSellingRecycler"
             android:layout_width="match_parent"
-            android:layout_height="248dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="16dp"
-            android:paddingHorizontal="16dp"
+            android:layout_height="260dp"
+            android:layout_marginTop="12dp"
             android:clipToPadding="false"
-            android:orientation="horizontal" />
+            android:orientation="horizontal"
+            android:paddingHorizontal="12dp"
+            app:layout_constraintTop_toBottomOf="@id/bestSellingHeader" />
 
-
-        <!-- Medicamentos Section Title -->
-        <LinearLayout
+        <!-- Medicamentos Section -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/medicamentosHeader"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
             android:layout_marginTop="32dp"
-            android:layout_marginBottom="8dp"
-            android:paddingHorizontal="24dp"
-            android:gravity="center_vertical">
+            android:paddingHorizontal="20dp"
+            app:layout_constraintTop_toBottomOf="@id/bestSellingRecycler">
 
             <TextView
-                android:id="@+id/medicamentosTitle"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:fontFamily="@font/gilroy"
                 android:text="Medicamentos"
-                android:textColor="#181725"
-                android:textSize="24sp"
-                android:textStyle="bold" />
+                android:textAppearance="@style/TextAppearance.Medlife.SectionTitle"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/seeAllMedicamentos"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/gilroy"
-                android:text="Ver Tudo"
-                android:textColor="#1E56A0"
-                android:textSize="16sp"
-                android:layout_marginStart="8dp" />
-        </LinearLayout>
+                android:text="Ver tudo"
+                android:textAppearance="@style/TextAppearance.Medlife.Link"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <!-- Categories Section (Medicamentos) -->
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/medicamentosRecycler"
             android:layout_width="match_parent"
-            android:layout_height="248dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="16dp"
-            android:paddingHorizontal="16dp"
+            android:layout_height="260dp"
+            android:layout_marginTop="12dp"
             android:clipToPadding="false"
-            android:orientation="horizontal" />
+            android:orientation="horizontal"
+            android:paddingHorizontal="12dp"
+            app:layout_constraintTop_toBottomOf="@id/medicamentosHeader" />
 
-        <!-- Add extra space at the bottom -->
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="48dp" />
-    </LinearLayout>
-
-</ScrollView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.core.widget.NestedScrollView>

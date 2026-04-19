@@ -35,7 +35,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Principal"
-            android:textColor="@color/blue_700"
+            android:textColor="@color/medlife_primary"
             android:fontFamily="@font/gilroybold"
             android:visibility="gone"
             android:layout_marginTop="4dp"/>

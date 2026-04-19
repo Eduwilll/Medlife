@@ -1,258 +1,292 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFFFFF">
+    android:background="@color/medlife_surface_variant">
 
-    <RelativeLayout
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="340dp"
+        android:background="@drawable/bg_product_datail_header">
 
-        <LinearLayout
-            android:id="@+id/top_section"
+        <com.google.android.material.appbar.CollapsingToolbarLayout
             android:layout_width="match_parent"
-            android:layout_height="370dp"
-            android:background="@drawable/bg_product_detail_top"
-            android:gravity="center">
+            android:layout_height="match_parent"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
             <ImageView
                 android:id="@+id/product_image"
-                android:layout_width="250dp"
-                android:layout_height="250dp"
-                android:scaleType="centerCrop"
-                android:src="@drawable/mock_remedio" />
-        </LinearLayout>
+                android:layout_width="280dp"
+                android:layout_height="280dp"
+                android:layout_gravity="center"
+                android:padding="32dp"
+                android:src="@drawable/mock_remedio"
+                app:layout_collapseMode="parallax" />
 
-        <ImageView
-            android:id="@+id/back_arrow"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_arrow_left"
-            android:layout_marginStart="25dp"
-            android:layout_marginTop="56dp"/>
+            <androidx.appcompat.widget.Toolbar
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                app:layout_collapseMode="pin">
 
-        <LinearLayout
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/back_arrow"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:backgroundTint="#80FFFFFF"
+                    app:elevation="0dp"
+                    app:fabSize="mini"
+                    app:srcCompat="@drawable/ic_arrow_left"
+                    app:tint="@color/medlife_on_surface" />
+            </androidx.appcompat.widget.Toolbar>
+
+        </com.google.android.material.appbar.CollapsingToolbarLayout>
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="-32dp"
+        android:background="@drawable/bg_card_elevated"
+        android:padding="24dp"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_below="@id/top_section"
-            android:padding="25dp">
+            android:paddingBottom="100dp">
 
-            <LinearLayout
-                android:layout_width="match_parent"
+            <TextView
+                android:id="@+id/product_name"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center_vertical">
-                <TextView
-                    android:id="@+id/product_name"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Aspirina"
-                    android:textSize="24sp"
-                    android:fontFamily="@font/gilroybold"
-                    android:textColor="#181725"/>
-                <ImageView
-                    android:id="@+id/favorite_icon"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:src="@drawable/ic_favorite"
-                    android:layout_marginStart="8dp"
-                    android:contentDescription="Favoritar"/>
-            </LinearLayout>
+                android:text="Aspirina"
+                android:textAppearance="@style/TextAppearance.Medlife.HeadlineXL"
+                app:layout_constraintEnd_toStartOf="@id/favorite_icon"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/favorite_icon"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:src="@drawable/ic_favorite"
+                app:layout_constraintBottom_toBottomOf="@id/product_name"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/product_name"
+                app:tint="@color/medlife_error" />
 
             <TextView
                 android:id="@+id/product_subtitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="ácido acetilsalicílico 500 mg com 20 comprimidos"
-                android:textSize="16sp"
-                android:fontFamily="@font/gilroy"
-                android:textColor="#7C7C7C"
-                android:layout_marginTop="4dp"/>
-
-            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp">
+                android:layout_marginTop="8dp"
+                android:text="ácido acetilsalicílico 500 mg com 20 comprimidos"
+                android:textAppearance="@style/TextAppearance.Medlife.Body2"
+                app:layout_constraintTop_toBottomOf="@id/product_name" />
+
+            <LinearLayout
+                android:id="@+id/quantityLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="48dp"
+                android:layout_marginTop="32dp"
+                android:background="@drawable/bg_chip_category"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingHorizontal="8dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/product_subtitle">
+
+                <ImageView
+                    android:id="@+id/minus_button"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:padding="8dp"
+                    android:src="@drawable/ic_minus"
+                    app:tint="@color/medlife_secondary" />
+
+                <TextView
+                    android:id="@+id/quantity_text"
+                    android:layout_width="40dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="1"
+                    android:textAppearance="@style/TextAppearance.Medlife.Body1"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:id="@+id/plus_button"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:padding="8dp"
+                    android:src="@drawable/ic_add_blue"
+                    app:tint="@color/medlife_primary" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/product_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="R$16.97"
+                android:textAppearance="@style/TextAppearance.Medlife.HeadlineXL"
+                android:textColor="@color/medlife_primary"
+                app:layout_constraintBottom_toBottomOf="@id/quantityLayout"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/quantityLayout" />
+
+            <View
+                android:id="@+id/divider1"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="32dp"
+                android:background="@color/medlife_surface_variant"
+                app:layout_constraintTop_toBottomOf="@id/quantityLayout" />
+
+            <TextView
+                android:id="@+id/descTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:text="Descrição do produto"
+                android:textAppearance="@style/TextAppearance.Medlife.SectionTitle"
+                app:drawableEndCompat="@drawable/ic_arrow_down"
+                app:layout_constraintTop_toBottomOf="@id/divider1" />
+
+            <TextView
+                android:id="@+id/descContent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:text="Aspirina é indicada para dores de cabeça, de dente, de garganta, menstrual, muscular, nas articulações, nas costas, artrite e o alívio da dor e da febre nos resfriados ou gripes."
+                android:textAppearance="@style/TextAppearance.Medlife.Body2"
+                app:layout_constraintTop_toBottomOf="@id/descTitle" />
+
+            <!-- Pharmacy Info Card -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/pharmacyCard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="2dp"
+                app:layout_constraintTop_toBottomOf="@id/descContent"
+                app:strokeWidth="0dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:padding="16dp">
+
+                    <ImageView
+                        android:id="@+id/imagePharmacyLogo"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:padding="4dp"
+                        android:src="@drawable/logo_small" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/textPharmacyName"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Droga Raia"
+                            android:textAppearance="@style/TextAppearance.Medlife.Body1"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/textPharmacyLocation"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Campinas, SP"
+                            android:textAppearance="@style/TextAppearance.Medlife.Caption" />
+                    </LinearLayout>
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@drawable/ic_arrow_right"
+                        app:tint="@color/medlife_primary" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Review Summary -->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/reviewSection"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                app:layout_constraintTop_toBottomOf="@id/pharmacyCard">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Avaliações"
+                    android:textAppearance="@style/TextAppearance.Medlife.SectionTitle"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical"
-                    android:layout_centerVertical="true">
+                    android:orientation="horizontal"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
                     <ImageView
-                        android:id="@+id/minus_button"
-                        android:layout_width="25dp"
-                        android:layout_height="25dp"
-                        android:src="@drawable/ic_minus"/>
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:src="@drawable/ic_star_filled"
+                        app:tint="#FFB400" />
+
                     <TextView
-                        android:id="@+id/quantity_text"
+                        android:id="@+id/rating_score"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="1"
-                        android:textSize="18sp"
-                        android:fontFamily="@font/gilroy"
-                        android:textColor="#181725"
-                        android:layout_marginHorizontal="16dp"/>
+                        android:layout_marginStart="4dp"
+                        android:text="4.8"
+                        android:textAppearance="@style/TextAppearance.Medlife.Body2"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/review_count"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="4dp"
+                        android:text="(128)"
+                        android:textAppearance="@style/TextAppearance.Medlife.Caption" />
+
                     <ImageView
-                        android:id="@+id/plus_button"
-                        android:layout_width="25dp"
-                        android:layout_height="25dp"
-                        android:src="@drawable/ic_add_blue"/>
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_marginStart="8dp"
+                        android:src="@drawable/ic_arrow_right" />
                 </LinearLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
-                <TextView
-                    android:id="@+id/product_price"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="R$16.97"
-                    android:textSize="24sp"
-                    android:fontFamily="@font/gilroybold"
-                    android:textColor="#181725"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"/>
-            </RelativeLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Descrição do produto"
-                android:textSize="16sp"
-                android:fontFamily="@font/gilroy"
-                android:textColor="#181725"
-                android:layout_marginTop="20dp"
-                app:drawableEndCompat="@drawable/ic_arrow_down" />
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/add_to_cart_button"
+        style="@style/Widget.Medlife.Button"
+        android:layout_width="match_parent"
+        android:layout_height="64dp"
+        android:layout_gravity="bottom"
+        android:layout_margin="20dp"
+        android:text="Adicionar ao carrinho"
+        app:cornerRadius="16dp" />
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Aspirina é indicada para dores de cabeça, de dente, de garganta, menstrual, muscular, nas articulações, nas costas, artrite e o alívio da dor e da febre nos resfriados ou gripes."
-                android:textSize="13sp"
-                android:fontFamily="@font/gilroymedium"
-                android:textColor="#7C7C7C"
-                android:layout_marginTop="8dp"/>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="#E2E2E2"
-                android:layout_marginTop="20dp"/>
-
-            <!-- Seller Info -->
-            <LinearLayout
-                android:id="@+id/layoutPharmacyHeader"
-                android:layout_width="match_parent"
-                android:layout_height="80dp"
-                android:orientation="horizontal"
-                android:padding="16dp"
-                android:gravity="center_vertical"
-                android:layout_marginTop="20dp">
-                <ImageView
-                    android:id="@+id/imagePharmacyLogo"
-                    android:layout_width="56dp"
-                    android:layout_height="56dp"
-                    android:src="@drawable/logo"
-                    android:background="@drawable/profile_bg"
-                    android:scaleType="centerCrop" />
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_marginStart="12dp">
-                    <TextView
-                        android:id="@+id/textPharmacyName"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Farmácia"
-                        android:textColor="#181725"
-                        android:textSize="16sp"
-                        android:fontFamily="@font/gilroybold"/>
-                    <TextView
-                        android:id="@+id/textPharmacyLocation"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Localização"
-                        android:textColor="#7C7C7C"
-                        android:textSize="14sp"
-                        android:fontFamily="@font/gilroyregular"/>
-                </LinearLayout>
-            </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="#E2E2E2"
-                android:layout_marginTop="20dp"/>
-
-            <!-- Review Section -->
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Review"
-                    android:textSize="16sp"
-                    android:fontFamily="@font/gilroybold"
-                    android:textColor="#181725"
-                    android:layout_centerVertical="true"/>
-
-                <ImageView
-                    android:id="@+id/review_arrow"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_arrow_right"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"/>
-
-                <TextView
-                    android:id="@+id/review_count"
-                    android:layout_toStartOf="@id/review_arrow"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="(85)"
-                    android:layout_marginStart="4dp"
-                    android:textColor="#7C7C7C"
-                    android:textSize="16sp"
-                    android:fontFamily="@font/gilroy"
-                    android:layout_centerVertical="true"/>
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_toStartOf="@id/review_count"
-                    android:layout_centerVertical="true"
-                    android:orientation="horizontal">
-
-                    <ImageView android:src="@drawable/ic_star_filled" style="@style/ReviewStar"/>
-                    <ImageView android:src="@drawable/ic_star_filled" style="@style/ReviewStar"/>
-                    <ImageView android:src="@drawable/ic_star_filled" style="@style/ReviewStar"/>
-                    <ImageView android:src="@drawable/ic_star_filled" style="@style/ReviewStar"/>
-                    <ImageView android:src="@drawable/ic_star_empty" style="@style/ReviewStar"/>
-
-                </LinearLayout>
-            </RelativeLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="#E2E2E2"
-                android:layout_marginTop="20dp"/>
-            <Button
-                android:id="@+id/add_to_cart_button"
-                android:layout_width="match_parent"
-                android:layout_height="67dp"
-                android:text="Adicionar ao carrinho"
-                android:layout_alignParentBottom="true"
-                android:layout_margin="25dp"
-                style="@style/FilterButton"/>
-        </LinearLayout>
-
-
-
-    </RelativeLayout>
-</ScrollView> 
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

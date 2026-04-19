@@ -79,7 +79,7 @@
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:src="@drawable/ic_orders"
-                    android:backgroundTint="@color/blue_500" />
+                    app:tint="@color/medlife_primary" />
 
                 <TextView
                     android:layout_width="wrap_content"

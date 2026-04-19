@@ -1,506 +1,488 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    >
+    android:background="@color/medlife_surface_variant">
 
-    <LinearLayout
-        android:orientation="vertical"
+    <!-- Header -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cartHeader"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="0dp">
+        android:background="@color/white"
+        android:padding="20dp"
+        app:layout_constraintTop_toTopOf="parent">
 
-        <!-- Empty State -->
-        <include layout="@layout/view_cart_empty"/>
+        <ImageView
+            android:id="@+id/back_arrow"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/ic_arrow_left"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="@color/medlife_on_surface" />
 
-        <!-- Main Content -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Meu Carrinho"
+            android:textAppearance="@style/TextAppearance.Medlife.SectionTitle"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/cartHeader">
+
         <LinearLayout
-            android:id="@+id/layoutMainContent"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:paddingBottom="120dp">
 
-            <!-- Cart Items -->
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerCartItems"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingTop="8dp"
-                android:paddingBottom="8dp"
-                android:clipToPadding="false" />
-
-            <!-- Divider -->
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="#E2E2E2" />
-
-            <!-- Delivery Address -->
+            <!-- Empty State -->
             <LinearLayout
-                android:id="@+id/layoutDeliveryAddress"
+                android:id="@+id/layoutEmptyState"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:padding="16dp"
-                android:background="@drawable/profile_bg"
-                android:gravity="center_vertical">
-                <ImageView
-                    android:layout_width="112dp"
-                    android:layout_height="85dp"
-                    android:src="@drawable/ic_cart_location"
-                    android:scaleType="centerInside" />
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="vertical"
-                    android:layout_marginStart="12dp">
-                    <TextView
-                        android:id="@+id/textDeliveryAddressTitle"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Entregar em"
-                        android:textColor="#7C7C7C"
-                        android:textSize="14sp"
-                        android:fontFamily="@font/gilroyregular"/>
-                    <TextView
-                        android:id="@+id/textDeliveryAddress"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="R. Acre, cep 135197-125\nBairro São Jorge N43"
-                        android:textColor="#181725"
-                        android:textSize="16sp"
-                        android:fontFamily="@font/gilroybold"/>
-                </LinearLayout>
-                <Button
-                    android:id="@+id/buttonAddAddress"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Adicionar"
-                    android:textColor="#FFFFFF"
-                    android:backgroundTint="#1E56A0"
-                    android:fontFamily="@font/gilroysemibold"
-                    android:visibility="gone"
-                    android:paddingStart="16dp"
-                    android:paddingEnd="16dp"
-                    android:paddingTop="8dp"
-                    android:paddingBottom="8dp"/>
-            </LinearLayout>
-
-            <!-- No Address State -->
-            <LinearLayout
-                android:id="@+id/layoutNoAddress"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:padding="16dp"
-                android:background="@drawable/profile_bg"
-                android:gravity="center_vertical"
-                android:visibility="gone">
-                <ImageView
-                    android:layout_width="112dp"
-                    android:layout_height="85dp"
-                    android:src="@drawable/ic_cart_location"
-                    android:scaleType="centerInside" />
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="vertical"
-                    android:layout_marginStart="12dp">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Endereço de entrega obrigatório"
-                        android:textColor="#BF2F25"
-                        android:textSize="14sp"
-                        android:fontFamily="@font/gilroybold"/>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Adicione um endereço para finalizar a compra"
-                        android:textColor="#181725"
-                        android:textSize="16sp"
-                        android:fontFamily="@font/gilroybold"/>
-                </LinearLayout>
-                <Button
-                    android:id="@+id/buttonAddAddressNoAddress"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Adicionar"
-                    android:textColor="#FFFFFF"
-                    android:backgroundTint="#1E56A0"
-                    android:fontFamily="@font/gilroysemibold"
-                    android:paddingStart="16dp"
-                    android:paddingEnd="16dp"
-                    android:paddingTop="8dp"
-                    android:paddingBottom="8dp"/>
-            </LinearLayout>
-
-            <!-- Delivery Options -->
-            <HorizontalScrollView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:overScrollMode="never"
-                android:scrollbars="none"
-                android:paddingTop="8dp"
-                android:paddingBottom="8dp">
-
-                <LinearLayout
-                    android:id="@+id/layoutDeliveryOptions"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="center_vertical">
-
-                    <!-- Imediato -->
-                    <LinearLayout
-                        android:id="@+id/cardDeliveryImmediate"
-                        android:layout_width="172dp"
-                        android:layout_height="120dp"
-                        android:orientation="vertical"
-                        android:background="@drawable/bg_delivery_option_selected"
-                        android:padding="16dp"
-                        android:layout_marginEnd="12dp"
-                        android:gravity="center_vertical">
-
-                        <TextView
-                            android:id="@+id/textDeliveryImmediateTitle"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Imediato"
-                            android:textColor="#1E56A0"
-                            android:textSize="16sp"
-                            android:fontFamily="@font/gilroybold"/>
-                        <TextView
-                            android:id="@+id/textDeliveryImmediateTime"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Hoje, 43 - 53 min"
-                            android:textColor="#7C7C7C"
-                            android:textSize="14sp"
-                            android:fontFamily="@font/gilroymedium"
-                            android:layout_marginTop="4dp"/>
-                        <TextView
-                            android:id="@+id/textDeliveryImmediatePrice"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="R$7.00"
-                            android:textColor="#181725"
-                            android:fontFamily="@font/gilroysemibold"
-                            android:layout_marginTop="8dp"/>
-                    </LinearLayout>
-
-                    <!-- Retirar na Loja -->
-                    <LinearLayout
-                        android:id="@+id/cardDeliveryStorePickup"
-                        android:layout_width="172dp"
-                        android:layout_height="120dp"
-                        android:orientation="vertical"
-                        android:background="@drawable/bg_delivery_option_unselected"
-                        android:padding="16dp"
-                        android:layout_marginEnd="12dp"
-                        android:gravity="center_vertical">
-
-                        <TextView
-                            android:id="@+id/textDeliveryStorePickupTitle"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Retirar na Loja"
-                            android:textColor="#1E56A0"
-                            android:textSize="16sp"
-                            android:fontFamily="@font/gilroybold"/>
-                        <TextView
-                            android:id="@+id/textDeliveryStorePickupTime"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="--, -- min"
-                            android:textColor="#7C7C7C"
-                            android:textSize="14sp"
-                            android:fontFamily="@font/gilroymedium"
-                            android:layout_marginTop="4dp"/>
-                        <TextView
-                            android:id="@+id/textDeliveryStorePickupPrice"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="R$--"
-                            android:textColor="#181725"
-                            android:fontFamily="@font/gilroysemibold"
-                            android:layout_marginTop="8dp"/>
-                    </LinearLayout>
-
-                    <!-- Agendado -->
-                    <LinearLayout
-                        android:id="@+id/cardDeliveryScheduled"
-                        android:layout_width="172dp"
-                        android:layout_height="120dp"
-                        android:orientation="vertical"
-                        android:background="@drawable/bg_delivery_option_unselected"
-                        android:padding="16dp"
-                        android:gravity="center_vertical">
-
-                        <TextView
-                            android:id="@+id/textDeliveryScheduledTitle"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Agendado"
-                            android:textColor="#1E56A0"
-                            android:textSize="16sp"
-                            android:fontFamily="@font/gilroybold"/>
-                        <TextView
-                            android:id="@+id/textDeliveryScheduledTime"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="--, -- min"
-                            android:textColor="#7C7C7C"
-                            android:textSize="14sp"
-                            android:fontFamily="@font/gilroymedium"
-                            android:layout_marginTop="4dp"/>
-                        <TextView
-                            android:id="@+id/textDeliveryScheduledPrice"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="R$7.00"
-                            android:textColor="#181725"
-                            android:textSize="16sp"
-                            android:fontFamily="@font/gilroysemibold"
-                            android:layout_marginTop="8dp"/>
-                    </LinearLayout>
-                </LinearLayout>
-            </HorizontalScrollView>
-
-            <!-- Divider -->
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="#E2E2E2" />
-
-            <!-- Payment Method -->
-            <LinearLayout
-                android:id="@+id/layoutPaymentMethod"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:padding="16dp"
-                android:gravity="center_vertical">
-                <ImageView
-                    android:layout_width="28dp"
-                    android:layout_height="24dp"
-                    android:layout_marginEnd="10dp"
-                    android:src="@drawable/ic_credit_card" />
-
-                <TextView
-                    android:id="@+id/textPaymentMethod"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Forma de pagamento"
-                    android:textColor="#181725"
-                    android:textSize="16sp"
-                    android:fontFamily="@font/gilroybold"/>
-                <Button
-                    android:id="@+id/buttonChoosePayment"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Escolher"
-                    android:textColor="#BF2F25"
-                    android:backgroundTint="#FFFFFF"
-                    android:fontFamily="@font/gilroysemibold"/>
-            </LinearLayout>
-
-            <!-- Divider -->
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="#E2E2E2" />
-
-            <!-- Summary -->
-            <LinearLayout
-                android:id="@+id/layoutSummary"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="16dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:paddingStart="8dp"
-                    android:paddingEnd="8dp"
-                    android:minHeight="48dp"
-                    android:gravity="center_vertical">
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="Subtotal"
-                        android:textSize="16sp"
-                        android:fontFamily="@font/gilroybold"/>
-                    <TextView
-                        android:id="@+id/textSubtotal"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="R$1.887,74"
-                        android:textColor="#B3B3B3"
-                        android:textSize="16sp"
-                        android:fontFamily="@font/gilroysemibold"/>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:paddingStart="8dp"
-                    android:paddingEnd="8dp"
-                    android:minHeight="48dp"
-                    android:gravity="center_vertical">
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="Taxa de entrega"
-                        android:textSize="16sp"
-                        android:fontFamily="@font/gilroybold"/>
-                    <TextView
-                        android:id="@+id/textDeliveryFee"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="R$7,00"
-                        android:textColor="#B3B3B3"
-                        android:textSize="16sp"
-                        android:fontFamily="@font/gilroysemibold"/>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:paddingStart="8dp"
-                    android:paddingEnd="8dp"
-                    android:minHeight="48dp"
-                    android:gravity="center_vertical">
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="Desconto"
-                        android:textColor="#7C7C7C"
-                        android:textSize="16sp"
-                        android:fontFamily="@font/gilroybold"/>
-                    <TextView
-                        android:id="@+id/textDiscount"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="R$283,16"
-                        android:textColor="#B3B3B3"
-                        android:textSize="16sp"
-                        android:fontFamily="@font/gilroysemibold"/>
-                </LinearLayout>
-
-                <!-- Divider -->
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginTop="12dp"
-                    android:layout_marginBottom="12dp"
-                    android:background="#E2E2E2" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:paddingStart="8dp"
-                    android:paddingEnd="8dp"
-                    android:minHeight="48dp"
-                    android:gravity="center_vertical">
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="Total"
-                        android:textColor="#181725"
-                        android:textSize="18sp"
-                        android:fontFamily="@font/gilroysemibold"/>
-                    <TextView
-                        android:id="@+id/textTotal"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="R$1.611,58"
-                        android:textColor="#181725"
-                        android:textSize="18sp"
-                        android:fontFamily="@font/gilroysemibold"/>
-                </LinearLayout>
-            </LinearLayout>
-
-            <!-- Warning and Prescription Upload -->
-            <LinearLayout
-                android:id="@+id/layoutPrescriptionWarning"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="16dp"
-                android:gravity="center_horizontal">
-                <ImageView
-                    android:layout_width="46dp"
-                    android:layout_height="46dp"
-                    android:src="@drawable/ic_warning"
-                    android:layout_gravity="center_horizontal"/>
-                <TextView
-                    android:id="@+id/textPrescriptionWarning"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Notamos que certos produtos no carrinho necessita de receita médica, para finalizar a compra, por favor insira as receitas!"
-                    android:textColor="#BF2F25"
-                    android:textSize="16sp"
-                    android:fontFamily="@font/gilroybold"
-                    android:gravity="center"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginBottom="40dp"/>
-                <Button
-                    android:id="@+id/buttonUploadPrescription"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Enviar receita"
-                    android:textColor="#FCFCFC"
-                    android:backgroundTint="#1E56A0"
-                    android:fontFamily="@font/gilroysemibold"
-                    android:layout_marginBottom="8dp"/>
-            </LinearLayout>
-
-            <!-- Checkout Button -->
-            <Button
-                android:id="@+id/buttonCheckout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Finalizar Compra"
-                android:textColor="#FCFCFC"
-                android:backgroundTint="#1E56A0"
-                android:textSize="18sp"
-                android:fontFamily="@font/gilroybold"
-                android:layout_margin="16dp"/>
-
-            <!-- Address Requirement Warning -->
-            <TextView
-                android:id="@+id/textAddressWarning"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="⚠️ Endereço de entrega obrigatório para finalizar a compra"
-                android:textColor="#BF2F25"
-                android:textSize="14sp"
-                android:fontFamily="@font/gilroymedium"
+                android:layout_height="match_parent"
                 android:gravity="center"
-                android:padding="8dp"
-                android:visibility="gone"/>
-        </LinearLayout>
+                android:orientation="vertical"
+                android:visibility="gone">
+                
+                <ImageView
+                    android:id="@+id/imageEmptyCart"
+                    android:layout_width="200dp"
+                    android:layout_height="200dp"
+                    android:src="@drawable/ic_empty_cart" />
+                
+                <TextView
+                    android:id="@+id/textEmptyCart"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:text="Seu carrinho está vazio"
+                    android:textAppearance="@style/TextAppearance.Medlife.SectionTitle" />
+            </LinearLayout>
 
-        <!-- Fragment Container for UploadPrescriptionFragment -->
-        <FrameLayout
-            android:id="@+id/fragment_container"
+            <!-- Main Content -->
+            <LinearLayout
+                android:id="@+id/layoutMainContent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="20dp">
+
+                <!-- Cart Items -->
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerCartItems"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    tools:itemCount="2"
+                    tools:listitem="@layout/item_product" />
+
+                <!-- Delivery Options Section -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="32dp"
+                    android:text="Tipo de Entrega"
+                    android:textAppearance="@style/TextAppearance.Medlife.SectionTitle" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:orientation="horizontal">
+
+                    <!-- Immediate -->
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/cardDeliveryImmediate"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="8dp"
+                        android:layout_weight="1"
+                        app:cardCornerRadius="12dp"
+                        app:cardElevation="2dp"
+                        app:strokeColor="@color/medlife_primary"
+                        app:strokeWidth="2dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:orientation="vertical"
+                            android:padding="12dp">
+
+                            <ImageView
+                                android:layout_width="24dp"
+                                android:layout_height="24dp"
+                                android:src="@drawable/ic_delivery"
+                                app:tint="@color/medlife_primary" />
+
+                            <TextView
+                                android:id="@+id/textDeliveryImmediateTitle"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="8dp"
+                                android:text="Imediata"
+                                android:textAppearance="@style/TextAppearance.Medlife.Caption"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <!-- Store Pickup -->
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/cardDeliveryStorePickup"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="4dp"
+                        android:layout_weight="1"
+                        app:cardCornerRadius="12dp"
+                        app:cardElevation="2dp"
+                        app:strokeWidth="0dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:orientation="vertical"
+                            android:padding="12dp">
+
+                            <ImageView
+                                android:layout_width="24dp"
+                                android:layout_height="24dp"
+                                android:src="@drawable/ic_store"
+                                app:tint="@color/medlife_on_surface_variant" />
+
+                            <TextView
+                                android:id="@+id/textDeliveryStorePickupTitle"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="8dp"
+                                android:text="Retirada"
+                                android:textAppearance="@style/TextAppearance.Medlife.Caption" />
+                        </LinearLayout>
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <!-- Scheduled -->
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/cardDeliveryScheduled"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_weight="1"
+                        app:cardCornerRadius="12dp"
+                        app:cardElevation="2dp"
+                        app:strokeWidth="0dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:orientation="vertical"
+                            android:padding="12dp">
+
+                            <ImageView
+                                android:layout_width="24dp"
+                                android:layout_height="24dp"
+                                android:src="@drawable/ic_calendar"
+                                app:tint="@color/medlife_on_surface_variant" />
+
+                            <TextView
+                                android:id="@+id/textDeliveryScheduledTitle"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="8dp"
+                                android:text="Agendada"
+                                android:textAppearance="@style/TextAppearance.Medlife.Caption" />
+                        </LinearLayout>
+                    </com.google.android.material.card.MaterialCardView>
+                </LinearLayout>
+
+                <!-- Delivery Address Card -->
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/layoutDeliveryAddress"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    app:cardCornerRadius="16dp"
+                    app:cardElevation="2dp"
+                    app:strokeWidth="0dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:padding="16dp">
+
+                        <ImageView
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:src="@drawable/ic_location"
+                            app:tint="@color/medlife_primary" />
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/textDeliveryAddressTitle"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Entregar em"
+                                android:textAppearance="@style/TextAppearance.Medlife.Caption" />
+
+                            <TextView
+                                android:id="@+id/textDeliveryAddress"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="R. Acre, 125, Campinas - SP"
+                                android:textAppearance="@style/TextAppearance.Medlife.Body1"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+
+                        <ImageView
+                            android:id="@+id/buttonAddAddress"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:src="@drawable/ic_arrow_right" />
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+                <!-- No Address State (Hidden by default) -->
+                <LinearLayout
+                    android:id="@+id/layoutNoAddress"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+                    
+                    <TextView
+                        android:id="@+id/textAddressWarning"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Nenhum endereço cadastrado"
+                        android:textAppearance="@style/TextAppearance.Medlife.Body2"
+                        android:textColor="@color/medlife_error" />
+
+                    <Button
+                        android:id="@+id/buttonAddAddressNoAddress"
+                        style="@style/Widget.Medlife.Button.OutlinedButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="ADICIONAR ENDEREÇO" />
+                </LinearLayout>
+
+                <!-- Prescription Warning Block -->
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/layoutPrescriptionWarning"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    app:cardBackgroundColor="#FFF0F0"
+                    app:cardCornerRadius="16dp"
+                    app:cardElevation="0dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:padding="16dp">
+
+                        <ImageView
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:src="@drawable/ic_warning"
+                            app:tint="@color/medlife_error" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="12dp"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Receita Necessária"
+                                android:textAppearance="@style/TextAppearance.Medlife.Body2"
+                                android:textColor="@color/medlife_error"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/textPrescriptionWarning"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="4dp"
+                                android:text="Alguns produtos necessitam de receita para finalizar a compra."
+                                android:textAppearance="@style/TextAppearance.Medlife.Caption" />
+
+                            <com.google.android.material.button.MaterialButton
+                                android:id="@+id/buttonUploadPrescription"
+                                style="@style/Widget.MaterialComponents.Button.TextButton"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="ENVIAR RECEITA"
+                                android:textColor="@color/medlife_primary"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+                <!-- Order Summary -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="32dp"
+                    android:text="Resumo do Pedido"
+                    android:textAppearance="@style/TextAppearance.Medlife.SectionTitle" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:background="@drawable/bg_card_elevated"
+                    android:orientation="vertical"
+                    android:padding="20dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Subtotal"
+                            android:textAppearance="@style/TextAppearance.Medlife.Body2" />
+
+                        <TextView
+                            android:id="@+id/textSubtotal"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="R$1.887,74"
+                            android:textAppearance="@style/TextAppearance.Medlife.Body2"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Taxa de entrega"
+                            android:textAppearance="@style/TextAppearance.Medlife.Body2" />
+
+                        <TextView
+                            android:id="@+id/textDeliveryFee"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="R$7,00"
+                            android:textAppearance="@style/TextAppearance.Medlife.Body2"
+                            android:textColor="@color/medlife_primary"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Desconto"
+                            android:textAppearance="@style/TextAppearance.Medlife.Body2" />
+
+                        <TextView
+                            android:id="@+id/textDiscount"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="- R$283,16"
+                            android:textAppearance="@style/TextAppearance.Medlife.Body2"
+                            android:textColor="@color/medlife_error"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginVertical="16dp"
+                        android:background="@color/medlife_surface_variant" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Total"
+                            android:textAppearance="@style/TextAppearance.Medlife.Body1"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/textTotal"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="R$1.611,58"
+                            android:textAppearance="@style/TextAppearance.Medlife.HeadlineXL"
+                            android:textColor="@color/medlife_on_surface" />
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <!-- Bottom Action Area -->
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardElevation="16dp"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/buttonCheckout"
+            style="@style/Widget.Medlife.Button"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:visibility="gone" />
-    </LinearLayout>
-</ScrollView>
+            android:layout_height="64dp"
+            android:layout_margin="20dp"
+            android:text="Finalizar Compra"
+            app:cornerRadius="16dp" />
+    </androidx.cardview.widget.CardView>
+
+    <!-- Fragment Container for Sub-screens (Prescription Upload, etc) -->
+    <FrameLayout
+        android:id="@+id/fragment_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:elevation="20dp"
+        android:visibility="gone" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
