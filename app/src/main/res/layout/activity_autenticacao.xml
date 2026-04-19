@@ -195,4 +195,22 @@
         </androidx.cardview.widget.CardView>
     </androidx.core.widget.NestedScrollView>
 
+    <!-- Loading Overlay -->
+    <FrameLayout
+        android:id="@+id/loadingOverlay"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#80FFFFFF"
+        android:elevation="20dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:visibility="gone">
+
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:indeterminateTint="@color/medlife_primary" />
+    </FrameLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

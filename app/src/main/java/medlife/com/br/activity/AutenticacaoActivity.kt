@@ -2,6 +2,8 @@ package medlife.com.br.activity
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
+import android.widget.FrameLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.viewModels
@@ -29,6 +31,7 @@ class AutenticacaoActivity : AppCompatActivity() {
     private lateinit var forgotPasswordLink: TextView
     private lateinit var googleButton: MaterialButton
     private lateinit var facebookButton: MaterialButton
+    private lateinit var loadingOverlay: FrameLayout
 
     private val authViewModel: AuthViewModel by viewModels()
 
@@ -47,6 +50,7 @@ class AutenticacaoActivity : AppCompatActivity() {
 
             if (email.isNotEmpty()) {
                 if (senha.isNotEmpty()) {
+                    showLoading(true)
                     authViewModel.signIn(email, senha)
                 } else {
                     Toast.makeText(this, "Preencha a senha!", Toast.LENGTH_SHORT).show()
@@ -73,6 +77,7 @@ class AutenticacaoActivity : AppCompatActivity() {
 
     private fun setupObservers() {
         authViewModel.signInResult.observe(this) { result ->
+            showLoading(false)
             result.onSuccess {
                 Toast.makeText(this, "Logado com sucesso", Toast.LENGTH_SHORT).show()
                 abrirTelaPrincipal()
@@ -107,6 +112,8 @@ class AutenticacaoActivity : AppCompatActivity() {
                 if (credential is CustomCredential && credential.type == GoogleIdTokenCredential.TYPE_GOOGLE_ID_TOKEN_CREDENTIAL) {
                     val googleIdTokenCredential = GoogleIdTokenCredential.createFrom(credential.data)
                     val idToken = googleIdTokenCredential.idToken
+                    
+                    showLoading(true)
                     authViewModel.signInWithGoogle(idToken)
                 } else {
                     Toast.makeText(this@AutenticacaoActivity, "Tipo de credencial não suportado", Toast.LENGTH_SHORT).show()
@@ -138,5 +145,14 @@ class AutenticacaoActivity : AppCompatActivity() {
         forgotPasswordLink = findViewById(R.id.forgotPasswordLink)
         googleButton = findViewById(R.id.googleButton)
         facebookButton = findViewById(R.id.facebookButton)
+        loadingOverlay = findViewById(R.id.loadingOverlay)
+    }
+
+    private fun showLoading(isLoading: Boolean) {
+        if (isLoading) {
+            loadingOverlay.visibility = View.VISIBLE
+        } else {
+            loadingOverlay.visibility = View.GONE
+        }
     }
 }
