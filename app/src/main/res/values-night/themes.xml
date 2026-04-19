@@ -2,27 +2,28 @@
     <!-- Base application theme. -->
     <style name="Theme.Medlife" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/blue_500</item>
-        <item name="colorPrimaryVariant">@color/blue_700</item>
+        <item name="colorPrimary">@color/medlife_primary</item>
+        <item name="colorPrimaryVariant">@color/medlife_primary_light</item>
         <item name="colorOnPrimary">@color/white</item>
         
         <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/blue_500</item>
-        <item name="colorSecondaryVariant">@color/blue_700</item>
+        <item name="colorSecondary">@color/medlife_accent</item>
+        <item name="colorSecondaryVariant">@color/medlife_accent</item>
         <item name="colorOnSecondary">@color/white</item>
         
         <!-- Status bar color. -->
-        <item name="android:statusBarColor">@color/blue_900</item>
+        <item name="android:statusBarColor">@color/black</item>
         <item name="android:windowLightStatusBar">false</item>
 
         <!-- Background colors -->
-        <item name="android:colorBackground">@color/blue_900</item>
-        <item name="colorSurface">@color/blue_800</item>
+        <item name="android:colorBackground">#121212</item>
+        <item name="colorSurface">#1E1E1E</item>
         <item name="colorOnSurface">@color/white</item>
+        <item name="colorError">@color/medlife_error</item>
 
         <!-- Text appearances -->
-        <item name="textAppearanceHeadline1">@style/TextAppearance.Medlife.Headline1</item>
-        <item name="textAppearanceHeadline2">@style/TextAppearance.Medlife.Headline2</item>
+        <item name="textAppearanceHeadline1">@style/TextAppearance.Medlife.HeadlineXL</item>
+        <item name="textAppearanceHeadline2">@style/TextAppearance.Medlife.SectionTitle</item>
         <item name="textAppearanceBody1">@style/TextAppearance.Medlife.Body1</item>
         <item name="textAppearanceBody2">@style/TextAppearance.Medlife.Body2</item>
 
@@ -31,8 +32,8 @@
         <item name="materialButtonOutlinedStyle">@style/Widget.Medlife.Button.OutlinedButton</item>
 
         <!-- TextInputLayout styling -->
-        <item name="boxStrokeColor">@color/blue_500</item>
-        <item name="hintTextColor">@color/blue_500</item>
-        <item name="android:textColorHint">@color/blue_500</item>
+        <item name="boxStrokeColor">@color/medlife_primary</item>
+        <item name="hintTextColor">@color/medlife_primary</item>
+        <item name="android:textColorHint">@color/medlife_on_surface_variant</item>
     </style>
 </resources>

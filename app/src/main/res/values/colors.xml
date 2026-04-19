@@ -1,31 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="white">#FFFFFFFF</color>
-    <color name="black">#FF000000</color>
+    <!-- Brand Identity (Legacy names) -->
+    <color name="blue_500">#1A5CCC</color>
+    <color name="blue_700">#12418C</color>
+    <color name="blue_900">#0B2652</color>
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
 
-    <!-- Core Design Colors -->
-    <color name="background_light">#F6F6F6</color>
-    <color name="text_primary_dark">#030303</color>
-    <color name="text_secondary_dark">#7C7C7C</color>
+    <!-- MedLife Semantic Palette -->
+    <color name="medlife_primary">#1A5CCC</color>
+    <color name="medlife_secondary">#7C7C7C</color>
+    <color name="medlife_primary_light">#4B84E8</color>
+    <color name="medlife_primary_container">#DCE8FF</color>
+    <color name="medlife_accent">#00B4A6</color>
+    <color name="medlife_success">#2D9E5F</color>
+    <color name="medlife_warning">#E8920A</color>
+    <color name="medlife_error">#C0392B</color>
+
+    <color name="medlife_surface">#FFFFFF</color>
+    <color name="medlife_surface_variant">#F4F6FA</color>
+    <color name="medlife_on_surface">#0F1923</color>
+    <color name="medlife_on_surface_variant">#576475</color>
+
+    <!-- Legacy / Compatibility Colors -->
+    <color name="colorGrayLight">#E0E0E0</color>
+    <color name="background_light">#F4F6FA</color>
+    <color name="active_color">@color/medlife_primary</color>
+    <color name="inactive_color">#7C7C7C</color>
     <color name="input_border_color">#E2E2E2</color>
-
-    <!-- Button & Link Colors -->
-    <color name="medlife_blue_login">#779CEC</color>
-    <color name="social_button_google">#5383EC</color>
-    <color name="social_button_facebook">#1E56A0</color>
-    <color name="link_blue">#1E56A0</color>
-    <color name="medlife_transparent_logout">#F2F3F2</color>
-
-    <!-- Keeping existing specific blues for potential wider use, if not explicitly consolidated -->
-    <color name="blue_500">#2196F3</color>
-    <color name="blue_700">#1976D2</color>
-    <color name="blue_800">#1565C0</color>
-    <color name="blue_900">#0D47A1</color>
-
-    <color name="active_color">#1E56A0</color>
-    <color name="inactive_color">#181725</color>
-
+    <color name="search_bar_background">#F4F6FA</color>
+    <color name="social_button_facebook">#1877F2</color>
+    <color name="medlife_transparent_logout">#10FF0000</color>
     <color name="colorGray">#7C7C7C</color>
-    <color name="colorGrayLight">#E2E2E2</color>"
-    <color name="search_bar_background">#F2F3F2</color>
+    <color name="link_blue">@color/medlife_primary</color>
+
+    <!-- Colors for Gradients -->
+    <color name="gradient_start">#1A5CCC</color>
+    <color name="gradient_end">#4B84E8</color>
 </resources>
